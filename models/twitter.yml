@@ -1,0 +1,23 @@
+version: 2
+
+models:
+  - name: twitter__ad_adapter
+    columns:
+      - name: daily_ad_id
+        tests:
+          - unique
+          - not_null
+          
+  - name: twitter__campaign_report
+    columns:
+      - name: daily_campaign_id
+        tests:
+          - unique
+          - not_null
+
+  - name: twitter__line_item_report
+    columns:
+      - name: daily_line_item_id
+        tests:
+          - unique
+          - not_null

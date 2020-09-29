@@ -36,10 +36,6 @@ with accounts as (
 
     select
         metrics.date_day,
-        metrics.spend,
-        metrics.clicks,
-        metrics.url_clicks,
-        metrics.impressions,
         tweet_url.base_url,
         tweet_url.url_host,
         tweet_url.url_path,
@@ -51,7 +47,11 @@ with accounts as (
         line_items.name as line_item_name,
         line_items.line_item_id,
         campaigns.campaign_name,
-        campaigns.campaign_id
+        campaigns.campaign_id,
+        sum(metrics.spend) as spend,
+        sum(metrics.clicks) as clicks,
+        sum(metrics.url_clicks) as url_clicks,
+        sum(metrics.impressions) as impressions
     from metrics
     left join promoted_tweet
         using (promoted_tweet_id)
@@ -61,8 +61,16 @@ with accounts as (
         using (line_item_id)
     left join campaigns
         using (campaign_id)
+    {{ dbt_utils.group_by(13) }}
+
+), unique_id as (
+
+    select
+        *,
+        {{ dbt_utils.surrogate_key(['date_day','base_url','line_item_id','campaign_id']) }} as daily_ad_id
+    from joined
 
 )
 
 select *
-from joined
+from unique_id
