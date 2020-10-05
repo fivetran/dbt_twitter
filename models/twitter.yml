@@ -2,22 +2,93 @@ version: 2
 
 models:
   - name: twitter__ad_adapter
+    description: Each record represents the daily performance of a line item at the URL level.
     columns:
       - name: daily_ad_id
+        description: Unique ID for each record.
         tests:
           - unique
           - not_null
+      - name: campaign_id
+        description: The ID of the campaign.
+      - name: campaign_name
+        description: The name of the campaign.
+      - name: clicks
+        description: The number of clicks on that date.
+      - name: date_day
+        description: The date of the performance.
+      - name: impressions
+        description: The number of impressions on that date.
+      - name: line_item_id
+        description: The ID of the line item.
+      - name: line_item_name
+        description: The name of the line item.
+      - name: spend
+        description: The amount of spend on that date.
+      - name: url_clicks
+        description: The number of URL clicks on that date.
+      - name: base_url
+        description: The base URL of the ad, extracted from the `expanded_url`.
+      - name: url_host
+        description: The URL host of the ad, extracted from the `expanded_url`.
+      - name: url_path
+        description: The URL path of the ad, extracted from the `expanded_url`.
+      - name: utm_source
+        description: The utm_source parameter of the ad, extracted from the `expanded_url`.
+      - name: utm_medium
+        description: The utm_medium parameter of the ad, extracted from the `expanded_url`.
+      - name: utm_campaign
+        description: The utm_campaign parameter of the ad, extracted from the `expanded_url`.
+      - name: utm_content
+        description: The utm_content parameter of the ad, extracted from the `expanded_url`.
+      - name: utm_term
+        description: The utm_term parameter of the ad, extracted from the `expanded_url`.
+
           
   - name: twitter__campaign_report
     columns:
       - name: daily_campaign_id
+        description: Unique ID for each record.
         tests:
           - unique
           - not_null
+      - name: campaign_id
+        description: The ID of the campaign.
+      - name: campaign_name
+        description: The name of the campaign.
+      - name: clicks
+        description: The number of clicks on that date.
+      - name: date_day
+        description: The date of the performance.
+      - name: impressions
+        description: The number of impressions on that date.
+      - name: spend
+        description: The amount of spend on that date.
+      - name: url_clicks
+        description: The number of URL clicks on that date.
 
   - name: twitter__line_item_report
     columns:
       - name: daily_line_item_id
+        description: Unique ID for each record.
         tests:
           - unique
           - not_null
+      - name: campaign_id
+        description: The ID of the campaign.
+      - name: campaign_name
+        description: The name of the campaign.
+      - name: clicks
+        description: The number of clicks on that date.
+      - name: date_day
+        description: The date of the performance.
+      - name: impressions
+        description: The number of impressions on that date.
+      - name: line_item_id
+        description: The ID of the line item.
+      - name: line_item_name
+        description: The name of the line item.
+      - name: spend
+        description: The amount of spend on that date.
+      - name: url_clicks
+        description: The number of URL clicks on that date.
