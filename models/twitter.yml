@@ -46,6 +46,7 @@ models:
 
           
   - name: twitter__campaign_report
+    description: Each record represents the daily ad performance of each campaign.
     columns:
       - name: daily_campaign_id
         description: Unique ID for each record.
@@ -68,6 +69,7 @@ models:
         description: The number of URL clicks on that date.
 
   - name: twitter__line_item_report
+    description: Each record represents the daily ad performance of each line item.
     columns:
       - name: daily_line_item_id
         description: Unique ID for each record.
