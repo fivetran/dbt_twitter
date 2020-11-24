@@ -1,36 +1,36 @@
 with accounts as (
 
     select *
-    from {{ ref('stg_twitter_ads__account_history') }}
+    from {{ var('twitter_account_history') }}
     where is_latest_version = True
 
 ), campaigns as (
 
     select *
-    from {{ ref('stg_twitter_ads__campaign_history') }}
+    from {{ var('twitter_campaign_history') }}
     where is_latest_version = True
 
 ), line_items as (
 
     select *
-    from {{ ref('stg_twitter_ads__line_item_history') }}
+    from {{ var('twitter_line_item_history') }}
     where is_latest_version = True
 
 ), metrics as (
 
     select *
-    from {{ ref('stg_twitter_ads__promoted_tweet_report') }}
+    from {{ var('twitter_promoted_tweet_report') }}
 
 ), promoted_tweet as (
 
     select *
-    from {{ ref('stg_twitter_ads__promoted_tweet_history')}}
+    from {{ var('twitter_promoted_tweet_history')}}
     where is_latest_version = True
 
 ), tweet_url as (
 
     select *
-    from {{ ref('stg_twitter_ads__tweet_url') }}
+    from {{ var('twitter_tweet_url') }}
 
 ), joined as (
 
