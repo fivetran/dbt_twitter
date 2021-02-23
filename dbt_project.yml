@@ -2,12 +2,7 @@ name: 'twitter_ads'
 version: '1.0.0'
 config-version: 2
 
-source-paths: ["models"]
-analysis-paths: ["analysis"]
-test-paths: ["tests"]
-data-paths: ["data"]
-macro-paths: ["macros"]
-snapshot-paths: ["snapshots"]
+require-dbt-version: [">=0.18.0", "<0.20.0"]
 
 models:
   twitter_ads:

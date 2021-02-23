@@ -1,6 +1,6 @@
 # Twitter Ads 
 
-This package models Twitter Ads data from [Fivetran's connector](https://fivetran.com/docs/applications/twitter-ads). It uses data in the format described by [this ERD](https://docs.google.com/presentation/d/1IfAVUPFazRFTM-wee-K7_4e5J7RWxNKxpfYMpkWmoPE/edit#slide=id.g311502b468_5_443).
+This package models Twitter Ads data from [Fivetran's connector](https://fivetran.com/docs/applications/twitter-ads). It uses data in the format described by [this ERD](https://fivetran.com/docs/applications/twitter-ads#schemainformation).
 
 The main focus of the package is to transform the core ad object tables into analytics-ready models, including an 'ad adapter' model that can be easily unioned in to other ad platform packages to get a single view. 
 
