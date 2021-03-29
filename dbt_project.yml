@@ -6,7 +6,7 @@ require-dbt-version: [">=0.18.0", "<0.20.0"]
 
 models:
   twitter_ads:
-    +schema: twitter
+    +schema: twitter_ads
     +materialized: table
 
 vars:

@@ -34,7 +34,7 @@ vars:
 For additional configurations for the source models, visit the [Twitter Ads source package](https://github.com/fivetran/dbt_twitter_source).
 
 ### Changing the Build Schema
-By default this package will build the Twitter Ads staging models within a schema titled (<target_schema> + `_stg_twitter`) and the Twitter Ads final models with a schema titled (<target_schema> + `_twitter`) in your target database. If this is not where you would like your modeled Twitter Ads data to be written to, add the following configuration to your `dbt_project.yml` file:
+By default this package will build the Twitter Ads staging models within a schema titled (<target_schema> + `_stg_twitter_ads`) and the Twitter Ads final models with a schema titled (<target_schema> + `_twitter_ads`) in your target database. If this is not where you would like your modeled Twitter Ads data to be written to, add the following configuration to your `dbt_project.yml` file:
 
 ```yml
 # dbt_project.yml
