@@ -2,17 +2,17 @@
 
 This package models Twitter Ads data from [Fivetran's connector](https://fivetran.com/docs/applications/twitter-ads). It uses data in the format described by [this ERD](https://fivetran.com/docs/applications/twitter-ads#schemainformation).
 
-The main focus of the package is to transform the core ad object tables into analytics-ready models, including an 'ad adapter' model that can be easily unioned in to other ad platform packages to get a single view. 
+The main focus of the package is to transform the core ad object tables into analytics-ready models, including an 'ad adapter' model that can be easily unioned in to other ad platform packages to get a single view. This is especially easy using our [Ad Reporting package](https://github.com/fivetran/dbt_ad_reporting).
 
 ## Models
 
-This package contains transformation models, designed to work simultaneously with our [Twitter Ads source package](https://github.com/fivetran/dbt_twitter_source). A dependency on the source package is declared in this package's `packages.yml` file, so it will automatically download when you run `dbt deps`. The primary outputs of this package are described below.
+This package contains transformation models, designed to work simultaneously with our [Twitter Ads source package](https://github.com/fivetran/dbt_twitter_source) and our [multi-platform Ad Reporting package](https://github.com/fivetran/dbt_ad_reporting). A dependency on the source package is declared in this package's `packages.yml` file, so it will automatically download when you run `dbt deps`. The primary outputs of this package are described below.
 
 | **model**                 | **description**                                                                                                        |
 | ------------------------- | ---------------------------------------------------------------------------------------------------------------------- |
-| twitter__ad_adapter       | Each record represents the daily ad performance of each creative, including information about the used UTM parameters. |
-| twitter__line_item_report | Each record represents the daily ad performance of each line item.                                                     |
-| twitter__campaign_report  | Each record represents the daily ad performance of each campaign.                                                      |
+| [twitter__ad_adapter](https://github.com/fivetran/dbt_twitter_ads/blob/master/models/twitter__ad_adapter.sql)       | Each record represents the daily ad performance of each creative, including information about the used UTM parameters. |
+| [twitter__line_item_report](https://github.com/fivetran/dbt_twitter_ads/blob/master/models/twitter__line_item_report.sql) | Each record represents the daily ad performance of each line item.                                                     |
+| [twitter__campaign_report](https://github.com/fivetran/dbt_twitter_ads/blob/master/models/twitter__campaign_report.sql)  | Each record represents the daily ad performance of each campaign.                                                      |
 
 ## Installation Instructions
 Check [dbt Hub](https://hub.getdbt.com/) for the latest installation instructions, or [read the dbt docs](https://docs.getdbt.com/docs/package-management) for more information on installing packages.
@@ -32,6 +32,20 @@ vars:
 ```
 
 For additional configurations for the source models, visit the [Twitter Ads source package](https://github.com/fivetran/dbt_twitter_source).
+
+### Changing the Build Schema
+By default this package will build the Twitter Ads staging models within a schema titled (<target_schema> + `_stg_twitter_ads`) and the Twitter Ads final models with a schema titled (<target_schema> + `_twitter_ads`) in your target database. If this is not where you would like your modeled Twitter Ads data to be written to, add the following configuration to your `dbt_project.yml` file:
+
+```yml
+# dbt_project.yml
+
+...
+models:
+  twitter_ads:
+    +schema: my_new_schema_name # leave blank for just the target_schema
+  twitter_ads_source:
+    +schema: my_new_schema_name # leave blank for just the target_schema
+```
 
 ## Contributions
 
