@@ -17,3 +17,5 @@ vars:
     twitter_tweet_url: "{{ ref('stg_twitter_ads__tweet_url') }}"
     twitter_account_history: "{{ ref('stg_twitter_ads__account_history') }}"
     twitter_campaign_history: "{{ ref('stg_twitter_ads__campaign_history') }}"
+  dbt_utils_dispatch_list: ['spark_utils', 'fivetran_utils']
+  fivetran_utils_dispatch_list: ['spark_utils']
