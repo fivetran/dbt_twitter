@@ -9,11 +9,9 @@ models:
 vars:
   twitter_ads:
     twitter_line_item_history: "{{ ref('stg_twitter_ads__line_item_history') }}"
-    twitter_promoted_tweet_report: "{{ ref('stg_twitter_ads__promoted_tweet_report')\
-      \ }}"
-    twitter_promoted_tweet_history: "{{ ref('stg_twitter_ads__promoted_tweet_history')}}"
+    twitter_promoted_tweet_report: "{{ ref('stg_twitter_ads__promoted_tweet_report') }}"
+    twitter_promoted_tweet_history: "{{ ref('stg_twitter_ads__promoted_tweet_history') }}"
     twitter_tweet_url: "{{ ref('stg_twitter_ads__tweet_url') }}"
     twitter_account_history: "{{ ref('stg_twitter_ads__account_history') }}"
     twitter_campaign_history: "{{ ref('stg_twitter_ads__campaign_history') }}"
-  dbt_utils_dispatch_list: ['spark_utils', 'fivetran_utils']
-  fivetran_utils_dispatch_list: ['spark_utils']
+
