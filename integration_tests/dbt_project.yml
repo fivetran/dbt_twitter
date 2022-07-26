@@ -1,17 +1,24 @@
 name: 'twitter_integration_tests'
-version: '0.3.0'
+version: '0.5.0'
 profile: 'integration_tests'
 config-version: 2
 snapshot-paths: ["snapshots"]
 
 vars:
   twitter_ads_source:
-    account_history: "{{ ref('twitter_account_history_data') }}"
-    campaign_history: "{{ ref('twitter_campaign_history_data') }}"
-    line_item_history: "{{ ref('twitter_line_item_history_data') }}"
-    promoted_tweet_history: "{{ ref('twitter_promoted_tweet_history_data') }}"
-    promoted_tweet_report: "{{ ref('twitter_promoted_tweet_report_data') }}"
-    tweet_url: "{{ ref('twitter_tweet_url_data') }}"
+    twitter_ads_schema: twitter_source_integration_tests
+
+    twitter_ads_account_history_identifier: "twitter_account_history_data"
+    twitter_ads_campaign_history_identifier: "twitter_campaign_history_data"
+    twitter_ads_line_item_history_identifier: "twitter_line_item_history_data"
+    twitter_ads_promoted_tweet_history_identifier: "twitter_promoted_tweet_history_data"
+    twitter_ads_promoted_tweet_report_identifier: "twitter_promoted_tweet_report_data"
+    twitter_ads_tweet_url_identifier: "twitter_tweet_url_data"
+    twitter_ads_tweet_identifier: "twitter_tweet_data"
+    twitter_ads_campaign_report_identifier: "twitter_campaign_report_data"
+    twitter_ads_line_item_report_identifier: "twitter_line_item_report_data"
+    twitter_ads_account_report_identifier: "twitter_account_report_data"
+    twitter_ads_line_item_keywords_report_identifier: "twitter_line_item_keywords_report_data"
 
 seeds:
   twitter_integration_tests:

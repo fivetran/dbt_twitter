@@ -1,3 +1,5 @@
+{{ config(enabled=false) }}
+
 with accounts as (
 
     select *

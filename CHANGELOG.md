@@ -1,3 +1,31 @@
+# dbt_twitter_source v0.5.0
+
+PR [#12](https://github.com/fivetran/dbt_twitter/pull/12) includes the following changes:
+## 🚨 Breaking Changes 🚨
+- The `twitter_ads__ad_adapter` has been renamed to `twitter_ads__url_report`.
+
+## 🎉 Feature Enhancements 🎉
+- Addition of the following new end models: 
+  - `twitter_ads__promoted_tweet_report`
+    - Each record in this table represents the daily performance at the promoted tweet level.
+  - `twitter_ads__account_report`
+    - Each record in this table represents the daily performance at the advertiser account level.
+  - `twitter_ads__line_item_report`
+    - Each record in this table represents the daily performance at the line item (ad group) level.
+  - `twitter_ads__keyword_report`
+    - Each record in this table represents the daily performance at line item level for keywords.
+  - `twitter_ads__campaign_report`
+    - Each record in this table represents the daily performance at the campaign level.
+
+- Inclusion of additional passthrough metrics: 
+  - `twitter_ads__line_item_report_passthrough_metrics`
+  - `twitter_ads__campaign_report_passthrough_metrics`
+  - `twitter_ads__line_item_keywords_report_passthrough_metrics`
+  - `twitter_ads__promoted_tweet_report_passthrough_metrics`
+
+- README updates for easier navigation and use of the package. 
+- Included grain uniqueness tests for each end model. 
+
 # dbt_twitter v0.4.0
 🎉 dbt v1.0.0 Compatibility 🎉
 ## 🚨 Breaking Changes 🚨
