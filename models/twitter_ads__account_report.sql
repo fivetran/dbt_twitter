@@ -6,7 +6,7 @@ with accounts as (
 ),
 
 promoted_tweet_report as (
--- roll this up to the account -> or should we use highest grain like campaign?
+    
     select *
     from {{ var('promoted_tweet_report') }}
 ),
@@ -29,29 +29,6 @@ rollup_report as (
     group by 1,2,3
 
 ),
-
-{# join_reports as (
-
-    select 
-        coalesce(account_report.date_day, rollup_report.date_day) as date_day,
-        coalesce(account_report.account_id, rollup_report.account_id) as account_id,
-        coalesce(account_report.placement, rollup_report.placement) as placement,
-        coalesce(rollup_report.clicks, 0) as clicks,
-        coalesce(account_report.impressions, rollup_report.impressions) as impressions, -- this indeed ties out, maybe we don't need the account_report
-        coalesce(rollup_report.spend, 0) as spend,
-        coalesce(rollup_report.spend_micro, 0) as spend_micro,
-        coalesce(rollup_report.url_clicks, 0) as url_clicks
-
-        -- these won't be coalesced with 0 
-        {{ fivetran_utils.persist_pass_through_columns('twitter_ads__promoted_tweet_report_passthrough_metrics') }}
-
-    from account_report
-    full outer join rollup_report
-        on account_report.account_id = rollup_report.account_id
-        and account_report.date_day = rollup_report.date_day
-        and account_report.placement = rollup_report.placement
-
-), #}
 
 final as (
 

@@ -2,7 +2,8 @@ version: 2
 
 models:
   - name: twitter_ads__campaign_report
-    description: Each record represents the daily ad performance of each campaign.
+    description: >
+      Each record in this table represents the daily performance of ads at the account and campaign level, within a placement in Twitter.
     tests:
       - dbt_utils.unique_combination_of_columns:
           combination_of_columns:
@@ -26,14 +27,50 @@ models:
         description: The number of impressions on that date.
       - name: spend
         description: The amount of spend on that date.
+      - name: spend_micro
+        description: The amount of spend, in micros, on that date.
       - name: url_clicks
         description: The number of URL clicks on that date.
       - name: placement
+        description: Where on Twitter the ad is being displayed. Possible values include 'ALL_ON_TWITTER', 'PUBLISHER_NETWORK', 'TWITTER_PROFILE', 'TWITTER_SEARCH', 'TWITTER_TIMELINE', and 'TAP_*', which are more granular options for `PUBLISHER_NETWORK`.
         tests:
           - not_null
+      - name: account_id
+        description: The ID of the related account.
+      - name: account_name
+        description: The name of the related account.
+      - name: created_timestamp
+        description: "{{ doc('created_at') }}"
+      - name: currency
+        description: The currency all metrics for the account are set to.
+      - name: is_deleted
+        description: "{{ doc('deleted') }}"
+      - name: duration_in_days
+        description: The time period within which the frequency_cap is achieved.
+      - name: end_timestamp
+        description: The time the campaign will end
+      - name: campaign_status
+        description: The status of the campaign.
+      - name: frequency_cap
+        description: The maximum number of times an ad could be delivered to a user.
+      - name: is_servable
+        description: Whether the campaign is in a state to be actively served to users.
+      - name: is_standard_delivery
+        description: Whether standard delivery is enabled (vs accelerated delivery).
+      - name: start_timestamp
+        description: The time the campaign will start.
+      - name: updated_timestamp
+        description: "{{ doc('updated_at') }}"
+      - name: funding_instrument_id
+        description: Reference to the funding instrument.
+      - name: daily_budget_amount
+        description: The daily budget amount to be allocated to the campaign. The currency associated with the specified funding instrument will be used.
+      - name: total_budget_amount
+        description: The total budget amount to be allocated to the campaign.
 
   - name: twitter_ads__line_item_report
-    description: Each record represents the daily ad performance of each line item.
+    description: >
+      Each record in this table represents the daily performance of ads at the account, campaign, and line item (ad group) level, within a placement in Twitter.
     tests:
       - dbt_utils.unique_combination_of_columns:
           combination_of_columns:
@@ -42,9 +79,9 @@ models:
             - placement
     columns:
       - name: campaign_id
-        description: The ID of the campaign.
+        description: The ID of the line item's campaign.
       - name: campaign_name
-        description: The name of the campaign.
+        description: The name of the line item's campaign.
       - name: clicks
         description: The number of clicks on that date.
       - name: date_day
@@ -61,20 +98,116 @@ models:
         description: The name of the line item.
       - name: spend
         description: The amount of spend on that date.
+      - name: spend_micro
+        description: The amount of spend, in micros, on that date.
       - name: url_clicks
         description: The number of URL clicks on that date.
       - name: placement
         tests:
           - not_null
-  
+      - name: account_id
+        description: The ID of the related account.
+      - name: account_name
+        description: The name of the related account.
+      - name: advertiser_domain
+        description: The website domain for this advertiser, without the protocol specification.
+      - name: advertiser_user_id
+        description: The Twitter user identifier for the handle promoting the ad.
+      - name: bid_type
+        description: The bidding mechanism.
+      - name: bid_unit
+        description: The bid unit for this line item.
+      - name: charge_by
+        description: The unit to charge this line item by.
+      - name: created_timestamp
+        description: "{{ doc('created_at') }}"
+      - name: creative_source
+        description: The source of the creatives for the line item.
+      - name: currency
+        description: The currency in which metrics will be reported.
+      - name: is_deleted
+        description: "{{ doc('deleted') }}"
+      - name: end_timestamp
+        description: The timestamp at which the line item will stop being served.
+      - name: line_item_status
+        description: The status of the line item.
+      - name: campaign_status
+        description: The status of the line item's related campaign.
+      - name: objective
+        description: The campaign objective for this line item.
+      - name: optimization
+        description: The optimization setting to use with this line item.
+      - name: primary_web_event_tag
+        description: The identifier of the primary web event tag. Allows more accurate tracking of engagements for the campaign pertaining to this line item.
+      - name: product_type
+        description: The type of promoted product that this line item will contain.
+      - name: start_timestamp
+        description: The timestamp at which the line item will start being served.
+      - name: updated_timestamp
+        description: "{{ doc('updated_at') }}"
+      - name: bid_amount
+        description: The bid amount to be associated with this line item.
+      - name: total_budget_amount
+        description: The total budget amount to be allocated to the campaign.
+      - name: target_cpa
+        description: The target cost per acquisition for the line item.
+      - name: placement
+        description: Where on Twitter the ad is being displayed. Possible values include 'ALL_ON_TWITTER', 'PUBLISHER_NETWORK', 'TWITTER_PROFILE', 'TWITTER_SEARCH', 'TWITTER_TIMELINE', and 'TAP_*', which are more granular options for `PUBLISHER_NETWORK`.
+
   - name: twitter_ads__account_report 
+    description: >
+      Each record in this table represents the daily performance of ads at the account level, within a placement in Twitter.
     tests:
       - dbt_utils.unique_combination_of_columns:
           combination_of_columns:
             - date_day
             - account_id
             - placement
+    columns:
+      - name: spend_micro
+        description: The spend (in micros) for the account on that day.
+      - name: spend
+        description: The spend for the account on that day.
+      - name: clicks
+        description: The clicks for th account on that day.
+      - name: date_day
+        description: The date of the performance.
+        tests:
+          - not_null
+      - name: impressions
+        description: The impressions for the account on that day.
+      - name: url_clicks
+        description: The url clicks for the account on that day.
+      - name: placement
+        description: Where on Twitter the ad is being displayed. Possible values include 'ALL_ON_TWITTER', 'PUBLISHER_NETWORK', 'TWITTER_PROFILE', 'TWITTER_SEARCH', 'TWITTER_TIMELINE', and 'TAP_*', which are more granular options for `PUBLISHER_NETWORK`.
+      - name: approval_status
+        description: The approval status of the account.
+      - name: business_id
+        description: The ID of the related business.
+      - name: business_name
+        description: The name of the related business.
+      - name: created_timestamp
+        description: "{{ doc('created_at') }}"
+      - name: is_deleted
+        description: "{{ doc('deleted') }}"
+      - name: account_id
+        description: The ID of the account.
+        tests:
+          - not_null
+      - name: account_name
+        description: Name of the account.
+      - name: industry_type
+        description: The industry of the accounts.
+      - name: timezone
+        description: The timezone the account is set to.
+      - name: timezone_switched_timestamp
+        description: The timestamp the account's timezone was last changed.
+      - name: updated_timestamp
+        description: "{{ doc('updated_at') }}"
+
   - name: twitter_ads__keyword_report 
+    description: >
+      Each record in this table represents the daily performance of ads at the account, campaign, line item (ad group), and keyword level, within a placement in Twitter.
     tests:
       - dbt_utils.unique_combination_of_columns:
           combination_of_columns:
@@ -82,17 +215,182 @@ models:
             - line_item_id 
             - keyword
             - placement
+    columns:
+      - name: account_id
+        description: The ID of the related account.
+      - name: spend_micro
+        description: The spend for the line item + keyword on that day, in micros and in whichever currency was selected during account creation.
+      - name: spend
+        description: The spend for the line item + keyword on that day in whichever currency was selected during account creation.
+      - name: clicks
+        description: The clicks for the line item + keyword on that day.
+      - name: date_day
+        description: The date of the performance.
+        tests:
+          - not_null
+      - name: impressions
+        description: The impressions for the line item + keyword on that day.
+      - name: line_item_id
+        description: The ID of the line item.
+        tests:
+          - not_null
+      - name: url_clicks
+        description: The url clicks for the line item + keyword on that day.
+      - name: keyword
+        description: The keyword whose performance is being tracked.
+        tests:
+          - not_null
+      - name: placement
+        description: Where on Twitter the ad is being displayed. Possible values include 'ALL_ON_TWITTER', 'PUBLISHER_NETWORK', 'TWITTER_PROFILE', 'TWITTER_SEARCH', 'TWITTER_TIMELINE', and 'TAP_*', which are more granular options for `PUBLISHER_NETWORK`.
+        tests:
+          - not_null
+      - name: account_name
+        description: Name of the associated account.
+      - name: campaign_id
+        description: The ID of the related campaign.
+      - name: campaign_name
+        description: The name of the related campaign.
+      - name: line_item_id
+        description: The ID of the related line item (ad group).
+      - name: line_item_name
+        description: The ID of the related line item.
+      - name: currency
+        description: The currency all metrics for the account are set to.
+
   - name: twitter_ads__promoted_tweet_report
+    description: >
+      Each record in this table represents the daily performance of ads at the account, campaign, line item (ad group), and promoted tweet level, within a placement in Twitter.
     tests:
       - dbt_utils.unique_combination_of_columns:
           combination_of_columns:
             - date_day
             - promoted_tweet_id 
             - placement
+    columns:
+      - name: date_day
+        description: The date of the performance.
+      - name: placement
+        description: Where on Twitter the ad is being displayed. Possible values include 'ALL_ON_TWITTER', 'PUBLISHER_NETWORK', 'TWITTER_PROFILE', 'TWITTER_SEARCH', 'TWITTER_TIMELINE', and 'TAP_*', which are more granular options for `PUBLISHER_NETWORK`.
+      - name: account_id
+        description: The ID of the related account.
+      - name: account_name
+        description: The name of the related account.
+      - name: campaign_id
+        description: The ID of the related campaign.
+      - name: campaign_name
+        description: The name of the related campaign.
+      - name: line_item_id
+        description: The ID of the related line item (ad group).
+      - name: line_item_name
+        description: The ID of the related line item.
+      - name: promoted_tweet_id
+        description: The ID of the promoted tweet that the URL appeared in.
+        tests:
+          - not_null
+      - name: tweet_id
+        description: The ID of the tweet that the URL appeared in.
+      - name: tweet_name
+        description: The name, if provided, of the tweet that the URL appeared in.
+      - name: full_text
+        description: The full text of the tweet that the URL appeared in.
+      - name: currency
+        description: The currency all metrics for the account are set to.
+      - name: clicks
+        description: The clicks for the promoted tweet + URL on that day.
+      - name: impressions
+        description: The impressions for the promoted tweet + URL on that day.
+      - name: spend
+        description: The spend for the promoted tweet + URL on that day.
+      - name: spend_micro
+        description: The spend, in micros, for the tweet + URL on that day.
+      - name: url_clicks
+        description: The URL clicks for the promoted tweet + URL on that day.
+      - name: approval_status
+        description: The approval status of the promoted tweet.
+      - name: created_timestamp
+        description: "{{ doc('created_at') }}"
+      - name: is_deleted
+        description: "{{ doc('deleted') }}"
+      - name: promoted_tweet_status
+        description: The status of the promoted tweet.
+      - name: campaign_status
+        description: The status of the tweet's campaign.
+      - name: line_item_status
+        description: The status of the tweet's line item.
+      - name: updated_timestamp
+        description: "{{ doc('updated_at') }}"
+      - name: language
+        description: Two-letter language code of the tweet. 
+        
   - name: twitter_ads__url_report
+    description: >
+      Each record in this table represents the daily performance of ads at the account, campaign, line item (ad group), promoted tweet, and url level, within a placement in Twitter.
     tests:
       - dbt_utils.unique_combination_of_columns:
           combination_of_columns:
             - date_day
-            - tweet_id 
+            - promoted_tweet_id 
             - placement
+    columns:
+      - name: date_day
+        description: The date of the performance.
+        tests:
+          - not_null
+      - name: placement
+        description: Where on Twitter the ad is being displayed. Possible values include 'ALL_ON_TWITTER', 'PUBLISHER_NETWORK', 'TWITTER_PROFILE', 'TWITTER_SEARCH', 'TWITTER_TIMELINE', and 'TAP_*', which are more granular options for `PUBLISHER_NETWORK`.
+        tests:
+          - not_null
+      - name: account_id
+        description: The ID of the related account.
+      - name: account_name
+        description: The name of the related account.
+      - name: campaign_id
+        description: The ID of the related campaign.
+      - name: campaign_name
+        description: The name of the related campaign.
+      - name: line_item_id
+        description: The ID of the related line item (ad group).
+      - name: line_item_name
+        description: The ID of the related line item.
+      - name: promoted_tweet_id
+        description: The ID of the promoted tweet that the URL appeared in.
+        tests:
+          - not_null
+      - name: tweet_id
+        description: The ID of the tweet that the URL appeared in.
+      - name: tweet_name
+        description: The name, if provided, of the tweet that the URL appeared in.
+      - name: tweet_full_text
+        description: The full text of the tweet that the URL appeared in.
+      - name: base_url
+        description: The base URL of the ad, extracted from the `expanded_url`.
+      - name: url_host
+        description: The URL host of the ad, extracted from the `expanded_url`.
+      - name: url_path
+        description: The URL path of the ad, extracted from the `expanded_url`.
+      - name: utm_source
+        description: The utm_source parameter of the ad, extracted from the `expanded_url`.
+      - name: utm_medium
+        description: The utm_medium parameter of the ad, extracted from the `expanded_url`.
+      - name: utm_campaign
+        description: The utm_campaign parameter of the ad, extracted from the `expanded_url`.
+      - name: utm_content
+        description: The utm_content parameter of the ad, extracted from the `expanded_url`.
+      - name: utm_term
+        description: The utm_term parameter of the ad, extracted from the `expanded_url`.
+      - name: display_url
+        description: The URL as it will be displayed.
+      - name: expanded_url
+        description: The fully expanded URL.
+      - name: currency
+        description: The currency all metrics for the account are set to.
+      - name: clicks
+        description: The clicks for the promoted tweet + URL on that day.
+      - name: impressions
+        description: The impressions for the promoted tweet + URL on that day.
+      - name: spend
+        description: The spend for the promoted tweet + URL on that day.
+      - name: spend_micro
+        description: The spend, in micros, for the tweet + URL on that day.
+      - name: url_clicks
+        description: The URL clicks for the promoted tweet + URL on that day.

@@ -19,7 +19,6 @@ vars:
     tweet: "{{ ref('stg_twitter_ads__tweet') }}"
     campaign_report: "{{ ref('stg_twitter_ads__campaign_report') }}"
     line_item_report: "{{ ref('stg_twitter_ads__line_item_report') }}"
-    account_report: "{{ ref('stg_twitter_ads__account_report') }}"
     line_item_keywords_report: "{{ ref('stg_twitter_ads__line_item_keywords_report') }}"
 
     twitter_ads__campaign_report_passthrough_metrics: []

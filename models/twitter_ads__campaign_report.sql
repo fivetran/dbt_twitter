@@ -32,6 +32,7 @@ final as (
         campaigns.currency,
         campaigns.is_servable,
         campaigns.is_standard_delivery,
+        campaigns.frequency_cap,
         campaigns.start_timestamp,
         campaigns.end_timestamp,
         campaigns.created_timestamp,
@@ -53,7 +54,7 @@ final as (
     left join accounts
         on report.account_id = accounts.account_id
 
-    {{ dbt_utils.group_by(n=18) }}
+    {{ dbt_utils.group_by(n=19) }}
 )
 
 select *

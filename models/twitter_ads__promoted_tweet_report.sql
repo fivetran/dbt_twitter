@@ -51,7 +51,7 @@ final as (
         line_items.name as line_item_name,
         promoted_tweets.promoted_tweet_id,
         promoted_tweets.tweet_id,
-        tweets.name,
+        tweets.name as tweet_name,
         tweets.full_text,
         promoted_tweets.is_deleted,
         promoted_tweets.entity_status as promoted_tweet_status,

@@ -35,7 +35,7 @@ final as (
         line_items.campaign_id,
         campaigns.campaign_name,
         report.line_item_id,
-        line_items.name,
+        line_items.name as line_item_name,
         line_items.is_deleted,
         line_items.entity_status as line_item_status,
         campaigns.entity_status as campaign_status,
