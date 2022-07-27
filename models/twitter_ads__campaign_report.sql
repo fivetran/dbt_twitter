@@ -22,14 +22,14 @@ final as (
 
     select 
         report.date_day,
+        report.placement, 
         report.account_id,
         accounts.name as account_name,
         report.campaign_id,
         campaigns.campaign_name,
-        campaigns.currency,
-        report.placement, 
-        campaigns.entity_status as campaign_status,
         campaigns.is_deleted,
+        campaigns.entity_status as campaign_status,
+        campaigns.currency,
         campaigns.is_servable,
         campaigns.is_standard_delivery,
         campaigns.start_timestamp,
@@ -45,7 +45,7 @@ final as (
         sum(report.spend_micro) as spend_micro,
         sum(report.url_clicks) as url_clicks
 
-        {{ fivetran_utils.persist_pass_through_columns('twitter_ads__campaign_report_passthrough_metrics', transform='sum')}}
+        {{ fivetran_utils.persist_pass_through_columns('twitter_ads__campaign_report_passthrough_metrics', transform='sum') }}
 
     from report 
     left join campaigns 

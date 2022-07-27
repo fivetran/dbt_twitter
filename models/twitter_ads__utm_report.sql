@@ -1,1 +1,0 @@
-{{ config(enabled=false) }} -- change ad adapter to this
