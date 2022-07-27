@@ -82,7 +82,7 @@ final as (
     from report 
     left join promoted_tweets 
         on report.promoted_tweet_id = promoted_tweets.promoted_tweet_id
-    join tweet_url 
+    left join tweet_url 
         on promoted_tweets.tweet_id = tweet_url.tweet_id
     left join tweets
         on promoted_tweets.tweet_id = tweets.tweet_id
@@ -94,6 +94,8 @@ final as (
         on report.account_id = accounts.account_id
         
     {{ dbt_utils.group_by(n=23) }}
+
+    where tweet_url.expanded_url is not null
 )
 
 select *
