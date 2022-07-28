@@ -271,6 +271,8 @@ models:
         description: The date of the performance.
       - name: placement
         description: Where on Twitter the ad is being displayed. Possible values include 'ALL_ON_TWITTER', 'PUBLISHER_NETWORK', 'TWITTER_PROFILE', 'TWITTER_SEARCH', 'TWITTER_TIMELINE', and 'TAP_*', which are more granular options for `PUBLISHER_NETWORK`.
+        tests:
+          - not_null
       - name: account_id
         description: The ID of the related account.
       - name: account_name
