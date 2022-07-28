@@ -2,7 +2,9 @@
 
 PR [#12](https://github.com/fivetran/dbt_twitter/pull/12) includes the following changes:
 ## 🚨 Breaking Changes 🚨
-- The `twitter_ads__ad_adapter` has been renamed refactored into `twitter_ads__url_report`.
+- The `twitter__ad_adapter` has been refactored and renamed to `twitter_ads__url_report`.
+- The `twitter__campaign_report` has been refactored and renamed to `twitter_ads__campaign_report`.
+- The `twitter__line_item_report` has been refactored and renamed to `twitter_ads__line_item_report`.
 
 ## 🎉 Feature Enhancements 🎉
 - Addition of the following new end models: 

@@ -92,10 +92,12 @@ final as (
         on line_items.campaign_id = campaigns.campaign_id
     left join accounts
         on report.account_id = accounts.account_id
-        
+    
+    where tweet_url.expanded_url is not null
+    
     {{ dbt_utils.group_by(n=23) }}
 
-    where tweet_url.expanded_url is not null
+    
 )
 
 select *
