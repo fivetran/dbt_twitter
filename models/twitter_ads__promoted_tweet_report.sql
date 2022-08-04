@@ -59,6 +59,7 @@ final as (
         line_items.entity_status as line_item_status,
         tweets.language,
         campaigns.currency,
+        promoted_tweets.approval_status,
         promoted_tweets.created_timestamp,
         promoted_tweets.updated_timestamp,
         sum(report.clicks) as clicks, 
@@ -81,7 +82,7 @@ final as (
     left join accounts
         on report.account_id = accounts.account_id
 
-    {{ dbt_utils.group_by(n=20) }}
+    {{ dbt_utils.group_by(n=21) }}
 )
 
 select *

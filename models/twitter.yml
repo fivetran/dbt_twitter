@@ -10,6 +10,7 @@ models:
             - date_day
             - campaign_id 
             - placement
+            - account_id
     columns:
       - name: campaign_id
         description: The ID of the campaign.
@@ -18,13 +19,13 @@ models:
       - name: campaign_name
         description: The name of the campaign.
       - name: clicks
-        description: The number of clicks on that date.
+        description: The number of clicks on that date. Includes clicks on the URL (shortened or regular links), profile pic, screen name, username, detail, hashtags, and likes.
       - name: date_day
         description: The date of the performance.
         tests:
           - not_null
       - name: impressions
-        description: The number of impressions on that date.
+        description: The number of impressions on that date.  This is the number of users who see a Promoted Ad either in their home timeline or search results.
       - name: spend
         description: The amount of spend on that date.
       - name: spend_micro
@@ -45,8 +46,6 @@ models:
         description: The currency all metrics for the account are set to.
       - name: is_deleted
         description: "{{ doc('deleted') }}"
-      - name: duration_in_days
-        description: The time period within which the frequency_cap is achieved.
       - name: end_timestamp
         description: The time the campaign will end
       - name: campaign_status
@@ -77,19 +76,21 @@ models:
             - date_day
             - line_item_id 
             - placement
+            - campaign_id
+            - account_id
     columns:
       - name: campaign_id
         description: The ID of the line item's campaign.
       - name: campaign_name
         description: The name of the line item's campaign.
       - name: clicks
-        description: The number of clicks on that date.
+        description: The number of clicks on that date. Includes clicks on the URL (shortened or regular links), profile pic, screen name, username, detail, hashtags, and likes.
       - name: date_day
         description: The date of the performance.
         tests:
           - not_null
       - name: impressions
-        description: The number of impressions on that date.
+        description: The number of impressions on that date.  This is the number of users who see a Promoted Ad either in their home timeline or search results.
       - name: line_item_id
         description: The ID of the line item.
         tests:
@@ -103,6 +104,7 @@ models:
       - name: url_clicks
         description: The number of URL clicks on that date.
       - name: placement
+        description: Where on Twitter the ad is being displayed. Possible values include 'ALL_ON_TWITTER', 'PUBLISHER_NETWORK', 'TWITTER_PROFILE', 'TWITTER_SEARCH', 'TWITTER_TIMELINE', and 'TAP_*', which are more granular options for `PUBLISHER_NETWORK`.
         tests:
           - not_null
       - name: account_id
@@ -151,8 +153,6 @@ models:
         description: The total budget amount to be allocated to the campaign.
       - name: target_cpa
         description: The target cost per acquisition for the line item.
-      - name: placement
-        description: Where on Twitter the ad is being displayed. Possible values include 'ALL_ON_TWITTER', 'PUBLISHER_NETWORK', 'TWITTER_PROFILE', 'TWITTER_SEARCH', 'TWITTER_TIMELINE', and 'TAP_*', which are more granular options for `PUBLISHER_NETWORK`.
 
   - name: twitter_ads__account_report 
     description: >
@@ -169,17 +169,19 @@ models:
       - name: spend
         description: The spend for the account on that day.
       - name: clicks
-        description: The clicks for th account on that day.
+        description: The clicks for th account on that day. Includes clicks on the URL (shortened or regular links), profile pic, screen name, username, detail, hashtags, and likes.
       - name: date_day
         description: The date of the performance.
         tests:
           - not_null
       - name: impressions
-        description: The impressions for the account on that day.
+        description: The impressions for the account on that day.  This is the number of users who see a Promoted Ad either in their home timeline or search results.
       - name: url_clicks
         description: The url clicks for the account on that day.
       - name: placement
         description: Where on Twitter the ad is being displayed. Possible values include 'ALL_ON_TWITTER', 'PUBLISHER_NETWORK', 'TWITTER_PROFILE', 'TWITTER_SEARCH', 'TWITTER_TIMELINE', and 'TAP_*', which are more granular options for `PUBLISHER_NETWORK`.
+        tests:
+          - not_null
       - name: approval_status
         description: The approval status of the account.
       - name: business_id
@@ -215,6 +217,8 @@ models:
             - line_item_id 
             - keyword
             - placement
+            - account_id 
+            - campaign_id
     columns:
       - name: account_id
         description: The ID of the related account.
@@ -223,13 +227,13 @@ models:
       - name: spend
         description: The spend for the line item + keyword on that day in whichever currency was selected during account creation.
       - name: clicks
-        description: The clicks for the line item + keyword on that day.
+        description: The clicks for the line item + keyword on that day. Includes clicks on the URL (shortened or regular links), profile pic, screen name, username, detail, hashtags, and likes.
       - name: date_day
         description: The date of the performance.
         tests:
           - not_null
       - name: impressions
-        description: The impressions for the line item + keyword on that day.
+        description: The impressions for the line item + keyword on that day.  This is the number of users who see a Promoted Ad either in their home timeline or search results.
       - name: line_item_id
         description: The ID of the line item.
         tests:
@@ -266,6 +270,9 @@ models:
             - date_day
             - promoted_tweet_id 
             - placement
+            - line_item_id
+            - campaign_id 
+            - account_id
     columns:
       - name: date_day
         description: The date of the performance.
@@ -298,9 +305,9 @@ models:
       - name: currency
         description: The currency all metrics for the account are set to.
       - name: clicks
-        description: The clicks for the promoted tweet + URL on that day.
+        description: The clicks for the promoted tweet + URL on that day. Includes clicks on the URL (shortened or regular links), profile pic, screen name, username, detail, hashtags, and likes.
       - name: impressions
-        description: The impressions for the promoted tweet + URL on that day.
+        description: The impressions for the promoted tweet + URL on that day.  This is the number of users who see a Promoted Ad either in their home timeline or search results.
       - name: spend
         description: The spend for the promoted tweet + URL on that day.
       - name: spend_micro
@@ -333,6 +340,9 @@ models:
             - date_day
             - promoted_tweet_id 
             - placement
+            - line_item_id
+            - campaign_id 
+            - account_id
     columns:
       - name: date_day
         description: The date of the performance.
@@ -387,9 +397,9 @@ models:
       - name: currency
         description: The currency all metrics for the account are set to.
       - name: clicks
-        description: The clicks for the promoted tweet + URL on that day.
+        description: The clicks for the promoted tweet + URL on that day. Includes clicks on the URL (shortened or regular links), profile pic, screen name, username, detail, hashtags, and likes.
       - name: impressions
-        description: The impressions for the promoted tweet + URL on that day.
+        description: The impressions for the promoted tweet + URL on that day.  This is the number of users who see a Promoted Ad either in their home timeline or search results.
       - name: spend
         description: The spend for the promoted tweet + URL on that day.
       - name: spend_micro

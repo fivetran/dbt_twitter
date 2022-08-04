@@ -15,7 +15,7 @@ PR [#12](https://github.com/fivetran/dbt_twitter/pull/12) includes the following
   - `twitter_ads__line_item_report`
     - Each record in this table represents the daily performance at the line item (ad group) level.
   - `twitter_ads__keyword_report`
-    - Each record in this table represents the daily performance at line item level for keywords.
+    - Each record in this table represents the daily performance at line item level for keywords. This can be disabled by setting the `twitter_ads__using_keywords` variable to `False`.
   - `twitter_ads__campaign_report`
     - Each record in this table represents the daily performance at the campaign level.
   - `twitter_ads__url_report`
