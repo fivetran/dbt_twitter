@@ -65,7 +65,15 @@ vars:
     twitter_ads_database: your_destination_name 
 ```
 
-## (Optional) Step 4: Additional configurations
+### Step 4: Disabling Keyword Models
+This package takes into consideration that not every Twitter Ads account tracks `keyword` performance, and allows you to disable the corresponding functionality by adding the following variable configuration:
+```yml
+# dbt_project.yml
+vars:
+    twitter_ads__using_keywords: False # Default = true
+```
+
+## (Optional) Step 5: Additional configurations
 ### Passing Through Additional Metrics
 By default, this package will select `clicks`, `impressions`, and `cost` from `_report` source tables used by the respective staging models. If you would like to pass through additional metrics to the staging models, add the variable configuration in the code block below to your `dbt_project.yml` file. These variables allow for the pass-through fields to be aliased (`alias`) and casted (`transform_sql`) if desired, but not required. Datatype casting is configured via a sql snippet within the `transform_sql` key. You may add the desired sql while omitting the `as field_name` at the end and your custom pass-though fields will be casted accordingly. Use the below format for declaring the respective pass-through variables:
 
@@ -86,14 +94,6 @@ vars:
 ```
 
 > Please ensure you use due diligence when adding metrics to these models. The metrics added by default (`clicks`, `impressions`, and `cost`) have been vetting by the Fivetran team maintaining this package for accuracy. There are metrics included within the source reports which are comprised of averages. You will want to ensure whichever metrics you pass through are indeed appropriate to aggregate.
-
-### Disabling Keyword Models
-This package takes into consideration that not every Twitter Ads account tracks `keyword` performance, and allows you to disable the corresponding functionality by adding the following variable configuration:
-```yml
-# dbt_project.yml
-vars:
-    twitter_ads__using_keywords: False # Default = true
-```
 
 ### Changing the Build Schema
 By default this package will build the Twitter Ads staging models within a schema titled (<target_schema> + `_twitter_ads_source`) and the Twitter Ads final models with a schema titled (<target_schema> + `_twitter_ads`) in your target database. If this is not where you would like your modeled Twitter Ads data to be written to, add the following configuration to your `dbt_project.yml` file:
@@ -117,7 +117,7 @@ vars:
     twitter_ads_<default_source_table_name>_identifier: your_table_name 
 ```
 
-## (Optional) Step 5: Orchestrate your models with Fivetran Transformations for dbt Core™
+## (Optional) Step 6: Orchestrate your models with Fivetran Transformations for dbt Core™
 Fivetran offers the ability for you to orchestrate your dbt project through [Fivetran Transformations for dbt Core™](https://fivetran.com/docs/transformations/dbt). Learn how to set up your project for orchestration through Fivetran in our [Transformations for dbt Core™ setup guides](https://fivetran.com/docs/transformations/dbt#setupguide).
 
 # 🔍 Does this package have dependencies?
