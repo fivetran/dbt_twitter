@@ -22,6 +22,8 @@ vars:
 
 seeds:
   twitter_integration_tests:
+    +column_types:
+      date: timestamp
     twitter_tweet_url_data:
       +column_types:
         tweet_id: "{{ 'INT64' if target.type == 'bigquery' else 'bigint' }}"
