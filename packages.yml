@@ -5,3 +5,4 @@ packages:
   - git: https://github.com/fivetran/dbt_twitter_source.git
     revision: feature/v2-updates
     warn-unpinned: false
+  # - local: ../Twitter_ads/dbt_twitter_source

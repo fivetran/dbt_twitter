@@ -1,4 +1,4 @@
-{{ config(enabled=var('twitter_ads__using_keywords', true)) }}
+{{ config(enabled=fivetran_utils.enabled_vars(['ad_reporting__twitter_ads_enabled','twitter_ads__using_keywords'])) }}
 
 with report as (
 

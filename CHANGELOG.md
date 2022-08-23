@@ -7,7 +7,7 @@ PR [#12](https://github.com/fivetran/dbt_twitter/pull/12) includes the following
 - The `twitter__line_item_report` has been refactored and renamed to `twitter_ads__line_item_report`.
 
 ## 🎉 Feature Enhancements 🎉
-- Addition of the following new end models: 
+- Addition of the following new end models:
   - `twitter_ads__promoted_tweet_report`
     - Each record in this table represents the daily performance at the promoted tweet level.
   - `twitter_ads__account_report`
@@ -21,14 +21,22 @@ PR [#12](https://github.com/fivetran/dbt_twitter/pull/12) includes the following
   - `twitter_ads__url_report`
     - Each record in this table represents the daily performance at the URL level.
 
-- Inclusion of additional passthrough metrics: 
+- Inclusion of passthrough metrics:
   - `twitter_ads__line_item_report_passthrough_metrics`
   - `twitter_ads__campaign_report_passthrough_metrics`
   - `twitter_ads__line_item_keywords_report_passthrough_metrics`
-  - `twitter_ads__promoted_tweet_report_passthrough_metrics`
+  - `twitter_ads__promoted_tweet_report_passthrough_metrics` - _These metrics will be passed to the account report as well._
+> This applies to all passthrough columns within the `dbt_twitter` package and not just the `twitter_ads__line_item_report_passthrough_metrics` example.
+```yml
+vars:
+  twitter_ads__line_item_report_passthrough_metrics:
+    - name: "my_field_to_include" # Required: Name of the field within the source.
+      alias: "field_alias" # Optional: If you wish to alias the field within the staging model.
+      transform_sql: "cast(field_alias as string)" # Optional: If you wish to define the datatype or apply a light transformation.
+```
 
-- README updates for easier navigation and use of the package. 
-- Included grain uniqueness tests for each end model. 
+- README updates for easier navigation and use of the package.
+- Included grain uniqueness tests for each end model.
 
 # dbt_twitter v0.4.0
 🎉 dbt v1.0.0 Compatibility 🎉
