@@ -93,9 +93,6 @@ vars:
     twitter_ads__promoted_tweet_report_passthrough_metrics: 
         - name: "that_field"
 ```
-
-> Please ensure you use due diligence when adding metrics to these models. The metrics added by default (`clicks`, `impressions`, and `cost`) have been vetting by the Fivetran team maintaining this package for accuracy. There are metrics included within the source reports which are comprised of averages. You will want to ensure whichever metrics you pass through are indeed appropriate to aggregate.
-
 ### Changing the Build Schema
 By default this package will build the Twitter Ads staging models within a schema titled (<target_schema> + `_twitter_ads_source`) and the Twitter Ads final models with a schema titled (<target_schema> + `_twitter_ads`) in your target database. If this is not where you would like your modeled Twitter Ads data to be written to, add the following configuration to your `dbt_project.yml` file:
 
