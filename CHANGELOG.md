@@ -32,7 +32,6 @@ vars:
   twitter_ads__line_item_report_passthrough_metrics:
     - name: "my_field_to_include" # Required: Name of the field within the source.
       alias: "field_alias" # Optional: If you wish to alias the field within the staging model.
-      transform_sql: "cast(field_alias as string)" # Optional: If you wish to define the datatype or apply a light transformation.
 ```
 
 - README updates for easier navigation and use of the package.

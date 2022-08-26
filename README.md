@@ -75,7 +75,9 @@ vars:
 
 ## (Optional) Step 5: Additional configurations
 ### Passing Through Additional Metrics
-By default, this package will select `clicks`, `impressions`, and `cost` from `_report` source tables used by the respective staging models. If you would like to pass through additional metrics to the staging models, add the variable configuration in the code block below to your `dbt_project.yml` file. These variables allow for the pass-through fields to be aliased (`alias`) and casted (`transform_sql`) if desired, but not required. Datatype casting is configured via a sql snippet within the `transform_sql` key. You may add the desired sql while omitting the `as field_name` at the end and your custom pass-though fields will be casted accordingly. Use the below format for declaring the respective pass-through variables:
+By default, this package will select `clicks`, `impressions`, and `cost` from the source reporting tables to store into the staging models. If you would like to pass through additional metrics to the staging models, add the below configurations to your `dbt_project.yml` file. These variables allow for the pass-through fields to be aliased (`alias`) if desired, but not required. Use the below format for declaring the respective pass-through variables:
+
+>**Note** Please ensure you exercised due diligence when adding metrics to these models. The metrics added by default (taps, impressions, and spend) have been vetted by the Fivetran team maintaining this package for accuracy. There are metrics included within the source reports, for example metric averages, which may be inaccurately represented at the grain for reports created in this package. You will want to ensure whichever metrics you pass through are indeed appropriate to aggregate at the respective reporting levels provided in this package.
 
 ```yml
 # dbt_project.yml
@@ -86,10 +88,9 @@ vars:
     twitter_ads__line_item_report_passthrough_metrics: 
         - name: "unique_int_field"
           alias: "field_id"
-          transform_sql: "cast(field_id as int)"
     twitter_ads__line_item_keywords_report_passthrough_metrics: 
         - name: "that_field"
-    twitter_ads__promoted_tweet_report_passthrough_metrics: # these will appear in the account_report model as well
+    twitter_ads__promoted_tweet_report_passthrough_metrics: 
         - name: "that_field"
 ```
 
