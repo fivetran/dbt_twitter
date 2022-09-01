@@ -3,6 +3,5 @@ packages:
 #   version: [">=0.4.0", "<0.5.0"]
   # - local: ../dbt_twitter_source
   - git: https://github.com/fivetran/dbt_twitter_source.git
-    revision: feature/v2-updates
+    revision: main
     warn-unpinned: false
-  # - local: ../Twitter_ads/dbt_twitter_source
