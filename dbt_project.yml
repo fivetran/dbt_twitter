@@ -1,13 +1,11 @@
 name: 'twitter_ads'
-version: '0.5.0'
+version: '0.6.0'
 config-version: 2
-require-dbt-version: [">=1.0.0", "<2.0.0"]
-
+require-dbt-version: [">=1.2.0", "<2.0.0"]
 models:
   twitter_ads:
     +schema: twitter_ads
     +materialized: table
-
 vars:
   twitter_ads:
     line_item_history: "{{ ref('stg_twitter_ads__line_item_history') }}"
@@ -20,9 +18,7 @@ vars:
     campaign_report: "{{ ref('stg_twitter_ads__campaign_report') }}"
     line_item_report: "{{ ref('stg_twitter_ads__line_item_report') }}"
     line_item_keywords_report: "{{ ref('stg_twitter_ads__line_item_keywords_report') }}"
-
     twitter_ads__campaign_report_passthrough_metrics: []
     twitter_ads__line_item_report_passthrough_metrics: []
     twitter_ads__line_item_keywords_report_passthrough_metrics: []
     twitter_ads__promoted_tweet_report_passthrough_metrics: []
-
