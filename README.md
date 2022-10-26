@@ -137,7 +137,7 @@ packages:
     - package: fivetran/fivetran_utils
       version: [">=0.4.0", "<0.5.0"]
     - package: dbt-labs/dbt_utils
-      version: [">=1.0.0", "<1.1.0"]
+      version: [">=1.0.0", "<2.0.0"]
 ```
 
 # 🙌 How is this package maintained and can I contribute?
