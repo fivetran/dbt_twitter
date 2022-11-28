@@ -1,5 +1,5 @@
 name: 'twitter_integration_tests'
-version: '0.5.0'
+version: '0.5.1'
 profile: 'integration_tests'
 config-version: 2
 snapshot-paths: ["snapshots"]
@@ -33,7 +33,7 @@ seeds:
     twitter_promoted_tweet_report_data:
       +column_types:
         impressions: "{{ 'INT64' if target.type == 'bigquery' else 'bigint' }}"
-        
+
 dispatch:
   - macro_namespace: dbt_utils
     search_order: ['spark_utils', 'dbt_utils']
