@@ -1,3 +1,16 @@
+# dbt_twitter v0.5.1
+## Fixes
+- Fix the package name in the README ([#16](https://github.com/fivetran/dbt_twitter/pull/16))
+
+## Feature Enhancement
+- Addition of the `keyword_id` to the `twitter_ads__keyword_report` model. ([#15](https://github.com/fivetran/dbt_twitter/pull/15))
+
+## Under the Hood
+- BuildKite testing integration. ([#15](https://github.com/fivetran/dbt_twitter/pull/15))
+
+## Contributors
+- [@johnf](https://github.com/johnf) ([#16](https://github.com/fivetran/dbt_twitter/pull/16))
+
 # dbt_twitter v0.5.0
 
 PR [#12](https://github.com/fivetran/dbt_twitter/pull/12) includes the following changes:

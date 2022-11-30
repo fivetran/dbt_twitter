@@ -1,12 +1,12 @@
 name: 'twitter_integration_tests'
-version: '0.5.0'
+version: '0.5.1'
 profile: 'integration_tests'
 config-version: 2
 snapshot-paths: ["snapshots"]
 
 vars:
   twitter_ads_source:
-    twitter_ads_schema: twitter_integration_tests
+    twitter_ads_schema: twitter_ads_integration_tests
 
     twitter_ads_account_history_identifier: "twitter_account_history_data"
     twitter_ads_campaign_history_identifier: "twitter_campaign_history_data"
@@ -33,7 +33,7 @@ seeds:
     twitter_promoted_tweet_report_data:
       +column_types:
         impressions: "{{ 'INT64' if target.type == 'bigquery' else 'bigint' }}"
-        
+
 dispatch:
   - macro_namespace: dbt_utils
     search_order: ['spark_utils', 'dbt_utils']
