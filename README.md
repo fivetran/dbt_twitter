@@ -51,7 +51,7 @@ Include the following Twitter package version in your `packages.yml` file:
 ```yml
 # packages.yml
 packages:
-  - package: fivetran/twitter
+  - package: fivetran/twitter_ads
     version: [">=0.5.0", "<0.6.0"]
 ```
 
