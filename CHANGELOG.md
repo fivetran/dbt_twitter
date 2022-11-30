@@ -1,9 +1,9 @@
 # dbt_twitter v0.5.1
 
-# Feature Enhancement
+## Feature Enhancement
 - Addition of the `keyword_id` to the `twitter_ads__keyword_report` model. ([#15](https://github.com/fivetran/dbt_twitter/pull/15))
 
-# Under the Hood
+## Under the Hood
 - BuildKite testing integration. ([#15](https://github.com/fivetran/dbt_twitter/pull/15))
 
 # dbt_twitter v0.5.0
