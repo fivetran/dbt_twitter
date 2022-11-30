@@ -38,6 +38,7 @@ final as (
         campaigns.campaign_name,
         report.line_item_id,
         line_items.name as line_item_name,
+        report.keyword_id,
         report.keyword,
         line_items.currency,
         sum(report.clicks) as clicks, 
@@ -56,7 +57,7 @@ final as (
     left join accounts
         on report.account_id = accounts.account_id
 
-    {{ dbt_utils.group_by(n=10) }}
+    {{ dbt_utils.group_by(n=11) }}
 )
 
 select *
