@@ -95,8 +95,13 @@ final as (
     left join accounts
         on report.account_id = accounts.account_id
     
-    where tweet_url.expanded_url is not null
-    
+    {% if (var('include_twitter_null_urls', False)) or
+        (var('include_ad_reporting_null_urls', False)) %}
+        -- In this case, skip where clause to include all rows whether or not the url field is populated.
+    {% else %}
+        where tweet_url.expanded_url is not null
+    {% endif %}
+
     {{ dbt_utils.group_by(n=23) }}
 
     
