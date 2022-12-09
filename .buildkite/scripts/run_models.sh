@@ -19,5 +19,5 @@ dbt deps
 dbt seed --target "$db" --full-refresh
 dbt run --target "$db" --full-refresh
 dbt test --target "$db"
-dbt run --vars '{twitter_ads__using_keywords: False, allow_ad_reporting_null_urls: True}' --target "$db" --full-refresh
+dbt run --vars '{twitter_ads__using_keywords: false, allow_ad_reporting_null_urls: true}' --target "$db" --full-refresh
 dbt test --target "$db"
