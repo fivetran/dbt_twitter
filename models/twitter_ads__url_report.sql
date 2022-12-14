@@ -95,10 +95,7 @@ final as (
     left join accounts
         on report.account_id = accounts.account_id
     
-    {% if (var('allow_twitter_ads_null_urls', False)) or
-        (var('allow_ad_reporting_null_urls', False)) %}
-        -- In this case, skip where clause to include all rows whether or not the url field is populated.
-    {% else %}
+    {% if var('ad_reporting__url_report__using_null_filter', True) %}
         where tweet_url.expanded_url is not null
     {% endif %}
 
