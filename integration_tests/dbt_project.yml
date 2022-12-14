@@ -6,7 +6,7 @@ snapshot-paths: ["snapshots"]
 
 vars:
   twitter_ads_source:
-    twitter_ads_schema: twitter_ads_integration_tests_2
+    twitter_ads_schema: twitter_ads_integration_tests_3
 
     twitter_ads_account_history_identifier: "twitter_account_history_data"
     twitter_ads_campaign_history_identifier: "twitter_campaign_history_data"
