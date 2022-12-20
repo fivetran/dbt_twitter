@@ -338,6 +338,9 @@ models:
             - line_item_id
             - campaign_id 
             - account_id
+          config:
+            # Below is so we don't run this test if the user has allowed urls to have null entries
+            enabled: "{{ var('ad_reporting__url_report__using_null_filter', True) }}"
     columns:
       - name: date_day
         description: The date of the performance.
@@ -371,6 +374,11 @@ models:
         description: The full text of the tweet that the URL appeared in.
       - name: base_url
         description: The base URL of the ad, extracted from the `expanded_url`.
+        tests:
+          - not_null:
+              config:
+                # Below is so we don't run this test if the user has allowed urls to have null entries
+                enabled: "{{ var('ad_reporting__url_report__using_null_filter', True) }}"
       - name: url_host
         description: The URL host of the ad, extracted from the `expanded_url`.
       - name: url_path

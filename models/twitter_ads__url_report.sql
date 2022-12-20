@@ -95,8 +95,10 @@ final as (
     left join accounts
         on report.account_id = accounts.account_id
     
-    where tweet_url.expanded_url is not null
-    
+    {% if var('ad_reporting__url_report__using_null_filter', True) %}
+        where tweet_url.expanded_url is not null
+    {% endif %}
+
     {{ dbt_utils.group_by(n=23) }}
 
     
