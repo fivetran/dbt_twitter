@@ -33,7 +33,7 @@ seeds:
     twitter_promoted_tweet_report_data:
       +column_types:
         impressions: "{{ 'INT64' if target.type == 'bigquery' else 'bigint' }}"
-        
+
 dispatch:
   - macro_namespace: dbt_utils
     search_order: ['spark_utils', 'dbt_utils']
