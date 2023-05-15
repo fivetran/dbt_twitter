@@ -52,8 +52,9 @@ Include the following Twitter package version in your `packages.yml` file:
 # packages.yml
 packages:
   - package: fivetran/twitter_ads
-    version: [">=0.6.0", "<0.7.0"]
+    version: [">=0.6.0", "<0.7.0"] # we recommend using ranges to capture non-breaking changes automatically
 ```
+Do NOT include the `twitter_ads_source` package in this file. The transformation package itself has a dependency on it and will install the source package as well.
 
 ## Step 3: Define database and schema variables
 By default, this package runs using your destination and the `twitter_ads` schema. If this is not where your Twitter Ads data is (for example, if your twitter schema is named `twitter_fivetran`), add the following configuration to your root `dbt_project.yml` file:

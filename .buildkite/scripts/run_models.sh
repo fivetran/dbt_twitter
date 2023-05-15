@@ -21,3 +21,5 @@ dbt run --target "$db" --full-refresh
 dbt test --target "$db"
 dbt run --vars '{twitter_ads__using_keywords: false, ad_reporting__url_report__using_null_filter: false}' --target "$db" --full-refresh
 dbt test --vars '{twitter_ads__using_keywords: false, ad_reporting__url_report__using_null_filter: false}' --target "$db"
+
+dbt run-operation fivetran_utils.drop_schemas_automation --target "$db"
