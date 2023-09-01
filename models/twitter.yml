@@ -1,3 +1,4 @@
+UPDATE TESTS AND CHECK SOURCE_RELATION ADDED PROPERLY!!! (delete line when done.)
 version: 2
 
 models:
@@ -7,11 +8,14 @@ models:
     tests:
       - dbt_utils.unique_combination_of_columns:
           combination_of_columns:
+            - source_relation
             - date_day
             - campaign_id 
             - placement
             - account_id
     columns:
+      - name: source_relation
+        description: "{{ doc('source_relation') }}"
       - name: campaign_id
         description: The ID of the campaign.
         tests:
@@ -73,12 +77,15 @@ models:
     tests:
       - dbt_utils.unique_combination_of_columns:
           combination_of_columns:
+            - source_relation
             - date_day
             - line_item_id 
             - placement
             - campaign_id
             - account_id
     columns:
+      - name: source_relation
+        description: "{{ doc('source_relation') }}"
       - name: campaign_id
         description: The ID of the line item's campaign.
       - name: campaign_name
@@ -160,10 +167,13 @@ models:
     tests:
       - dbt_utils.unique_combination_of_columns:
           combination_of_columns:
+            - source_relation
             - date_day
             - account_id
             - placement
     columns:
+      - name: source_relation
+        description: "{{ doc('source_relation') }}"
       - name: spend_micro
         description: The spend (in micros) for the account on that day.
       - name: spend
@@ -213,10 +223,13 @@ models:
     tests:
       - dbt_utils.unique_combination_of_columns:
           combination_of_columns:
+            - source_relation
             - date_day
             - keyword_id
             - campaign_id
     columns:
+      - name: source_relation
+        description: "{{ doc('source_relation') }}"
       - name: account_id
         description: The ID of the related account.
       - name: spend_micro
@@ -262,6 +275,7 @@ models:
     tests:
       - dbt_utils.unique_combination_of_columns:
           combination_of_columns:
+            - source_relation
             - date_day
             - promoted_tweet_id 
             - placement
@@ -269,6 +283,8 @@ models:
             - campaign_id 
             - account_id
     columns:
+      - name: source_relation
+        description: "{{ doc('source_relation') }}"
       - name: date_day
         description: The date of the performance.
       - name: placement
@@ -332,6 +348,7 @@ models:
     tests:
       - dbt_utils.unique_combination_of_columns:
           combination_of_columns:
+            - source_relation
             - date_day
             - promoted_tweet_id 
             - placement
@@ -342,6 +359,8 @@ models:
             # Below is so we don't run this test if the user has allowed urls to have null entries
             enabled: "{{ var('ad_reporting__url_report__using_null_filter', True) }}"
     columns:
+      - name: source_relation
+        description: "{{ doc('source_relation') }}"
       - name: date_day
         description: The date of the performance.
         tests:

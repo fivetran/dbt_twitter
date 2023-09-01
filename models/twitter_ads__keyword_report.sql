@@ -1,3 +1,5 @@
+ADD source_relation WHERE NEEDED + CHECK JOINS AND WINDOW FUNCTIONS! (Delete this line when done.)
+
 {{ config(enabled=fivetran_utils.enabled_vars(['ad_reporting__twitter_ads_enabled','twitter_ads__using_keywords'])) }}
 
 with report as (
@@ -30,6 +32,7 @@ accounts as (
 final as (
 
     select 
+        report.source_relation,
         report.date_day,
         report.placement, 
         report.account_id,
@@ -52,10 +55,13 @@ final as (
     from report 
     left join line_items
         on report.line_item_id = line_items.line_item_id
+        and report.source_relation = line_items.source_relation
     left join campaigns 
         on line_items.campaign_id = campaigns.campaign_id
+        and line_items.source_relation = campaigns.source_relation
     left join accounts
         on report.account_id = accounts.account_id
+        and report.source_relation = accounts.source_relation
 
     {{ dbt_utils.group_by(n=11) }}
 )

@@ -1,3 +1,5 @@
+ADD source_relation WHERE NEEDED + CHECK JOINS AND WINDOW FUNCTIONS! (Delete this line when done.)
+
 {{ config(enabled=var('ad_reporting__twitter_ads_enabled', True)) }}
 
 with report as (
@@ -23,6 +25,7 @@ accounts as (
 final as (
 
     select 
+        report.source_relation,
         report.date_day,
         report.placement, 
         report.account_id,
@@ -53,8 +56,10 @@ final as (
     from report 
     left join campaigns 
         on report.campaign_id = campaigns.campaign_id
+        and report.source_relation = campaigns.source_relation
     left join accounts
         on report.account_id = accounts.account_id
+        and report.source_relation = accounts.source_relation
 
     {{ dbt_utils.group_by(n=19) }}
 )
