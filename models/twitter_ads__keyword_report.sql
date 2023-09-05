@@ -1,5 +1,3 @@
-ADD source_relation WHERE NEEDED + CHECK JOINS AND WINDOW FUNCTIONS! (Delete this line when done.)
-
 {{ config(enabled=fivetran_utils.enabled_vars(['ad_reporting__twitter_ads_enabled','twitter_ads__using_keywords'])) }}
 
 with report as (
@@ -63,7 +61,7 @@ final as (
         on report.account_id = accounts.account_id
         and report.source_relation = accounts.source_relation
 
-    {{ dbt_utils.group_by(n=11) }}
+    {{ dbt_utils.group_by(12) }}
 )
 
 select *

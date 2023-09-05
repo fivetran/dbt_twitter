@@ -1,5 +1,3 @@
-ADD source_relation WHERE NEEDED + CHECK JOINS AND WINDOW FUNCTIONS! (Delete this line when done.)
-
 {{ config(enabled=var('ad_reporting__twitter_ads_enabled', True)) }}
 
 with accounts as (
@@ -18,7 +16,7 @@ promoted_tweet_report as (
 rollup_report as (
 
     select 
-        .source_relation,
+        source_relation,
         date_day,
         account_id,
         placement,
@@ -31,7 +29,7 @@ rollup_report as (
         {{ fivetran_utils.persist_pass_through_columns('twitter_ads__promoted_tweet_report_passthrough_metrics', transform='sum') }}
 
     from promoted_tweet_report
-    group by 1,2,3
+    {{ dbt_utils.group_by(4) }}
 
 ),
 
@@ -65,7 +63,7 @@ final as (
         on report.account_id = accounts.account_id
         and report.source_relation = accounts.source_relation
 
-    {{ dbt_utils.group_by(n=13) }}
+    {{ dbt_utils.group_by(14) }}
 )
 
 select *

@@ -1,5 +1,3 @@
-ADD source_relation WHERE NEEDED + CHECK JOINS AND WINDOW FUNCTIONS! (Delete this line when done.)
-
 {{ config(enabled=var('ad_reporting__twitter_ads_enabled', True)) }}
 
 with report as (
@@ -92,7 +90,7 @@ final as (
         on report.account_id = accounts.account_id
         and report.source_relation = accounts.source_relation
 
-    {{ dbt_utils.group_by(n=21) }}
+    {{ dbt_utils.group_by(22) }}
 )
 
 select *

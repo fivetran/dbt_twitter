@@ -1,5 +1,3 @@
-ADD source_relation WHERE NEEDED + CHECK JOINS AND WINDOW FUNCTIONS! (Delete this line when done.)
-
 {{ config(enabled=var('ad_reporting__twitter_ads_enabled', True)) }}
 
 with report as (
@@ -108,7 +106,7 @@ final as (
         where tweet_url.expanded_url is not null
     {% endif %}
 
-    {{ dbt_utils.group_by(n=23) }}
+    {{ dbt_utils.group_by(24) }}
 
     
 )
