@@ -52,7 +52,7 @@ Include the following Twitter package version in your `packages.yml` file:
 # packages.yml
 packages:
   - package: fivetran/twitter_ads
-    version: [">=0.6.0", "<0.7.0"] # we recommend using ranges to capture non-breaking changes automatically
+    version: [">=0.7.0", "<0.8.0"] # we recommend using ranges to capture non-breaking changes automatically
 ```
 Do NOT include the `twitter_ads_source` package in this file. The transformation package itself has a dependency on it and will install the source package as well.
 
@@ -146,7 +146,7 @@ This dbt package is dependent on the following dbt packages. Please be aware tha
 ```yml
 packages:
     - package: fivetran/twitter_source
-      version: [">=0.6.0", "<0.7.0"]
+      version: [">=0.7.0", "<0.8.0"]
     - package: fivetran/fivetran_utils
       version: [">=0.4.0", "<0.5.0"]
     - package: dbt-labs/dbt_utils
