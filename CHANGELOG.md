@@ -9,11 +9,9 @@
 - Updated tests to account for the new `source_relation` column.
     - The `source_relation` column is included in all joins and window function partition clauses in the transform package. 
 
-# dbt_twitter v0.UPDATE.UPDATE
-
-## Under the Hood:
-- Incorporated the new `fivetran_utils.drop_schemas_automation` macro into the end of each Buildkite integration test job. ([#18](https://github.com/fivetran/dbt_twitter/pull/18))
-- Updated the pull request [templates](/.github). ([#18](https://github.com/fivetran/dbt_twitter/pull/18))
+[PR #18](https://github.com/fivetran/dbt_twitter/pull/18) includes the following updates:
+- Incorporated the new `fivetran_utils.drop_schemas_automation` macro into the end of each Buildkite integration test job.
+- Updated the pull request [templates](/.github).
 
 # dbt_twitter v0.6.0
 
