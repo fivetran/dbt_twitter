@@ -16,6 +16,7 @@ promoted_tweet_report as (
 rollup_report as (
 
     select 
+        source_relation,
         date_day,
         account_id,
         placement,
@@ -28,13 +29,14 @@ rollup_report as (
         {{ fivetran_utils.persist_pass_through_columns('twitter_ads__promoted_tweet_report_passthrough_metrics', transform='sum') }}
 
     from promoted_tweet_report
-    group by 1,2,3
+    {{ dbt_utils.group_by(4) }}
 
 ),
 
 final as (
 
     select 
+        report.source_relation,
         report.date_day,
         report.placement, 
         report.account_id,
@@ -59,8 +61,9 @@ final as (
     from rollup_report as report
     left join accounts 
         on report.account_id = accounts.account_id
+        and report.source_relation = accounts.source_relation
 
-    {{ dbt_utils.group_by(n=13) }}
+    {{ dbt_utils.group_by(14) }}
 )
 
 select *

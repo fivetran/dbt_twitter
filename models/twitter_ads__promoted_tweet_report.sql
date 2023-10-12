@@ -43,6 +43,7 @@ tweets as (
 final as (
 
     select 
+        report.source_relation,
         report.date_day,
         report.placement, 
         accounts.account_id,
@@ -75,16 +76,21 @@ final as (
     from report 
     left join promoted_tweets 
         on report.promoted_tweet_id = promoted_tweets.promoted_tweet_id
+        and report.source_relation = promoted_tweets.source_relation
     left join tweets
         on promoted_tweets.tweet_id = tweets.tweet_id
+        and promoted_tweets.source_relation = tweets.source_relation
     left join line_items
         on promoted_tweets.line_item_id = line_items.line_item_id
+        and promoted_tweets.source_relation = line_items.source_relation
     left join campaigns 
         on line_items.campaign_id = campaigns.campaign_id
+        and line_items.source_relation = campaigns.source_relation
     left join accounts
         on report.account_id = accounts.account_id
+        and report.source_relation = accounts.source_relation
 
-    {{ dbt_utils.group_by(n=21) }}
+    {{ dbt_utils.group_by(22) }}
 )
 
 select *
