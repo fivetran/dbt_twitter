@@ -153,7 +153,7 @@ packages:
 
 # 🙌 How is this package maintained and can I contribute?
 ## Package Maintenance
-The Fivetran team maintaining this package _only_ maintains the latest version of the package. We highly recommend you stay consistent with the [latest version](https://hub.getdbt.com/fivetran/twitter/latest/) of the package and refer to the [CHANGELOG](https://github.com/fivetran/dbt_twitter/blob/main/CHANGELOG.md) and release notes for more information on changes across versions.
+The Fivetran team maintaining this package _only_ maintains the latest version of the package. We highly recommend you stay consistent with the [latest version](https://hub.getdbt.com/fivetran/twitter_ads/latest/) of the package and refer to the [CHANGELOG](https://github.com/fivetran/dbt_twitter/blob/main/CHANGELOG.md) and release notes for more information on changes across versions.
 
 ## Opinionated Decisions
 In creating this package, which is meant for a wide range of use cases, we had to take opinionated stances on a few different questions we came across during development. We've consolidated significant choices we made in the [DECISIONLOG.md](https://github.com/fivetran/dbt_twitter/blob/main/DECISIONLOG.md), and will continue to update as the package evolves. We are always open to and encourage feedback on these choices, and the package in general.
