@@ -18,10 +18,12 @@
 - Materializes output models designed to work simultaneously with our [multi-platform Ad Reporting package](https://github.com/fivetran/dbt_ad_reporting).
 - Generates a comprehensive data dictionary of your source and modeled Twitter Ads data through the [dbt docs site](https://fivetran.github.io/dbt_twitter/).
 
-The following table provides a detailed list of all models materialized within this package by default.
-> TIP: See more details about these models in the package's [dbt docs site](https://fivetran.github.io/dbt_twitter/#!/overview?g_v=1&g_e=seeds).
+<!--section=“twitter_transformation_model"-->
 
-| **Model**                | **Description**                                                                                                                                |
+The following table provides a detailed list of all tables materialized within this package by default.
+> TIP: See more details about these tables in the package's [dbt docs site](https://fivetran.github.io/dbt_twitter/#!/overview?g_v=1&g_e=seeds).
+
+| **Table**                | **Description**                                                                                                                                |
 | ------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------- |
 | [twitter_ads__account_report](https://fivetran.github.io/dbt_twitter/#!/model/model.twitter.twitter_ads__account_report)             | Each record in this table represents the daily performance at the account and ad-placement level. |
 | [twitter_ads__campaign_report](https://fivetran.github.io/dbt_twitter/#!/model/model.twitter.twitter_ads__campaign_report)            | Each record in this table represents the daily performance of ads at the account, campaign, and ad-placement level. |
@@ -29,6 +31,8 @@ The following table provides a detailed list of all models materialized within t
 | [twitter_ads__keyword_report](https://fivetran.github.io/dbt_twitter/#!/model/model.twitter.twitter_ads__keyword_report)            | Each record in this table represents the daily performance of a keyword at the account, campaign, line item, keyword, and ad-placement level. |
 | [twitter_ads__promoted_tweet_report](https://fivetran.github.io/dbt_twitter/#!/model/model.twitter.twitter_ads__pin_promotion_report)            | Each record in this table represents the daily performance of ads at the account, campaign, line item, promoted tweet, and ad-placement level. |
 | [twitter_ads__url_report](https://fivetran.github.io/dbt_twitter/#!/model/model.twitter.twitter_ads__url_report)            |Each record in this table represents the daily performance of ads at the account, campaign, line item, promoted tweet, url, and ad-placement level. |                                                     |
+
+<!--section-end-->
 
 ## How do I use the dbt package?
 ### Step 1: Prerequisites
