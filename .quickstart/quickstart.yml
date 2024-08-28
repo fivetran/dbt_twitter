@@ -11,3 +11,12 @@ destination_configurations:
     dispatch:
       - macro_namespace: dbt_utils
         search_order: [ 'spark_utils', 'dbt_utils' ]
+
+public_models: [
+  "twitter_ads__account_report",
+  "twitter_ads__campaign_report",
+  "twitter_ads__url_report",
+  "twitter_ads__promoted_tweet_report",
+  "twitter_ads__line_item_report",
+  "twitter_ads__keyword_report"
+]
