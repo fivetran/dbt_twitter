@@ -69,7 +69,18 @@ models:
         description: The daily budget amount to be allocated to the campaign. The currency associated with the specified funding instrument will be used.
       - name: total_budget_amount
         description: The total budget amount to be allocated to the campaign.
-
+      - name: conversion_purchases_metric
+        description: Total number of purchases. The sum of post view, post engagement, and assisted purchases for both your website and mobile app. Included by the `twitter_ads__conversion_fields` variable by default.
+      - name: conversion_custom_metric
+        description: The number of conversions of type CUSTOM. Included by the `twitter_ads__conversion_fields` variable by default.
+      - name: conversion_purchases_sale_amount
+        description: The sale amount corresponding to PURCHASE conversion events. Included by the `twitter_ads__conversion_sale_amount_fields` variable by default.
+      - name: conversion_custom_sale_amount
+        description: The sale amount corresponding to PURCHASE conversion events. Included by the `twitter_ads__conversion_sale_amount_fields` variable by default.
+      - name: total_conversions 
+        description: Sum of all fields included in `twitter_ads__conversion_fields` variable (default = conversion_purchases_metric + conversion_custom_metric).
+      - name: total_conversion_sale_amount
+        description: Sum of all fields included in `twitter_ads__conversion_sale_amount_fields` variable (default = conversion_purchases_sale_amount + conversion_custom_sale_amount).
   - name: twitter_ads__line_item_report
     description: >
       Each record in this table represents the daily performance of ads at the account, campaign, and line item (ad group) level, within a placement in Twitter.
@@ -159,6 +170,18 @@ models:
         description: The total budget amount to be allocated to the campaign.
       - name: target_cpa
         description: The target cost per acquisition for the line item.
+      - name: conversion_purchases_metric
+        description: Total number of purchases. The sum of post view, post engagement, and assisted purchases for both your website and mobile app. Included by the `twitter_ads__conversion_fields` variable by default.
+      - name: conversion_custom_metric
+        description: The number of conversions of type CUSTOM. Included by the `twitter_ads__conversion_fields` variable by default.
+      - name: conversion_purchases_sale_amount
+        description: The sale amount corresponding to PURCHASE conversion events. Included by the `twitter_ads__conversion_sale_amount_fields` variable by default.
+      - name: conversion_custom_sale_amount
+        description: The sale amount corresponding to PURCHASE conversion events. Included by the `twitter_ads__conversion_sale_amount_fields` variable by default.
+      - name: total_conversions 
+        description: Sum of all fields included in `twitter_ads__conversion_fields` variable (default = conversion_purchases_metric + conversion_custom_metric).
+      - name: total_conversion_sale_amount
+        description: Sum of all fields included in `twitter_ads__conversion_sale_amount_fields` variable (default = conversion_purchases_sale_amount + conversion_custom_sale_amount).
 
   - name: twitter_ads__account_report 
     description: >
@@ -215,6 +238,18 @@ models:
         description: The timestamp the account's timezone was last changed.
       - name: updated_timestamp
         description: "{{ doc('updated_at') }}"
+      - name: conversion_purchases_metric
+        description: Total number of purchases. The sum of post view, post engagement, and assisted purchases for both your website and mobile app. Included by the `twitter_ads__conversion_fields` variable by default.
+      - name: conversion_custom_metric
+        description: The number of conversions of type CUSTOM. Included by the `twitter_ads__conversion_fields` variable by default.
+      - name: conversion_purchases_sale_amount
+        description: The sale amount corresponding to PURCHASE conversion events. Included by the `twitter_ads__conversion_sale_amount_fields` variable by default.
+      - name: conversion_custom_sale_amount
+        description: The sale amount corresponding to PURCHASE conversion events. Included by the `twitter_ads__conversion_sale_amount_fields` variable by default.
+      - name: total_conversions 
+        description: Sum of all fields included in `twitter_ads__conversion_fields` variable (default = conversion_purchases_metric + conversion_custom_metric).
+      - name: total_conversion_sale_amount
+        description: Sum of all fields included in `twitter_ads__conversion_sale_amount_fields` variable (default = conversion_purchases_sale_amount + conversion_custom_sale_amount).
 
   - name: twitter_ads__keyword_report 
     description: >
@@ -267,6 +302,18 @@ models:
         description: The ID of the related line item.
       - name: currency
         description: The currency all metrics for the account are set to.
+      - name: conversion_purchases_metric
+        description: Total number of purchases. The sum of post view, post engagement, and assisted purchases for both your website and mobile app. Included by the `twitter_ads__conversion_fields` variable by default.
+      - name: conversion_custom_metric
+        description: The number of conversions of type CUSTOM. Included by the `twitter_ads__conversion_fields` variable by default.
+      - name: conversion_purchases_sale_amount
+        description: The sale amount corresponding to PURCHASE conversion events. Included by the `twitter_ads__conversion_sale_amount_fields` variable by default.
+      - name: conversion_custom_sale_amount
+        description: The sale amount corresponding to PURCHASE conversion events. Included by the `twitter_ads__conversion_sale_amount_fields` variable by default.
+      - name: total_conversions 
+        description: Sum of all fields included in `twitter_ads__conversion_fields` variable (default = conversion_purchases_metric + conversion_custom_metric).
+      - name: total_conversion_sale_amount
+        description: Sum of all fields included in `twitter_ads__conversion_sale_amount_fields` variable (default = conversion_purchases_sale_amount + conversion_custom_sale_amount).
 
   - name: twitter_ads__promoted_tweet_report
     description: >
@@ -340,7 +387,19 @@ models:
         description: "{{ doc('updated_at') }}"
       - name: language
         description: Two-letter language code of the tweet. 
-        
+      - name: conversion_purchases_metric
+        description: Total number of purchases. The sum of post view, post engagement, and assisted purchases for both your website and mobile app. Included by the `twitter_ads__conversion_fields` variable by default.
+      - name: conversion_custom_metric
+        description: The number of conversions of type CUSTOM. Included by the `twitter_ads__conversion_fields` variable by default.
+      - name: conversion_purchases_sale_amount
+        description: The sale amount corresponding to PURCHASE conversion events. Included by the `twitter_ads__conversion_sale_amount_fields` variable by default.
+      - name: conversion_custom_sale_amount
+        description: The sale amount corresponding to PURCHASE conversion events. Included by the `twitter_ads__conversion_sale_amount_fields` variable by default.
+      - name: total_conversions 
+        description: Sum of all fields included in `twitter_ads__conversion_fields` variable (default = conversion_purchases_metric + conversion_custom_metric).
+      - name: total_conversion_sale_amount
+        description: Sum of all fields included in `twitter_ads__conversion_sale_amount_fields` variable (default = conversion_purchases_sale_amount + conversion_custom_sale_amount).
+
   - name: twitter_ads__url_report
     description: >
       Each record in this table represents the daily performance of ads at the account, campaign, line item (ad group), promoted tweet, and url level, within a placement in Twitter.
@@ -427,3 +486,15 @@ models:
         description: The spend, in micros, for the tweet + URL on that day.
       - name: url_clicks
         description: The URL clicks for the promoted tweet + URL on that day.
+      - name: conversion_purchases_metric
+        description: Total number of purchases. The sum of post view, post engagement, and assisted purchases for both your website and mobile app. Included by the `twitter_ads__conversion_fields` variable by default.
+      - name: conversion_custom_metric
+        description: The number of conversions of type CUSTOM. Included by the `twitter_ads__conversion_fields` variable by default.
+      - name: conversion_purchases_sale_amount
+        description: The sale amount corresponding to PURCHASE conversion events. Included by the `twitter_ads__conversion_sale_amount_fields` variable by default.
+      - name: conversion_custom_sale_amount
+        description: The sale amount corresponding to PURCHASE conversion events. Included by the `twitter_ads__conversion_sale_amount_fields` variable by default.
+      - name: total_conversions 
+        description: Sum of all fields included in `twitter_ads__conversion_fields` variable (default = conversion_purchases_metric + conversion_custom_metric).
+      - name: total_conversion_sale_amount
+        description: Sum of all fields included in `twitter_ads__conversion_sale_amount_fields` variable (default = conversion_purchases_sale_amount + conversion_custom_sale_amount).
