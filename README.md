@@ -80,7 +80,6 @@ vars:
 
 ### (Optional) Step 5: Additional configurations
 <details open><summary>Expand/Collapse details</summary>
-<br>
 
 #### Union multiple connectors
 If you have multiple twitter ads connectors in Fivetran and would like to use this package on all of them simultaneously, we have provided functionality to do so. The package will union all of the data together and pass the unioned table into the transformations. You will be able to see which source it came from in the `source_relation` column of each model. To use this functionality, you will need to set either the `twitter_ads_union_schemas` OR `twitter_ads_union_databases` variables (cannot do both) in your root `dbt_project.yml` file:
@@ -123,7 +122,7 @@ vars:
         - <any conversion value/sale amount field you want to include>
 ```
 
-We recommend using the same *types* of conversion events for `twitter_ads__conversion_fields` and `twitter_ads__conversion_sale_amount_fields` so that `total_conversions` and `total_conversion_sale_amount` properly map onto each other, but this is not required.
+> We recommend using the same *types* of conversion events for `twitter_ads__conversion_fields` and `twitter_ads__conversion_sale_amount_fields` so that `total_conversions` and `total_conversion_sale_amount` properly map onto each other, but this is not required.
 
 #### Passing Through Additional Metrics
 Besides the above conversion fields, this package by default will select `clicks`, `url_clicks`, `impressions`, `spend` (calculated from `billed_charge_local_micro`), and `spend_micro` (aliased from `billed_charge_local_micro`) from the source reporting tables to store into the staging models. If you would like to pass through additional metrics to the staging models, add the below configurations to your `dbt_project.yml` file. These variables allow for the pass-through fields to be aliased (`alias`) if desired, but not required. Use the below format for declaring the respective pass-through variables:

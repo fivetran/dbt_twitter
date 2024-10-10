@@ -24,15 +24,8 @@ vars:
     twitter_ads__promoted_tweet_report_passthrough_metrics: []
 
   twitter_ads__conversion_fields:
-    - conversion_purchases_metric # keep as default
-    - conversion_custom_metric # keep as default
-    # - conversion_sign_ups_metric
-    # - mobile_conversion_payment_info_additions_post_engagement
-    # - mobile_conversion_add_to_wishlists_post_engagement
-    # - mobile_conversion_add_to_carts_post_engagement
-    # - mobile_conversion_checkouts_initiated_post_engagement
-    # - mobile_conversion_searches_post_engagement
-    # - mobile_conversion_content_views_post_engagement
+    - conversion_purchases_metric
+    - conversion_custom_metric
   twitter_ads__conversion_sale_amount_fields:
-    - conversion_purchases_sale_amount # keep as default
-    - conversion_custom_sale_amount # keep as default
+    - conversion_purchases_sale_amount
+    - conversion_custom_sale_amount
