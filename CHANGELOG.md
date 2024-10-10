@@ -1,6 +1,9 @@
 # dbt_twitter v0.8.0
+[PR #26](https://github.com/fivetran/dbt_twitter/pull/26) includes the following **BREAKING CHANGE** updates:
 
-## Conversion Support - TO DO
+## Feature Support: Native Conversion Support
+
+## Under the Hood
 
 # dbt_twitter v0.7.0
 [PR #21](https://github.com/fivetran/dbt_twitter/pull/21) includes the following updates:

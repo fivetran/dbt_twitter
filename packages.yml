@@ -1,6 +1,6 @@
 packages:
 # - package: fivetran/twitter_ads_source
 #   version: [">=0.8.0", "<0.9.0"]
-# - git: https://github.com/fivetran/dbt_twitter_source.git
-#   revision: feature/add_conversions
-- local: ../Twitter_ads/dbt_twitter_source
+- git: https://github.com/fivetran/dbt_twitter_source.git
+  revision: feature/add_conversions
+# - local: ../Twitter_ads/dbt_twitter_source
