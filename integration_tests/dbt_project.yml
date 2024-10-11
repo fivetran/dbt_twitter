@@ -8,6 +8,16 @@ models:
   +schema: "twitter_ads_{{ var('directed_schema','dev') }}"
   
 vars:
+  twitter_ads__line_item_report_passthrough_metrics:
+    - name: "conversion_purchases_metric"
+    - name: "conversion_custom_sale_amount"
+      alias: "custom_conversion_value"
+      
+  twitter_ads__conversion_sale_amount_fields:
+    - conversion_purchases_sale_amount
+    - conversion_custom_sale_amount
+    - conversion_sign_ups_sale_amount
+
   twitter_ads_source:
     twitter_ads_schema: twitter_ads_integration_tests_4
 
