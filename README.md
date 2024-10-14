@@ -101,7 +101,7 @@ The package will include conversion metrics provided to the following variables 
 | `twitter_ads__conversion_fields`  | Which fields should be included in calculating total number of conversions. | `conversion_purchases_metric`, `conversion_custom_metric` |
 | `twitter_ads__conversion_sale_amount_fields` |  Which `*_sale_amount` fields should be included in calculating the total value of conversions.  | `conversion_purchases_sale_amount`, `conversion_custom_sale_amount` |
 
-In addition, the fields included in `var('twitter_ads__conversion_fields')` will be summed up into a `total_conversions` field, and the fields included in `var('twitter_ads__conversion_sale_amount_fields')` will be summed up into a `total_conversion_sale_amount` field.
+In addition, the fields included in `var('twitter_ads__conversion_fields')` will be summed up into a `total_conversions` field, and the fields included in `var('twitter_ads__conversion_sale_amount_fields')` will be summed up into a `total_conversions_sale_amount` field.
 
 By default, the data models include purchases and custom conversion events in both variables. However, you can configure each to include any types of conversions available in the Twitter Ads source `*_report` tables:
 
@@ -122,7 +122,7 @@ vars:
         - <any conversion value/sale amount field you want to include>
 ```
 
-> We recommend using the same *types* of conversion events for `twitter_ads__conversion_fields` and `twitter_ads__conversion_sale_amount_fields` so that `total_conversions` and `total_conversion_sale_amount` properly map onto each other, but this is not required.
+> We recommend using the same *types* of conversion events for `twitter_ads__conversion_fields` and `twitter_ads__conversion_sale_amount_fields` so that `total_conversions` and `total_conversions_sale_amount` properly map onto each other, but this is not required.
 
 #### Passing Through Additional Metrics
 Besides the above conversion fields, this package by default will select `clicks`, `url_clicks`, `impressions`, `spend` (calculated from `billed_charge_local_micro`), and `spend_micro` (aliased from `billed_charge_local_micro`) from the source reporting tables to store into the staging models. If you would like to pass through additional metrics to the staging models, add the below configurations to your `dbt_project.yml` file. These variables allow for the pass-through fields to be aliased (`alias`) if desired, but not required. Use the below format for declaring the respective pass-through variables:

@@ -7,7 +7,7 @@ We have added more robust support for conversions in our data models by doing th
 - Created the `twitter_ads__conversion_fields` and `twitter_ads__conversion_sale_amount_fields` variables to pass through conversion metrics (total number and monetary value, respectively).
   - By default, `twitter_ads__conversion_fields` will include `conversion_purchases_metric` and `conversion_custom_metric`.
   - By default, `twitter_ads__conversion_sale_amount_fields` will include `conversion_purchases_sale_amount` and `conversion_custom_sale_amount`.
-  - These conversion fields will be included in each end model report. Additionally, they will be summed up into new `total_conversions` and `total_conversion_sale_amount` columns.
+  - These conversion fields will be included in each end model report. Additionally, they will be summed up into new `total_conversions` and `total_conversions_sale_amount` columns.
   - See [README](https://github.com/fivetran/dbt_twitter?tab=readme-ov-file#customizing-types-of-conversions) for more details on how to configure these variables.
 
 ## Under the Hood

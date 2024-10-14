@@ -13,7 +13,7 @@ promoted_tweet_report as (
         *,
         {# Let's sum up conversions into general fields for ease of use #}
         {{ var('twitter_ads__conversion_fields') | join(' + ') if var('twitter_ads__conversion_fields') else 0 }} as total_conversions,
-        {{ var('twitter_ads__conversion_sale_amount_fields') | join(' + ') if var('twitter_ads__conversion_sale_amount_fields') else 0 }} as total_conversion_sale_amount
+        {{ var('twitter_ads__conversion_sale_amount_fields') | join(' + ') if var('twitter_ads__conversion_sale_amount_fields') else 0 }} as total_conversions_sale_amount
 
     from {{ var('promoted_tweet_report') }}
 ),
@@ -31,7 +31,7 @@ rollup_report as (
         sum(spend_micro) as spend_micro,
         sum(url_clicks) as url_clicks,
         sum(total_conversions) as total_conversions,
-        sum(total_conversion_sale_amount) as total_conversion_sale_amount
+        sum(total_conversions_sale_amount) as total_conversions_sale_amount
 
         {# Persist all of the customizable fields #}
         {{ twitter_ads_persist_pass_through_columns(pass_through_variable='twitter_ads__conversion_fields', transform='sum', coalesce_with=0, except_variable='twitter_ads__promoted_tweet_report_passthrough_metrics') }}
@@ -66,7 +66,7 @@ final as (
         sum(report.spend_micro) as spend_micro,
         sum(report.url_clicks) as url_clicks,
         sum(report.total_conversions) as total_conversions,
-        sum(report.total_conversion_sale_amount) as total_conversion_sale_amount
+        sum(report.total_conversions_sale_amount) as total_conversions_sale_amount
 
         {# Persist all of the customizable fields #}
         {{ twitter_ads_persist_pass_through_columns(pass_through_variable='twitter_ads__conversion_fields', transform='sum', coalesce_with=0, except_variable='twitter_ads__promoted_tweet_report_passthrough_metrics') }}

@@ -12,7 +12,7 @@ with prod as (
         sum(spend_micro) as spend_micro,
         sum(url_clicks) as url_clicks
         {# sum(total_conversions) as total_conversions,
-        sum(total_conversion_sale_amount) as total_conversion_sale_amount #}
+        sum(total_conversions_sale_amount) as total_conversions_sale_amount #}
     from {{ target.schema }}_twitter_ads_prod.twitter_ads__keyword_report
     group by 1
 ),
@@ -26,7 +26,7 @@ dev as (
         sum(spend_micro) as spend_micro,
         sum(url_clicks) as url_clicks
         {# sum(total_conversions) as total_conversions,
-        sum(total_conversion_sale_amount) as total_conversion_sale_amount #}
+        sum(total_conversions_sale_amount) as total_conversions_sale_amount #}
     from {{ target.schema }}_twitter_ads_dev.twitter_ads__keyword_report
     group by 1
 ),
@@ -46,8 +46,8 @@ final as (
         dev.spend_micro as dev_spend_micro
         {# prod.total_conversions as prod_total_conversions,
         dev.total_conversions as dev_total_conversions,
-        prod.total_conversion_sale_amount as prod_total_conversion_sale_amount,
-        dev.total_conversion_sale_amount as dev_total_conversion_sale_amount #}
+        prod.total_conversions_sale_amount as prod_total_conversions_sale_amount,
+        dev.total_conversions_sale_amount as dev_total_conversions_sale_amount #}
     from prod
     full outer join dev 
         on dev.keyword_id = prod.keyword_id
@@ -62,4 +62,4 @@ where
     or abs(prod_spend - dev_spend) >= .01
     or abs(prod_spend_micro - dev_spend_micro) >= .01
     {# or abs(prod_total_conversions - dev_total_conversions) >= .01
-    or abs(total_conversion_sale_amount - dev_total_conversion_sale_amount) >= .01 #}
+    or abs(total_conversions_sale_amount - dev_total_conversions_sale_amount) >= .01 #}

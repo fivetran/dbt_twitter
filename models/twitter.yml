@@ -79,7 +79,7 @@ models:
         description: The sale amount corresponding to PURCHASE conversion events. Included by the `twitter_ads__conversion_sale_amount_fields` variable by default.
       - name: total_conversions 
         description: Sum of all fields included in `twitter_ads__conversion_fields` variable (default = conversion_purchases_metric + conversion_custom_metric).
-      - name: total_conversion_sale_amount
+      - name: total_conversions_sale_amount
         description: Sum of all fields included in `twitter_ads__conversion_sale_amount_fields` variable (default = conversion_purchases_sale_amount + conversion_custom_sale_amount).
   - name: twitter_ads__line_item_report
     description: >
@@ -180,7 +180,7 @@ models:
         description: The sale amount corresponding to PURCHASE conversion events. Included by the `twitter_ads__conversion_sale_amount_fields` variable by default.
       - name: total_conversions 
         description: Sum of all fields included in `twitter_ads__conversion_fields` variable (default = conversion_purchases_metric + conversion_custom_metric).
-      - name: total_conversion_sale_amount
+      - name: total_conversions_sale_amount
         description: Sum of all fields included in `twitter_ads__conversion_sale_amount_fields` variable (default = conversion_purchases_sale_amount + conversion_custom_sale_amount).
 
   - name: twitter_ads__account_report 
@@ -248,7 +248,7 @@ models:
         description: The sale amount corresponding to PURCHASE conversion events. Included by the `twitter_ads__conversion_sale_amount_fields` variable by default.
       - name: total_conversions 
         description: Sum of all fields included in `twitter_ads__conversion_fields` variable (default = conversion_purchases_metric + conversion_custom_metric).
-      - name: total_conversion_sale_amount
+      - name: total_conversions_sale_amount
         description: Sum of all fields included in `twitter_ads__conversion_sale_amount_fields` variable (default = conversion_purchases_sale_amount + conversion_custom_sale_amount).
 
   - name: twitter_ads__keyword_report 
@@ -312,7 +312,7 @@ models:
         description: The sale amount corresponding to PURCHASE conversion events. Included by the `twitter_ads__conversion_sale_amount_fields` variable by default.
       - name: total_conversions 
         description: Sum of all fields included in `twitter_ads__conversion_fields` variable (default = conversion_purchases_metric + conversion_custom_metric).
-      - name: total_conversion_sale_amount
+      - name: total_conversions_sale_amount
         description: Sum of all fields included in `twitter_ads__conversion_sale_amount_fields` variable (default = conversion_purchases_sale_amount + conversion_custom_sale_amount).
 
   - name: twitter_ads__promoted_tweet_report
@@ -397,7 +397,7 @@ models:
         description: The sale amount corresponding to PURCHASE conversion events. Included by the `twitter_ads__conversion_sale_amount_fields` variable by default.
       - name: total_conversions 
         description: Sum of all fields included in `twitter_ads__conversion_fields` variable (default = conversion_purchases_metric + conversion_custom_metric).
-      - name: total_conversion_sale_amount
+      - name: total_conversions_sale_amount
         description: Sum of all fields included in `twitter_ads__conversion_sale_amount_fields` variable (default = conversion_purchases_sale_amount + conversion_custom_sale_amount).
 
   - name: twitter_ads__url_report
@@ -496,5 +496,5 @@ models:
         description: The sale amount corresponding to PURCHASE conversion events. Included by the `twitter_ads__conversion_sale_amount_fields` variable by default.
       - name: total_conversions 
         description: Sum of all fields included in `twitter_ads__conversion_fields` variable (default = conversion_purchases_metric + conversion_custom_metric).
-      - name: total_conversion_sale_amount
+      - name: total_conversions_sale_amount
         description: Sum of all fields included in `twitter_ads__conversion_sale_amount_fields` variable (default = conversion_purchases_sale_amount + conversion_custom_sale_amount).
