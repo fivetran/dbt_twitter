@@ -48,15 +48,15 @@ dispatch:
     search_order: ['spark_utils', 'dbt_utils']
 ```
 
-### Step 2: Install the package
-Include the following Twitter package version in your `packages.yml` file:
+### Step 2: Install the package (skip if using `ad_reporting` combination package)
+If you are not using the downstream [Ad Reporting](https://github.com/fivetran/dbt_ad_reporting) combination package, include the following Twitter package version in your `packages.yml` file:
 > TIP: Check [dbt Hub](https://hub.getdbt.com/) for the latest installation instructions or [read the dbt docs](https://docs.getdbt.com/docs/package-management) for more information on installing packages
 
 ```yml
 # packages.yml
 packages:
   - package: fivetran/twitter_ads
-    version: [">=0.7.0", "<0.8.0"] # we recommend using ranges to capture non-breaking changes automatically
+    version: [">=0.8.0", "<0.9.0"] # we recommend using ranges to capture non-breaking changes automatically
 ```
 Do NOT include the `twitter_ads_source` package in this file. The transformation package itself has a dependency on it and will install the source package as well.
 
@@ -79,6 +79,8 @@ vars:
 ```
 
 ### (Optional) Step 5: Additional configurations
+<details open><summary>Expand/Collapse details</summary>
+
 #### Union multiple connectors
 If you have multiple twitter ads connectors in Fivetran and would like to use this package on all of them simultaneously, we have provided functionality to do so. The package will union all of the data together and pass the unioned table into the transformations. You will be able to see which source it came from in the `source_relation` column of each model. To use this functionality, you will need to set either the `twitter_ads_union_schemas` OR `twitter_ads_union_databases` variables (cannot do both) in your root `dbt_project.yml` file:
 
@@ -91,8 +93,39 @@ vars:
 
 To connect your multiple schema/database sources to the package models, follow the steps outlined in the [Union Data Defined Sources Configuration](https://github.com/fivetran/dbt_fivetran_utils/tree/releases/v0.4.latest#union_data-source) section of the Fivetran Utils documentation for the union_data macro. This will ensure a proper configuration and correct visualization of connections in the DAG.
 
+#### Customizing Types of Conversions
+The package will include conversion metrics provided to the following variables in each model.
+
+| Variable    | Definition | Default Values |
+| -------- | -------- | -------- |
+| `twitter_ads__conversion_fields`  | Which fields should be included in calculating total number of conversions. | `conversion_purchases_metric`, `conversion_custom_metric` |
+| `twitter_ads__conversion_sale_amount_fields` |  Which `*_sale_amount` fields should be included in calculating the total value of conversions.  | `conversion_purchases_sale_amount`, `conversion_custom_sale_amount` |
+
+In addition, the fields included in `var('twitter_ads__conversion_fields')` will be summed up into a `total_conversions` field, and the fields included in `var('twitter_ads__conversion_sale_amount_fields')` will be summed up into a `total_conversions_sale_amount` field.
+
+By default, the data models include purchases and custom conversion events in both variables. However, you can configure each to include any types of conversions available in the Twitter Ads source `*_report` tables:
+
+```yml
+# dbt_project.yml
+vars:
+    twitter_ads__conversion_fields:
+        - conversion_purchases_metric
+        - conversion_sign_ups_metric
+        - mobile_conversion_payment_info_additions_post_engagement
+        - mobile_conversion_add_to_wishlists_post_engagement
+        - mobile_conversion_add_to_carts_post_engagement
+        - mobile_conversion_checkouts_initiated_post_engagement
+        - <any conversion field you want to include>
+    twitter_ads__conversion_sale_amount_fields: 
+        - conversion_purchases_sale_amount
+        - conversion_sign_ups_sale_amount
+        - <any conversion value/sale amount field you want to include>
+```
+
+> We recommend using the same *types* of conversion events for `twitter_ads__conversion_fields` and `twitter_ads__conversion_sale_amount_fields` so that `total_conversions` and `total_conversions_sale_amount` properly map onto each other, but this is not required. We chose to split conversions and conversion values into 2 distinct variables due to the N:1 relationship beteen conversions and conversion value fields.
+
 #### Passing Through Additional Metrics
-By default, this package will select `clicks`, `impressions`, and `cost` from the source reporting tables to store into the staging models. If you would like to pass through additional metrics to the staging models, add the below configurations to your `dbt_project.yml` file. These variables allow for the pass-through fields to be aliased (`alias`) if desired, but not required. Use the below format for declaring the respective pass-through variables:
+Besides the above conversion fields, this package by default will select `clicks`, `url_clicks`, `impressions`, `spend` (calculated from `billed_charge_local_micro`), and `spend_micro` (aliased from `billed_charge_local_micro`) from the source reporting tables to store into the staging models. If you would like to pass through additional metrics to the staging models, add the below configurations to your `dbt_project.yml` file. These variables allow for the pass-through fields to be aliased (`alias`) if desired, but not required. Use the below format for declaring the respective pass-through variables:
 
 > IMPORTANT: Make sure to exercise due diligence when adding metrics to these models. The metrics added by default (taps, impressions, and spend) have been vetted by the Fivetran team, maintaining this package for accuracy. There are metrics included within the source reports, such as metric averages, which may be inaccurately represented at the grain for reports created in this package. You must ensure that whichever metrics you pass through are appropriate to aggregate at the respective reporting levels in this package.
 
@@ -132,6 +165,8 @@ vars:
     twitter_ads_<default_source_table_name>_identifier: your_table_name 
 ```
 
+</details>
+
 ### (Optional) Step 6: Orchestrate your models with Fivetran Transformations for dbt Core™
 <details><summary>Expand for more details</summary>
 <br>
@@ -146,8 +181,8 @@ This dbt package is dependent on the following dbt packages. These dependencies 
 
 ```yml
 packages:
-    - package: fivetran/twitter_source
-      version: [">=0.7.0", "<0.8.0"]
+    - package: fivetran/twitter_ads_source
+      version: [">=0.8.0", "<0.9.0"]
     - package: fivetran/fivetran_utils
       version: [">=0.4.0", "<0.5.0"]
     - package: dbt-labs/dbt_utils
@@ -165,6 +200,13 @@ In creating this package, which is meant for a wide range of use cases, we had t
 
 ### Contributions
 A small team of analytics engineers at Fivetran develops these dbt packages. However, the packages are made better by community contributions.
+
+We highly encourage and welcome contributions to this package. Check out [this dbt Discourse article](https://discourse.getdbt.com/t/contributing-to-a-dbt-package/657) on the best workflow for contributing to a package.
+
+#### Contributors
+We thank [everyone](https://github.com/fivetran/dbt_twitter/graphs/contributors) who has taken the time to contribute. Each PR, bug report, and feature request has made this package better and is truly appreciated.
+
+A special thank you to [Seer Interactive](https://www.seerinteractive.com/?utm_campaign=Fivetran%20%7C%20Models&utm_source=Fivetran&utm_medium=Fivetran%20Documentation), who we closely collaborated with to introduce native conversion support to our Ad packages.
 
 ## Are there any resources available?
 - If you have questions or want to reach out for help, see the [GitHub Issue](https://github.com/fivetran/dbt_twitter/issues/new/choose) section to find the right avenue of support for you.
