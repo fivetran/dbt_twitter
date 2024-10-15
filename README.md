@@ -122,7 +122,7 @@ vars:
         - <any conversion value/sale amount field you want to include>
 ```
 
-> We recommend using the same *types* of conversion events for `twitter_ads__conversion_fields` and `twitter_ads__conversion_sale_amount_fields` so that `total_conversions` and `total_conversions_sale_amount` properly map onto each other, but this is not required.
+> We recommend using the same *types* of conversion events for `twitter_ads__conversion_fields` and `twitter_ads__conversion_sale_amount_fields` so that `total_conversions` and `total_conversions_sale_amount` properly map onto each other, but this is not required. We chose to split conversions and conversion values into 2 distinct variables due to the N:1 relationship beteen conversions and conversion value fields.
 
 #### Passing Through Additional Metrics
 Besides the above conversion fields, this package by default will select `clicks`, `url_clicks`, `impressions`, `spend` (calculated from `billed_charge_local_micro`), and `spend_micro` (aliased from `billed_charge_local_micro`) from the source reporting tables to store into the staging models. If you would like to pass through additional metrics to the staging models, add the below configurations to your `dbt_project.yml` file. These variables allow for the pass-through fields to be aliased (`alias`) if desired, but not required. Use the below format for declaring the respective pass-through variables:
