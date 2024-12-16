@@ -1,3 +1,10 @@
+# dbt_twitter version.version
+
+## Documentation
+- Updated README:
+    - Fixed broken links to dbt model documentation.
+    - Applied minor formatting improvements.
+
 # dbt_twitter v0.8.0
 
 [PR #26](https://github.com/fivetran/dbt_twitter/pull/26) includes the following **BREAKING CHANGE** updates:

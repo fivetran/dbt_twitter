@@ -1,4 +1,6 @@
-<p align="center">
+# Twitter Ads Transformation dbt Package ([Docs](https://fivetran.github.io/dbt_twitter/))
+
+<p align="left">
     <a alt="License"
         href="https://github.com/fivetran/dbt_twitter/blob/main/LICENSE">
         <img src="https://img.shields.io/badge/License-Apache%202.0-blue.svg" /></a>
@@ -10,7 +12,6 @@
         <img src="https://img.shields.io/badge/Contributions-welcome-blueviolet" /></a>
 </p>
 
-# Twitter Ads Transformation dbt Package ([Docs](https://fivetran.github.io/dbt_twitter/))
 ## What does this dbt package do?
 - Produces modeled tables that leverage Twitter Ads data from [Fivetran's connector](https://fivetran.com/docs/applications/twitter-ads) in the format described by [this ERD](https://fivetran.com/docs/applications/twitter-ads#schemainformation) and builds off the output of our [Twitter Ads source package](https://github.com/fivetran/dbt_twitter_source).
 - Enables you to better understand the performance of your ads across varying grains:
@@ -25,12 +26,12 @@ The following table provides a detailed list of all tables materialized within t
 
 | **Table**                | **Description**                                                                                                                                |
 | ------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------- |
-| [twitter_ads__account_report](https://fivetran.github.io/dbt_twitter/#!/model/model.twitter.twitter_ads__account_report)             | Each record in this table represents the daily performance at the account and ad-placement level. |
-| [twitter_ads__campaign_report](https://fivetran.github.io/dbt_twitter/#!/model/model.twitter.twitter_ads__campaign_report)            | Each record in this table represents the daily performance of ads at the account, campaign, and ad-placement level. |
-| [twitter_ads__line_item_report](https://fivetran.github.io/dbt_twitter/#!/model/model.twitter.twitter_ads__line_item_report)            | Each record in this table represents the daily performance of ads at the campaign, account, line item, and ad-placement level. Line items are essentially ad groups in other platforms. |
-| [twitter_ads__keyword_report](https://fivetran.github.io/dbt_twitter/#!/model/model.twitter.twitter_ads__keyword_report)            | Each record in this table represents the daily performance of a keyword at the account, campaign, line item, keyword, and ad-placement level. |
-| [twitter_ads__promoted_tweet_report](https://fivetran.github.io/dbt_twitter/#!/model/model.twitter.twitter_ads__pin_promotion_report)            | Each record in this table represents the daily performance of ads at the account, campaign, line item, promoted tweet, and ad-placement level. |
-| [twitter_ads__url_report](https://fivetran.github.io/dbt_twitter/#!/model/model.twitter.twitter_ads__url_report)            |Each record in this table represents the daily performance of ads at the account, campaign, line item, promoted tweet, url, and ad-placement level. |                                                     |
+| [twitter_ads__account_report](https://fivetran.github.io/dbt_twitter/#!/model/model.twitter_ads.twitter_ads__account_report)             | Each record in this table represents the daily performance at the account and ad-placement level. |
+| [twitter_ads__campaign_report](https://fivetran.github.io/dbt_twitter/#!/model/model.twitter_ads.twitter_ads__campaign_report)            | Each record in this table represents the daily performance of ads at the account, campaign, and ad-placement level. |
+| [twitter_ads__line_item_report](https://fivetran.github.io/dbt_twitter/#!/model/model.twitter_ads.twitter_ads__line_item_report)            | Each record in this table represents the daily performance of ads at the campaign, account, line item, and ad-placement level. Line items are essentially ad groups in other platforms. |
+| [twitter_ads__keyword_report](https://fivetran.github.io/dbt_twitter/#!/model/model.twitter_ads.twitter_ads__keyword_report)            | Each record in this table represents the daily performance of a keyword at the account, campaign, line item, keyword, and ad-placement level. |
+| [twitter_ads__promoted_tweet_report](https://fivetran.github.io/dbt_twitter/#!/model/model.twitter_ads.twitter_ads__pin_promotion_report)            | Each record in this table represents the daily performance of ads at the account, campaign, line item, promoted tweet, and ad-placement level. |
+| [twitter_ads__url_report](https://fivetran.github.io/dbt_twitter/#!/model/model.twitter_ads.twitter_ads__url_report)            |Each record in this table represents the daily performance of ads at the account, campaign, line item, promoted tweet, url, and ad-placement level. |                                                     |
 
 <!--section-end-->
 
