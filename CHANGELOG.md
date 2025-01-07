@@ -1,6 +1,12 @@
 # dbt_twitter version.version
 
 ## Documentation
+- Added Quickstart model counts to README. ([#30](https://github.com/fivetran/dbt_twitter/pull/30))
+- Corrected references to connectors and connections in the README. ([#30](https://github.com/fivetran/dbt_twitter/pull/30))
+
+# dbt_twitter version.version
+
+## Documentation
 - Updated README:
     - Fixed broken links to dbt model documentation.
     - Applied minor formatting improvements.
