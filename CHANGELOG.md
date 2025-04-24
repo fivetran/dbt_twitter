@@ -12,15 +12,18 @@
 | stg_twitter_ads__campaign_regions_report_tmp | New Staging Model |   |   | Uses `campaign_regions_report` source table   |
 
 ## Feature Updates
-- Added the `twitter_ads__using_campaign_locations_report` and `twitter_ads__using_campaign_regions_report` variables, which can be used to enable or disable the above transformations related to the `campaign_locations_report` and `campaign_regions_report` tables.
+- Added the `twitter_ads__using_campaign_locations_report` and `twitter_ads__using_campaign_regions_report` variables, which can be used to enable or disable the above transformations related to the `campaign_locations_report` and `campaign_regions_report` tables. ([#31](https://github.com/fivetran/dbt_twitter/pull/31))
   - These variables are dynamically set for Fivetran Quickstart users, but **false** by default otherwise. See [README](https://github.com/fivetran/dbt_twitter?tab=readme-ov-file#country-and-region-reports) for more details.
-- Introduced the `twitter_ads__campaign_locations_report_passthrough_metrics` and `twitter_ads__campaign_regions_report_passthrough_metrics` passthrough column variables, which can be used to pass through additional metrics fields from their respective source reports to downstream models. See [README](https://github.com/fivetran/dbt_twitter?tab=readme-ov-file#passing-through-additional-metrics) for more details.
+- Introduced the `twitter_ads__campaign_locations_report_passthrough_metrics` and `twitter_ads__campaign_regions_report_passthrough_metrics` passthrough column variables, which can be used to pass through additional metrics fields from their respective source reports to downstream models. See [README](https://github.com/fivetran/dbt_twitter?tab=readme-ov-file#passing-through-additional-metrics) for more details. ([#31](https://github.com/fivetran/dbt_twitter/pull/31))
 
 ## Documentation
 - Added Quickstart model counts to README. ([#30](https://github.com/fivetran/dbt_twitter/pull/30))
 - Corrected references to connectors and connections in the README. ([#30](https://github.com/fivetran/dbt_twitter/pull/30))
 - Fixed broken links to dbt model documentation in the README. ([#29](https://github.com/fivetran/dbt_twitter/pull/29))
 - Applied minor formatting improvements to the README. ([#29](https://github.com/fivetran/dbt_twitter/pull/29))
+
+## Under the Hood
+- Added data validation tests for the new country and region report end models. ([#31](https://github.com/fivetran/dbt_twitter/pull/31))
 
 # dbt_twitter v0.8.0
 
