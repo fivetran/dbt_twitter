@@ -21,6 +21,7 @@
 - Corrected references to connectors and connections in the README. ([#30](https://github.com/fivetran/dbt_twitter/pull/30))
 - Fixed broken links to dbt model documentation in the README. ([#29](https://github.com/fivetran/dbt_twitter/pull/29))
 - Applied minor formatting improvements to the README. ([#29](https://github.com/fivetran/dbt_twitter/pull/29))
+- Updated LICENSE. ([#31](https://github.com/fivetran/dbt_twitter/pull/31))
 
 ## Under the Hood
 - Added data validation tests for the new country and region report end models. ([#31](https://github.com/fivetran/dbt_twitter/pull/31))
