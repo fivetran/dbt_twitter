@@ -1,11 +1,13 @@
 # dbt_twitter v0.9.0
 
+This release includes the following updates:
+
 ## Schema Changes
 **6 total changes • 0 possible breaking changes**
 | **Model** | **Change type** | **Old name** | **New name** | **Notes** |
 | ---------------- | --------------- | ------------ | ------------ | --------- |
-| twitter_ads__campaign_country_report | New Transform Model |   |   |  Each record in this table represents the daily performance of ads at the account, campaign, and ad-placement level, segmented by country.  |
-| twitter_ads__campaign_region_report | New Transform Model |   |   | Each record in this table represents the daily performance of ads at the account, campaign, and ad-placement level, segmented by geographic region.   |
+| [twitter_ads__campaign_country_report](https://fivetran.github.io/dbt_twitter/#!/model/model.twitter_ads.twitter_ads__campaign_country_report) | New Transform Model |   |   |  Each record in this table represents the daily performance of ads at the account, campaign, and ad-placement level, segmented by country.  |
+| [twitter_ads__campaign_region_report](https://fivetran.github.io/dbt_twitter/#!/model/model.twitter_ads.twitter_ads__campaign_region_report) | New Transform Model |   |   | Each record in this table represents the daily performance of ads at the account, campaign, and ad-placement level, segmented by geographic region.   |
 | stg_twitter_ads__campaign_locations_report | New Staging Model |   |   |  Uses `campaign_locations_report` source table  |
 | stg_twitter_ads__campaign_locations_report_tmp | New Staging Model |   |   | Uses `campaign_locations_report` source table   |
 | stg_twitter_ads__campaign_regions_report | New Staging Model |   |   |  Uses `campaign_regions_report` source table  |
@@ -14,7 +16,7 @@
 ## Feature Updates
 - Added the `twitter_ads__using_campaign_locations_report` and `twitter_ads__using_campaign_regions_report` variables, which can be used to enable or disable the above transformations related to the `campaign_locations_report` and `campaign_regions_report` tables. ([#31](https://github.com/fivetran/dbt_twitter/pull/31))
   - These variables are dynamically set for Fivetran Quickstart users, but **false** by default otherwise. See [README](https://github.com/fivetran/dbt_twitter?tab=readme-ov-file#country-and-region-reports) for more details.
-- Introduced the `twitter_ads__campaign_locations_report_passthrough_metrics` and `twitter_ads__campaign_regions_report_passthrough_metrics` passthrough column variables, which can be used to pass through additional metrics fields from their respective source reports to downstream models. See [README](https://github.com/fivetran/dbt_twitter?tab=readme-ov-file#passing-through-additional-metrics) for more details. ([#31](https://github.com/fivetran/dbt_twitter/pull/31))
+- Introduced the `twitter_ads__campaign_locations_report_passthrough_metrics` and `twitter_ads__campaign_regions_report_passthrough_metrics` passthrough column variables, which can be used to pass through additional metrics fields from their respective source reports to downstream models (`twitter_ads__campaign_country_report` and `twitter_ads__campaign_region_report`, respectively). See [README](https://github.com/fivetran/dbt_twitter?tab=readme-ov-file#passing-through-additional-metrics) for more details. ([#31](https://github.com/fivetran/dbt_twitter/pull/31))
 
 ## Documentation
 - Added Quickstart model counts to README. ([#30](https://github.com/fivetran/dbt_twitter/pull/30))

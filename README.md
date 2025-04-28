@@ -28,8 +28,8 @@ The following table provides a detailed list of all tables materialized within t
 | ------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------- |
 | [twitter_ads__account_report](https://fivetran.github.io/dbt_twitter/#!/model/model.twitter_ads.twitter_ads__account_report)             | Each record in this table represents the daily performance at the account and ad-placement level. |
 | [twitter_ads__campaign_report](https://fivetran.github.io/dbt_twitter/#!/model/model.twitter_ads.twitter_ads__campaign_report)            | Each record in this table represents the daily performance of ads at the account, campaign, and ad-placement level. |
-| [twitter_ads__campaign_locations_report](https://fivetran.github.io/dbt_twitter/#!/model/model.twitter_ads.twitter_ads__campaign_locations_report)            | Each record in this table represents the daily performance of ads at the account, campaign, and ad-placement level, segmented by country. |
-| [twitter_ads__campaign_regions_report](https://fivetran.github.io/dbt_twitter/#!/model/model.twitter_ads.twitter_ads__campaign_regions_report)            | Each record in this table represents the daily performance of ads at the account, campaign, and ad-placement level, segmented by geographic region. |
+| [twitter_ads__campaign_country_report](https://fivetran.github.io/dbt_twitter/#!/model/model.twitter_ads.twitter_ads__campaign_country_report)            | Each record in this table represents the daily performance of ads at the account, campaign, and ad-placement level, segmented by country. |
+| [twitter_ads__campaign_region_report](https://fivetran.github.io/dbt_twitter/#!/model/model.twitter_ads.twitter_ads__campaign_region_report)            | Each record in this table represents the daily performance of ads at the account, campaign, and ad-placement level, segmented by geographic region. |
 | [twitter_ads__line_item_report](https://fivetran.github.io/dbt_twitter/#!/model/model.twitter_ads.twitter_ads__line_item_report)            | Each record in this table represents the daily performance of ads at the campaign, account, line item, and ad-placement level. Line items are essentially ad groups in other platforms. |
 | [twitter_ads__keyword_report](https://fivetran.github.io/dbt_twitter/#!/model/model.twitter_ads.twitter_ads__keyword_report)            | Each record in this table represents the daily performance of a keyword at the account, campaign, line item, keyword, and ad-placement level. |
 | [twitter_ads__promoted_tweet_report](https://fivetran.github.io/dbt_twitter/#!/model/model.twitter_ads.twitter_ads__pin_promotion_report)            | Each record in this table represents the daily performance of ads at the account, campaign, line item, promoted tweet, and ad-placement level. |
@@ -94,8 +94,8 @@ To enable transformations of the above geo-focused campaign reports, add the fol
 ```yml
 # dbt_project.yml
 vars:
-  twitter_ads__using_campaign_locations_report: True # False by default. Will enable/disable use of the `campaign_locations_report`
-  twitter_ads__using_campaign_regions_report: True # False by default. Will enable/disable use of the `campaign_regions_report`
+  twitter_ads__using_campaign_locations_report: True # False by default. Will enable/disable use of the `campaign_locations_report` and materialization of twitter_ads__campaign_country_report
+  twitter_ads__using_campaign_regions_report: True # False by default. Will enable/disable use of the `campaign_regions_report` and materialization of twitter_ads__campaign_region_report
 ```
 
 ### (Optional) Step 5: Additional configurations
@@ -162,7 +162,7 @@ vars:
         - name: "that_field"
     twitter_ads__promoted_tweet_report_passthrough_metrics: 
         - name: "that_field"
-    twitter_ads__campaign_locations_report_passthrough_metrics: 
+    twitter_ads__campaign_locations_report_passthrough_metrics: # Will persist to twitter_ads__campaign_country_report
         - name: "that_field"
     twitter_ads__campaign_regions_report_passthrough_metrics: 
         - name: "that_field"

@@ -23,6 +23,6 @@ public_models: [
   "twitter_ads__promoted_tweet_report",
   "twitter_ads__line_item_report",
   "twitter_ads__keyword_report",
-  "twitter_ads__campaign_locations_report",
-  "twitter_ads__campaign_regions_report"
+  "twitter_ads__campaign_country_report",
+  "twitter_ads__campaign_region_report"
 ]
