@@ -28,13 +28,15 @@ The following table provides a detailed list of all tables materialized within t
 | ------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------- |
 | [twitter_ads__account_report](https://fivetran.github.io/dbt_twitter/#!/model/model.twitter_ads.twitter_ads__account_report)             | Each record in this table represents the daily performance at the account and ad-placement level. |
 | [twitter_ads__campaign_report](https://fivetran.github.io/dbt_twitter/#!/model/model.twitter_ads.twitter_ads__campaign_report)            | Each record in this table represents the daily performance of ads at the account, campaign, and ad-placement level. |
+| [twitter_ads__campaign_country_report](https://fivetran.github.io/dbt_twitter/#!/model/model.twitter_ads.twitter_ads__campaign_country_report)            | Each record in this table represents the daily performance of ads at the account, campaign, and ad-placement level, segmented by country. |
+| [twitter_ads__campaign_region_report](https://fivetran.github.io/dbt_twitter/#!/model/model.twitter_ads.twitter_ads__campaign_region_report)            | Each record in this table represents the daily performance of ads at the account, campaign, and ad-placement level, segmented by geographic region. |
 | [twitter_ads__line_item_report](https://fivetran.github.io/dbt_twitter/#!/model/model.twitter_ads.twitter_ads__line_item_report)            | Each record in this table represents the daily performance of ads at the campaign, account, line item, and ad-placement level. Line items are essentially ad groups in other platforms. |
 | [twitter_ads__keyword_report](https://fivetran.github.io/dbt_twitter/#!/model/model.twitter_ads.twitter_ads__keyword_report)            | Each record in this table represents the daily performance of a keyword at the account, campaign, line item, keyword, and ad-placement level. |
 | [twitter_ads__promoted_tweet_report](https://fivetran.github.io/dbt_twitter/#!/model/model.twitter_ads.twitter_ads__pin_promotion_report)            | Each record in this table represents the daily performance of ads at the account, campaign, line item, promoted tweet, and ad-placement level. |
 | [twitter_ads__url_report](https://fivetran.github.io/dbt_twitter/#!/model/model.twitter_ads.twitter_ads__url_report)            |Each record in this table represents the daily performance of ads at the account, campaign, line item, promoted tweet, url, and ad-placement level. |                                                     |
 
 ### Materialized Models
-Each Quickstart transformation job run materializes 26 models if all components of this data model are enabled. This count includes all staging, intermediate, and final models materialized as `view`, `table`, or `incremental`.
+Each Quickstart transformation job run materializes 32 models if all components of this data model are enabled. This count includes all staging, intermediate, and final models materialized as `view`, `table`, or `incremental`.
 <!--section-end-->
 
 ## How do I use the dbt package?
@@ -59,7 +61,7 @@ If you are not using the downstream [Ad Reporting](https://github.com/fivetran/d
 # packages.yml
 packages:
   - package: fivetran/twitter_ads
-    version: [">=0.8.0", "<0.9.0"] # we recommend using ranges to capture non-breaking changes automatically
+    version: [">=0.9.0", "<0.10.0"] # we recommend using ranges to capture non-breaking changes automatically
 ```
 Do NOT include the `twitter_ads_source` package in this file. The transformation package itself has a dependency on it and will install the source package as well.
 
@@ -73,12 +75,27 @@ vars:
     twitter_ads_database: your_destination_name 
 ```
 
-#### Step 4: Disabling Keyword Models
+#### Step 4: Disabling or Enabling Models
+#### Keywords
 This package takes into consideration that not every Twitter Ads account tracks `keyword` performance, and allows you to disable the corresponding functionality by adding the following variable configuration:
 ```yml
 # dbt_project.yml
 vars:
-    twitter_ads__using_keywords: False # Default = true
+    twitter_ads__using_keywords: False # Default = true. Dynamically set for you if using the Twitter Ads package via Fivetran Quickstart
+```
+
+#### Country and Region Reports
+This package uses the `campaign_locations_report` and `campaign_regions_report` [pre-built](https://fivetran.com/docs/connectors/applications/twitter-ads#campaigntables) reports, but takes into consideration that not every user may use these tables.
+
+If you are running the Twitter Ads package via Fivetran Quickstart, transformations of the above tables will be dynamically enabled or disabled. Otherwise, transformations of these tables are **disabled** by default.
+
+To enable transformations of the above geo-focused campaign reports, add the following variable configurations to your root `dbt_project.yml` file:
+
+```yml
+# dbt_project.yml
+vars:
+  twitter_ads__using_campaign_locations_report: True # False by default. Will enable/disable use of the `campaign_locations_report` and materialization of twitter_ads__campaign_country_report
+  twitter_ads__using_campaign_regions_report: True # False by default. Will enable/disable use of the `campaign_regions_report` and materialization of twitter_ads__campaign_region_report
 ```
 
 ### (Optional) Step 5: Additional configurations
@@ -128,9 +145,9 @@ vars:
 > We recommend using the same *types* of conversion events for `twitter_ads__conversion_fields` and `twitter_ads__conversion_sale_amount_fields` so that `total_conversions` and `total_conversions_sale_amount` properly map onto each other, but this is not required. We chose to split conversions and conversion values into 2 distinct variables due to the N:1 relationship beteen conversions and conversion value fields.
 
 #### Passing Through Additional Metrics
-Besides the above conversion fields, this package by default will select `clicks`, `url_clicks`, `impressions`, `spend` (calculated from `billed_charge_local_micro`), and `spend_micro` (aliased from `billed_charge_local_micro`) from the source reporting tables to store into the staging models. If you would like to pass through additional metrics to the staging models, add the below configurations to your `dbt_project.yml` file. These variables allow for the pass-through fields to be aliased (`alias`) if desired, but not required. Use the below format for declaring the respective pass-through variables:
+In addition to the above conversion fields, this package by default will select `clicks`, `url_clicks`, `impressions`, `spend` (calculated from `billed_charge_local_micro`), and `spend_micro` (aliased from `billed_charge_local_micro`) from the source reporting tables to store into the staging models. If you would like to pass through additional metrics to the staging models, add the below configurations to your `dbt_project.yml` file. These variables allow for the pass-through fields to be aliased (`alias`) if desired, but not required. Use the below format for declaring the respective pass-through variables:
 
-> IMPORTANT: Make sure to exercise due diligence when adding metrics to these models. The metrics added by default (taps, impressions, and spend) have been vetted by the Fivetran team, maintaining this package for accuracy. There are metrics included within the source reports, such as metric averages, which may be inaccurately represented at the grain for reports created in this package. You must ensure that whichever metrics you pass through are appropriate to aggregate at the respective reporting levels in this package.
+> IMPORTANT: Make sure to exercise due diligence when adding metrics to these models. The metrics added by default (taps, impressions, spend, and conversions) have been vetted by the Fivetran team, maintaining this package for accuracy. There are metrics included within the source reports, such as metric averages, which may be inaccurately represented at the grain for reports created in this package. You must ensure that whichever metrics you pass through are appropriate to aggregate at the respective reporting levels in this package.
 
 ```yml
 # dbt_project.yml
@@ -144,6 +161,10 @@ vars:
     twitter_ads__line_item_keywords_report_passthrough_metrics: 
         - name: "that_field"
     twitter_ads__promoted_tweet_report_passthrough_metrics: 
+        - name: "that_field"
+    twitter_ads__campaign_locations_report_passthrough_metrics: # Will persist to twitter_ads__campaign_country_report
+        - name: "that_field"
+    twitter_ads__campaign_regions_report_passthrough_metrics: 
         - name: "that_field"
 ```
 #### Changing the Build Schema
@@ -185,7 +206,7 @@ This dbt package is dependent on the following dbt packages. These dependencies 
 ```yml
 packages:
     - package: fivetran/twitter_ads_source
-      version: [">=0.8.0", "<0.9.0"]
+      version: [">=0.9.0", "<0.10.0"]
     - package: fivetran/fivetran_utils
       version: [">=0.4.0", "<0.5.0"]
     - package: dbt-labs/dbt_utils

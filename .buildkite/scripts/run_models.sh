@@ -19,7 +19,7 @@ dbt deps
 dbt seed --target "$db" --full-refresh
 dbt run --target "$db" --full-refresh
 dbt test --target "$db"
-dbt run --vars '{twitter_ads__using_keywords: false, ad_reporting__url_report__using_null_filter: false}' --target "$db" --full-refresh
-dbt test --vars '{twitter_ads__using_keywords: false, ad_reporting__url_report__using_null_filter: false}' --target "$db"
+dbt run --vars '{twitter_ads__using_keywords: false, ad_reporting__url_report__using_null_filter: false, twitter_ads__using_campaign_locations_report: true, twitter_ads__using_campaign_regions_report: true}' --target "$db" --full-refresh
+dbt test --vars '{twitter_ads__using_keywords: false, ad_reporting__url_report__using_null_filter: false, twitter_ads__using_campaign_locations_report: true, twitter_ads__using_campaign_regions_report: true}' --target "$db"
 
 dbt run-operation fivetran_utils.drop_schemas_automation --target "$db"

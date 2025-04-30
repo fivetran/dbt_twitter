@@ -1,5 +1,5 @@
 name: 'twitter_integration_tests'
-version: '0.8.0'
+version: '0.9.0'
 profile: 'integration_tests'
 config-version: 2
 snapshot-paths: ["snapshots"]
@@ -8,15 +8,24 @@ models:
   +schema: "twitter_ads_{{ var('directed_schema','dev') }}"
   
 vars:
+  # Comment OUT for docs generation
   twitter_ads__line_item_report_passthrough_metrics:
     - name: "conversion_purchases_metric"
     - name: "conversion_custom_sale_amount"
       alias: "custom_conversion_value"
-      
+
+  twitter_ads__conversion_fields:
+    - conversion_purchases_metric
+    - conversion_custom_metric
+
   twitter_ads__conversion_sale_amount_fields:
     - conversion_purchases_sale_amount
     - conversion_custom_sale_amount
     - conversion_sign_ups_sale_amount
+
+  # Comment IN for docs generation and running validation tests
+  # twitter_ads__using_campaign_locations_report: true
+  # twitter_ads__using_campaign_regions_report: true
 
   twitter_ads_source:
     twitter_ads_schema: twitter_ads_integration_tests_4
@@ -32,6 +41,8 @@ vars:
     twitter_ads_line_item_report_identifier: "twitter_line_item_report_data"
     twitter_ads_account_report_identifier: "twitter_account_report_data"
     twitter_ads_line_item_keywords_report_identifier: "twitter_line_item_keywords_report_data"
+  twitter_ads_campaign_locations_report_identifier: "twitter_campaign_locations_report_data"
+  twitter_ads_campaign_regions_report_identifier: "twitter_campaign_regions_report_data"
 
 seeds:
   twitter_integration_tests:
@@ -46,6 +57,8 @@ seeds:
     twitter_promoted_tweet_report_data:
       +column_types:
         impressions: "{{ 'INT64' if target.type == 'bigquery' else 'bigint' }}"
+  +docs:
+    show: false
 
 dispatch:
   - macro_namespace: dbt_utils
