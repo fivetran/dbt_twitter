@@ -1,6 +1,3 @@
 packages:
-# - package: fivetran/twitter_ads_source
-#   version: [">=0.9.0", "<0.10.0"]
-# - local: ../Twitter_ads/dbt_twitter_source
-- git: https://github.com/fivetran/dbt_twitter_source.git
-  revision: feature-update/add-geo-reports
+- package: fivetran/twitter_ads_source
+  version: [">=0.9.0", "<0.10.0"]
