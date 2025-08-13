@@ -1,6 +1,6 @@
 {% macro twitter_ads_extract_url_parameter(field, url_parameter) -%}
 
-{{ return(adapter.dispatch('twitter_ads_extract_url_parameter', 'twitter_ads_source') (field, url_parameter)) }}
+{{ return(adapter.dispatch('twitter_ads_extract_url_parameter', 'twitter_ads') (field, url_parameter)) }}
 
 {% endmacro %}
 

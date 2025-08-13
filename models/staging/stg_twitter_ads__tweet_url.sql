@@ -40,11 +40,11 @@ final as (
         {{ dbt.split_part('expanded_url', "'?'", 1) }} as base_url,
         {{ dbt_utils.get_url_host('expanded_url') }} as url_host,
         '/' || {{ dbt_utils.get_url_path('expanded_url') }} as url_path,
-        {{ twitter_ads_source.twitter_ads_extract_url_parameter('expanded_url', 'utm_source') }} as utm_source,
-        {{ twitter_ads_source.twitter_ads_extract_url_parameter('expanded_url', 'utm_medium') }} as utm_medium,
-        {{ twitter_ads_source.twitter_ads_extract_url_parameter('expanded_url', 'utm_campaign') }} as utm_campaign,
-        {{ twitter_ads_source.twitter_ads_extract_url_parameter('expanded_url', 'utm_content') }} as utm_content,
-        {{ twitter_ads_source.twitter_ads_extract_url_parameter('expanded_url', 'utm_term') }} as utm_term
+        {{ twitter_ads.twitter_ads_extract_url_parameter('expanded_url', 'utm_source') }} as utm_source,
+        {{ twitter_ads.twitter_ads_extract_url_parameter('expanded_url', 'utm_medium') }} as utm_medium,
+        {{ twitter_ads.twitter_ads_extract_url_parameter('expanded_url', 'utm_campaign') }} as utm_campaign,
+        {{ twitter_ads.twitter_ads_extract_url_parameter('expanded_url', 'utm_content') }} as utm_content,
+        {{ twitter_ads.twitter_ads_extract_url_parameter('expanded_url', 'utm_term') }} as utm_term
     
     from fields
 
