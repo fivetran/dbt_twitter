@@ -1,0 +1,458 @@
+version: 2
+
+models:
+  - name: stg_twitter_ads__account_history
+    description: Each record represents a version of each account. The versions can be differentiated by the updated_at timestamp.
+    columns:
+      - name: source_relation
+        description: "{{ doc('source_relation') }}"
+      - name: approval_status
+        description: The approval status of the account.
+      - name: business_id
+        description: The ID of the related business.
+      - name: business_name
+        description: The name of the related business.
+      - name: created_timestamp
+        description: "{{ doc('created_at') }}"
+      - name: is_deleted
+        description: "{{ doc('deleted') }}"
+      - name: account_id
+        description: The ID of the account.
+        tests:
+          - not_null
+      - name: industry_type
+        description: The industry of the accounts.
+      - name: name
+        description: The name of the account.
+      - name: timezone
+        description: The timezone the account is set to.
+      - name: timezone_switched_timestamp
+        description: The timestamp the account's timezone was last changed.
+      - name: updated_timestamp
+        description: "{{ doc('updated_at') }}"
+      - name: is_latest_version
+        description: Whether the record is the most latest version for the account
+      - name: salt
+        description: The random encryption key used to hash data.
+  - name: stg_twitter_ads__campaign_history
+    description: Each record represents a version of each campaign. The versions can be differentiated by the updated_at timestamp.
+    columns:
+      - name: source_relation
+        description: "{{ doc('source_relation') }}"
+      - name: account_id
+        description: The ID of the related account.
+      - name: created_timestamp
+        description: "{{ doc('created_at') }}"
+      - name: currency
+        description: The currency all metrics for the account are set to.
+      - name: daily_budget_amount_local_micro
+        description: The daily budget amount to be allocated to the campaign, in micros. The currency associated with the specified funding instrument will be used.
+      - name: is_deleted
+        description: "{{ doc('deleted') }}"
+      - name: duration_in_days
+        description: The time period within which the frequency_cap is achieved.
+      - name: end_timestamp
+        description: The time the campaign will end
+      - name: entity_status
+        description: The status of the campaign.
+      - name: frequency_cap
+        description: The maximum number of times an ad could be delivered to a user.
+      - name: campaign_id
+        description: The ID of the campaign.
+        tests:
+          - not_null
+      - name: campaign_name
+        description: The name of the campaign.
+      - name: is_servable
+        description: Whether the campaign is in a state to be actively served to users.
+      - name: is_standard_delivery
+        description: Whether standard delivery is enabled (vs accelerated delivery).
+      - name: start_timestamp
+        description: The time the campaign will start.
+      - name: total_budget_amount_local_micro
+        description: The total budget amount to be allocated to the campaign, in micros.
+      - name: updated_timestamp
+        description: "{{ doc('updated_at') }}"
+      - name: is_latest_version
+        description: Whether the record is the most latest version for the campaign
+      - name: funding_instrument_id
+        description: Reference to the funding instrument.
+      - name: daily_budget_amount
+        description: The daily budget amount to be allocated to the campaign. The currency associated with the specified funding instrument will be used.
+      - name: total_budget_amount
+        description: The total budget amount to be allocated to the campaign.
+  - name: stg_twitter_ads__line_item_history
+    description: Each record represents a version of each line item. The versions can be differentiated by the updated_at timestamp.
+    columns:
+      - name: source_relation
+        description: "{{ doc('source_relation') }}"
+      - name: advertiser_domain
+        description: The website domain for this advertiser, without the protocol specification.
+      - name: advertiser_user_id
+        description: The Twitter user identifier for the handle promoting the ad.
+      - name: automatically_select_bid
+        description: Whether automatically optimize bidding is enabled based on daily budget and campaign flight dates.
+      - name: bid_amount_local_micro
+        description: The bid amount to be associated with this line item, in micros.
+      - name: bid_type
+        description: The bidding mechanism.
+      - name: bid_unit
+        description: The bid unit for this line item.
+      - name: campaign_id
+        description: The ID of the related campaign.
+      - name: charge_by
+        description: The unit to charge this line item by.
+      - name: created_timestamp
+        description: "{{ doc('created_at') }}"
+      - name: creative_source
+        description: The source of the creatives for the line item.
+      - name: currency
+        description: The currency in which metrics will be reported.
+      - name: is_deleted
+        description: "{{ doc('deleted') }}"
+      - name: end_timestamp
+        description: The timestamp at which the line item will stop being served.
+      - name: entity_status
+        description: The status of the line item.
+      - name: line_item_id
+        description: The ID of the line item.
+        tests:
+          - not_null
+      - name: name
+        description: The name of the line item.
+      - name: objective
+        description: The campaign objective for this line item.
+      - name: optimization
+        description: The optimization setting to use with this line item.
+      - name: primary_web_event_tag
+        description: The identifier of the primary web event tag. Allows more accurate tracking of engagements for the campaign pertaining to this line item.
+      - name: product_type
+        description: The type of promoted product that this line item will contain.
+      - name: start_timestamp
+        description: The timestamp at which the line item will start being served.
+      - name: target_cpa_local_micro
+        description: The target cost per acquisition for the line item, in micros.
+      - name: total_budget_amount_local_micro
+        description: The total budget amount to be allocated to the line item, in micros.
+      - name: updated_timestamp
+        description: "{{ doc('updated_at') }}"
+      - name: is_latest_version
+        description: Whether the record is the most latest version for the line item.
+      - name: bid_amount
+        description: The bid amount to be associated with this line item.
+      - name: total_budget_amount
+        description: The total budget amount to be allocated to the campaign.
+      - name: target_cpa
+        description: The target cost per acquisition for the line item.
+  - name: stg_twitter_ads__promoted_tweet_history
+    description: Each record represents a version of each promoted tweet. The versions can be differentiated by the updated_at timestamp.
+    columns:
+      - name: source_relation
+        description: "{{ doc('source_relation') }}"
+      - name: approval_status
+        description: The approval status of the promoted tweet.
+      - name: created_timestamp
+        description: "{{ doc('created_at') }}"
+      - name: is_deleted
+        description: "{{ doc('deleted') }}"
+      - name: entity_status
+        description: The status of the promoted tweet.
+      - name: promoted_tweet_id
+        description: The ID of the promoted tweet.
+        tests:
+          - not_null
+      - name: line_item_id
+        description: The ID of the related line item.
+      - name: tweet_id
+        description: The ID of the related tweet.
+      - name: updated_timestamp
+        description: "{{ doc('updated_at') }}"
+      - name: is_latest_version
+        description: Whether the record is the most latest version for the promoted tweet.
+  - name: stg_twitter_ads__promoted_tweet_report
+    description: Each record represents the performance of a promoted tweet on a given day, in the tweet's defined placement.
+    columns:
+      - name: source_relation
+        description: "{{ doc('source_relation') }}"
+      - name: account_id
+        description: The ID of the related account.
+      - name: spend_micro
+        description: The spend (in micros) for the promoted tweet on that day.
+      - name: spend
+        description: The spend for the promoted tweet on that day.
+      - name: clicks
+        description: The clicks for the promoted tweet on that day. Includes clicks on the URL (shortened or regular links), profile pic, screen name, username, detail, hashtags, and likes.
+      - name: date_day
+        description: The date of the performance.
+        tests:
+          - not_null
+      - name: impressions
+        description: The impressions for the promoted tweet on that day.  This is the number of users who see a Promoted Ad either in their home timeline or search results.
+      - name: promoted_tweet_id
+        description: The ID of the related promoted tweet.
+        tests:
+          - not_null
+      - name: url_clicks
+        description: The url clicks for the promoted tweet on that day.
+      - name: placement
+        description: Where on Twitter the ad is being displayed. Possible values include 'ALL_ON_TWITTER', 'PUBLISHER_NETWORK', 'TWITTER_PROFILE', 'TWITTER_SEARCH', 'TWITTER_TIMELINE', and 'TAP_*', which are more granular options for `PUBLISHER_NETWORK`.
+        tests:
+          - not_null
+      - name: conversion_purchases_metric
+        description: Total number of purchases. The sum of post view, post engagement, and assisted purchases for both your website and mobile app. Included by the `twitter_ads__conversion_fields` variable by default.
+      - name: conversion_custom_metric
+        description: The number of conversions of type CUSTOM. Included by the `twitter_ads__conversion_fields` variable by default.
+      - name: conversion_purchases_sale_amount
+        description: The sale amount corresponding to PURCHASE conversion events. Included by the `twitter_ads__conversion_sale_amount_fields` variable by default.
+      - name: conversion_custom_sale_amount
+        description: The sale amount corresponding to PURCHASE conversion events. Included by the `twitter_ads__conversion_sale_amount_fields` variable by default.
+  - name: stg_twitter_ads__tweet_url
+    description: Each record represents a URL used in a tweet.
+    columns:
+      - name: source_relation
+        description: "{{ doc('source_relation') }}"
+      - name: display_url
+        description: The URL as it will be displayed.
+      - name: expanded_url
+        description: The fully expanded URL.
+      - name: index
+        description: The index of the URL within the tweet (ie if there are multiple URLs)
+        tests:
+          - not_null
+      - name: indices
+        description: The start and end point of where the URL is placed in the tweet text.
+      - name: tweet_id
+        description: The ID of the related tweet.
+        tests:
+          - not_null
+      - name: url
+        description: The 't.co' shortened URL.
+      - name: base_url
+        description: The base URL of the ad, extracted from the `expanded_url`.
+      - name: url_host
+        description: The URL host of the ad, extracted from the `expanded_url`.
+      - name: url_path
+        description: The URL path of the ad, extracted from the `expanded_url`.
+      - name: utm_source
+        description: The utm_source parameter of the ad, extracted from the `expanded_url`.
+      - name: utm_medium
+        description: The utm_medium parameter of the ad, extracted from the `expanded_url`.
+      - name: utm_campaign
+        description: The utm_campaign parameter of the ad, extracted from the `expanded_url`.
+      - name: utm_content
+        description: The utm_content parameter of the ad, extracted from the `expanded_url`.
+      - name: utm_term
+        description: The utm_term parameter of the ad, extracted from the `expanded_url`.
+  - name: stg_twitter_ads__campaign_report
+    description: Each record represents the performance of an ad campaign on a given day, for its placement in Twitter.
+    columns:
+      - name: source_relation
+        description: "{{ doc('source_relation') }}"
+      - name: account_id
+        description: The ID of the related account.
+      - name: spend_micro
+        description: The spend for the campaign on that day, in micros and in whichever currency was selected during account creation.
+      - name: spend
+        description: The spend for the campaign on that day in whichever currency was selected during account creation.
+      - name: clicks
+        description: The clicks for the campaign on that day. Includes clicks on the URL (shortened or regular links), profile pic, screen name, username, detail, hashtags, and likes.
+      - name: date_day
+        description: The date of the performance.
+        tests:
+          - not_null
+      - name: impressions
+        description: The impressions for the campaign on that day.  This is the number of users who see a Promoted Ad either in their home timeline or search results.
+      - name: campaign_id
+        description: The ID of the campaign.
+        tests:
+          - not_null
+      - name: url_clicks
+        description: The url clicks for the campaign on that day.
+      - name: placement
+        description: Where on Twitter the ad is being displayed. Possible values include 'ALL_ON_TWITTER', 'PUBLISHER_NETWORK', 'TWITTER_PROFILE', 'TWITTER_SEARCH', 'TWITTER_TIMELINE', and 'TAP_*', which are more granular options for `PUBLISHER_NETWORK`.
+        tests:
+          - not_null
+      - name: conversion_purchases_metric
+        description: Total number of purchases. The sum of post view, post engagement, and assisted purchases for both your website and mobile app. Included by the `twitter_ads__conversion_fields` variable by default.
+      - name: conversion_custom_metric
+        description: The number of conversions of type CUSTOM. Included by the `twitter_ads__conversion_fields` variable by default.
+      - name: conversion_purchases_sale_amount
+        description: The sale amount corresponding to PURCHASE conversion events. Included by the `twitter_ads__conversion_sale_amount_fields` variable by default.
+      - name: conversion_custom_sale_amount
+        description: The sale amount corresponding to PURCHASE conversion events. Included by the `twitter_ads__conversion_sale_amount_fields` variable by default.
+  - name: stg_twitter_ads__line_item_report
+    description: Each record represents the performance of a line item (ad group) on a given day, for its placement in Twitter.
+    columns:
+      - name: source_relation
+        description: "{{ doc('source_relation') }}"
+      - name: account_id
+        description: The ID of the related account.
+      - name: spend_micro
+        description: The spend for the line item on that day, in micros and in whichever currency was selected during account creation.
+      - name: spend
+        description: The spend for the line item on that day in whichever currency was selected during account creation.
+      - name: clicks
+        description: The clicks for the line item on that day. Includes clicks on the URL (shortened or regular links), profile pic, screen name, username, detail, hashtags, and likes.
+      - name: date_day
+        description: The date of the performance.
+        tests:
+          - not_null
+      - name: impressions
+        description: The impressions for the line item on that day.  This is the number of users who see a Promoted Ad either in their home timeline or search results.
+      - name: line_item_id
+        description: The ID of the line item.
+        tests:
+          - not_null
+      - name: url_clicks
+        description: The url clicks for the line item on that day.
+      - name: placement
+        description: Where on Twitter the ad is being displayed. Possible values include 'ALL_ON_TWITTER', 'PUBLISHER_NETWORK', 'TWITTER_PROFILE', 'TWITTER_SEARCH', 'TWITTER_TIMELINE', and 'TAP_*', which are more granular options for `PUBLISHER_NETWORK`.
+        tests:
+          - not_null
+      - name: conversion_purchases_metric
+        description: Total number of purchases. The sum of post view, post engagement, and assisted purchases for both your website and mobile app. Included by the `twitter_ads__conversion_fields` variable by default.
+      - name: conversion_custom_metric
+        description: The number of conversions of type CUSTOM. Included by the `twitter_ads__conversion_fields` variable by default.
+      - name: conversion_purchases_sale_amount
+        description: The sale amount corresponding to PURCHASE conversion events. Included by the `twitter_ads__conversion_sale_amount_fields` variable by default.
+      - name: conversion_custom_sale_amount
+        description: The sale amount corresponding to PURCHASE conversion events. Included by the `twitter_ads__conversion_sale_amount_fields` variable by default.
+  - name: stg_twitter_ads__line_item_keywords_report
+    description: Each record represents the performance of a line item (ad group) and keyword combination on a given day, for its placement in Twitter.
+    columns:
+      - name: source_relation
+        description: "{{ doc('source_relation') }}"
+      - name: keyword_id
+        description: Unique key of the table built from the combination of 'account_id', 'line_item_id','segment', and 'placement' fields.
+        tests:
+          - not_null
+      - name: account_id
+        description: The ID of the related account.
+      - name: spend_micro
+        description: The spend for the line item + keyword on that day, in micros and in whichever currency was selected during account creation.
+      - name: spend
+        description: The spend for the line item + keyword on that day in whichever currency was selected during account creation.
+      - name: clicks
+        description: The clicks for the line item + keyword on that day. Includes clicks on the URL (shortened or regular links), profile pic, screen name, username, detail, hashtags, and likes.
+      - name: date_day
+        description: The date of the performance.
+        tests:
+          - not_null
+      - name: impressions
+        description: The impressions for the line item + keyword on that day.  This is the number of users who see a Promoted Ad either in their home timeline or search results.
+      - name: line_item_id
+        description: The ID of the line item.
+      - name: url_clicks
+        description: The url clicks for the line item + keyword on that day.
+      - name: keyword
+        description: The keyword whose performance is being tracked.
+      - name: placement
+        description: Where on Twitter the ad is being displayed. Possible values include 'ALL_ON_TWITTER', 'PUBLISHER_NETWORK', 'TWITTER_PROFILE', 'TWITTER_SEARCH', 'TWITTER_TIMELINE', and 'TAP_*', which are more granular options for `PUBLISHER_NETWORK`.
+      - name: conversion_purchases_metric
+        description: Total number of purchases. The sum of post view, post engagement, and assisted purchases for both your website and mobile app. Included by the `twitter_ads__conversion_fields` variable by default.
+      - name: conversion_custom_metric
+        description: The number of conversions of type CUSTOM. Included by the `twitter_ads__conversion_fields` variable by default.
+      - name: conversion_purchases_sale_amount
+        description: The sale amount corresponding to PURCHASE conversion events. Included by the `twitter_ads__conversion_sale_amount_fields` variable by default.
+      - name: conversion_custom_sale_amount
+        description: The sale amount corresponding to PURCHASE conversion events. Included by the `twitter_ads__conversion_sale_amount_fields` variable by default.
+        
+  - name: stg_twitter_ads__tweet
+    description: Each record represents a tweet, promoted or not.
+    columns:
+      - name: source_relation
+        description: "{{ doc('source_relation') }}"
+      - name: account_id
+        description: The ID of the related account.
+      - name: tweet_id
+        description: Unique identifier of the tweet.
+        tests:
+          - not_null
+      - name: name 
+        description: If provided, the non-public title of the tweet. 
+      - name: full_text
+        description: Full text of the tweet's content.
+      - name: language
+        description: Two-letter language code of the tweet. 
+
+  - name: stg_twitter_ads__campaign_locations_report
+    description: Each record represents the performance of an ad campaign on a given day in a specific country, for its placement in Twitter.
+    columns:
+      - name: source_relation
+        description: "{{ doc('source_relation') }}"
+      - name: country 
+        description: "{{ doc('country') }}"
+        tests:
+          - not_null
+      - name: account_id
+        description: The ID of the related account.
+      - name: spend_micro
+        description: The spend for the campaign on that day, in micros and in whichever currency was selected during account creation.
+      - name: spend
+        description: The spend for the campaign on that day in whichever currency was selected during account creation.
+      - name: clicks
+        description: The clicks for the campaign on that day. Includes clicks on the URL (shortened or regular links), profile pic, screen name, username, detail, hashtags, and likes.
+      - name: date_day
+        description: The date of the performance.
+        tests:
+          - not_null
+      - name: impressions
+        description: The impressions for the campaign on that day.  This is the number of users who see a Promoted Ad either in their home timeline or search results.
+      - name: campaign_id
+        description: The ID of the campaign.
+        tests:
+          - not_null
+      - name: url_clicks
+        description: The url clicks for the campaign on that day.
+      - name: placement
+        description: Where on Twitter the ad is being displayed. Possible values include 'ALL_ON_TWITTER', 'PUBLISHER_NETWORK', 'TWITTER_PROFILE', 'TWITTER_SEARCH', 'TWITTER_TIMELINE', and 'TAP_*', which are more granular options for `PUBLISHER_NETWORK`.
+        tests:
+          - not_null
+      - name: conversion_purchases_metric
+        description: Total number of purchases. The sum of post view, post engagement, and assisted purchases for both your website and mobile app. Included by the `twitter_ads__conversion_fields` variable by default.
+      - name: conversion_custom_metric
+        description: The number of conversions of type CUSTOM. Included by the `twitter_ads__conversion_fields` variable by default.
+      - name: conversion_purchases_sale_amount
+        description: The sale amount corresponding to PURCHASE conversion events. Included by the `twitter_ads__conversion_sale_amount_fields` variable by default.
+      - name: conversion_custom_sale_amount
+        description: The sale amount corresponding to PURCHASE conversion events. Included by the `twitter_ads__conversion_sale_amount_fields` variable by default.
+
+  - name: stg_twitter_ads__campaign_regions_report
+    description: Each record represents the performance of an ad campaign on a given day in a specific geographic region, for its placement in Twitter.
+    columns:
+      - name: source_relation
+        description: "{{ doc('source_relation') }}"
+      - name: country 
+        description: "{{ doc('country') }}"
+      - name: region
+        description: "{{ doc('region') }}"
+        tests:
+          - not_null
+      - name: account_id
+        description: The ID of the related account.
+      - name: spend_micro
+        description: The spend for the campaign on that day, in micros and in whichever currency was selected during account creation.
+      - name: spend
+        description: The spend for the campaign on that day in whichever currency was selected during account creation.
+      - name: clicks
+        description: The clicks for the campaign on that day. Includes clicks on the URL (shortened or regular links), profile pic, screen name, username, detail, hashtags, and likes.
+      - name: date_day
+        description: The date of the performance.
+        tests:
+          - not_null
+      - name: impressions
+        description: The impressions for the campaign on that day.  This is the number of users who see a Promoted Ad either in their home timeline or search results.
+      - name: campaign_id
+        description: The ID of the campaign.
+      - name: url_clicks
+        description: The url clicks for the campaign on that day.
+      - name: placement
+        description: Where on Twitter the ad is being displayed. Possible values include 'ALL_ON_TWITTER', 'PUBLISHER_NETWORK', 'TWITTER_PROFILE', 'TWITTER_SEARCH', 'TWITTER_TIMELINE', and 'TAP_*', which are more granular options for `PUBLISHER_NETWORK`.
+      - name: conversion_purchases_metric
+        description: Total number of purchases. The sum of post view, post engagement, and assisted purchases for both your website and mobile app. Included by the `twitter_ads__conversion_fields` variable by default.
+      - name: conversion_custom_metric
+        description: The number of conversions of type CUSTOM. Included by the `twitter_ads__conversion_fields` variable by default.
+      - name: conversion_purchases_sale_amount
+        description: The sale amount corresponding to PURCHASE conversion events. Included by the `twitter_ads__conversion_sale_amount_fields` variable by default.
+      - name: conversion_custom_sale_amount
+        description: The sale amount corresponding to PURCHASE conversion events. Included by the `twitter_ads__conversion_sale_amount_fields` variable by default.

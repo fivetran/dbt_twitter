@@ -1,0 +1,714 @@
+version: 2
+
+sources:
+  - name: twitter_ads # This source will only be used if you are using a single tiktok_ads source connector. If multiple sources are being unioned, their tables will be directly referenced via adapter.get_relation.
+    schema: "{{ var('twitter_ads_schema', 'twitter_ads') }}"
+    database: "{% if target.type != 'spark'%}{{ var('twitter_ads_database', target.database) }}{% endif %}"
+    
+    loader: fivetran
+
+    config:
+      loaded_at_field: _fivetran_synced
+      enabled: "{{ var('ad_reporting__twitter_ads_enabled', true) }}"
+      freshness: 
+        warn_after: {count: 48, period: hour}
+        error_after: {count: 168, period: hour}
+
+    tables:
+      - name: account_history
+        description: Each record represents a version of each account. The versions can be differentiated by the updated_at timestamp.
+        identifier: "{{ var('twitter_ads_account_history_identifier', 'account_history') }}"
+        columns: 
+          - name: _fivetran_synced
+            description: "{{ doc('_fivetran_synced') }}"
+          - name: approval_status
+            description: The approval status of the account.
+          - name: business_id
+            description: The ID of the related business.
+          - name: business_name
+            description: The name of the related business.
+          - name: created_at
+            description: "{{ doc('created_at') }}"
+          - name: deleted
+            description: "{{ doc('deleted') }}"
+          - name: id
+            description: The ID of the account.
+          - name: industry_type
+            description: The industry of the accounts.
+          - name: name
+            description: The name of the account.
+          - name: timezone
+            description: The timezone the account is set to.
+          - name: timezone_switch_at
+            description: The timestamp the account's timezone was last changed.
+          - name: updated_at
+            description: "{{ doc('updated_at') }}"
+          - name: salt
+            description: The random encryption key used to has data.
+      - name: campaign_history
+        description: Each record represents a version of each campaign. The versions can be differentiated by the updated_at timestamp.
+        identifier: "{{ var('twitter_ads_campaign_history_identifier', 'campaign_history') }}"
+        columns:
+          - name: _fivetran_synced
+            description: "{{ doc('_fivetran_synced') }}"
+          - name: account_id
+            description: The ID of the related account.
+          - name: created_at
+            description: "{{ doc('created_at') }}"
+          - name: currency
+            description: The currently all metrics for the account are set to.
+          - name: daily_budget_amount_local_micro
+            description: The daily budget amount to be allocated to the campaign. The currency associated with the specified funding instrument will be used.
+          - name: deleted
+            description: "{{ doc('deleted') }}"
+          - name: duration_in_days
+            description: The time period within which the frequency_cap is achieved.
+          - name: end_time
+            description: The time the campaign will end
+          - name: entity_status
+            description: The status of the campaign.
+          - name: frequency_cap
+            description: The maximum number of times an ad could be delivered to a user.
+          - name: id
+            description: The ID of the campaign.
+          - name: name
+            description: The name of the campaign.
+          - name: servable
+            description: Whether the campaign is in a state to be actively served to users.
+          - name: standard_delivery
+            description: Whether standard delivery is enabled (vs accelerated delivery).
+          - name: start_time
+            description: The time the campaign will start.
+          - name: total_budget_amount_local_micro
+            description: The total budget amount to be allocated to the campaign.
+          - name: updated_at
+            description: "{{ doc('updated_at') }}"
+          - name: funding_instrument_id
+            description: Reference to the funding instrument.
+      - name: line_item_history
+        description: Each record represents a version of each line item. The versions can be differentiated by the updated_at timestamp.
+        identifier: "{{ var('twitter_ads_line_item_history_identifier', 'line_item_history') }}"
+        columns:
+          - name: _fivetran_synced
+            description: "{{ doc('_fivetran_synced') }}"
+          - name: advertiser_domain
+            description: The website domain for this advertiser, without the protocol specification.
+          - name: advertiser_user_id
+            description: The Twitter user identifier for the handle promoting the ad.
+          - name: automatically_select_bid
+            description: Whether automatically optimize bidding is enabled based on daily budget and campaign flight dates.
+          - name: bid_amount_local_micro
+            description: The bid amount to be associated with this line item.
+          - name: bid_type
+            description: The bidding mechanism.
+          - name: bid_unit
+            description: The bid unit for this line item.
+          - name: campaign_id
+            description: The ID of the related campaign.
+          - name: charge_by
+            description: The unit to charge this line item by.
+          - name: created_at
+            description: "{{ doc('created_at') }}"
+          - name: creative_source
+            description: The source of the creatives for the line item.
+          - name: currency
+            description: The currency in which metrics will be reported.
+          - name: deleted
+            description: "{{ doc('deleted') }}"
+          - name: end_time
+            description: The timestamp at which the line item will stop being served.
+          - name: entity_status
+            description: The status of the line item.
+          - name: id
+            description: The ID of the line item.
+          - name: name
+            description: The name of the line item.
+          - name: objective
+            description: The campaign objective for this line item.
+          - name: optimization
+            description: The optimization setting to use with this line item.
+          - name: primary_web_event_tag
+            description: The identifier of the primary web event tag. Allows more accurate tracking of engagements for the campaign pertaining to this line item.
+          - name: product_type
+            description: The type of promoted product that this line item will contain.
+          - name: start_time
+            description: The timestamp at which the line item will start being served.
+          - name: target_cpa_local_micro
+            description: The target cost per acquisition for the line item.
+          - name: total_budget_amount_local_micro
+            description: The total budget amount to be allocated to the line item.
+          - name: updated_at
+            description: "{{ doc('updated_at') }}"
+      - name: promoted_tweet_history
+        description: Each record represents a version of each promoted tweet. The versions can be differentiated by the updated_at timestamp.
+        identifier: "{{ var('twitter_ads_promoted_tweet_history_identifier', 'promoted_tweet_history') }}"
+        columns:
+          - name: _fivetran_synced
+            description: "{{ doc('_fivetran_synced') }}"
+          - name: approval_status
+            description: The approval status of the promoted tweet.
+          - name: created_at
+            description: "{{ doc('created_at') }}"
+          - name: deleted
+            description: "{{ doc('deleted') }}"
+          - name: entity_status
+            description: The status of the promoted tweet.
+          - name: id
+            description: The ID of the promoted tweet.
+          - name: line_item_id
+            description: The ID of the related line item.
+          - name: tweet_id
+            description: The ID of the related tweet.
+          - name: updated_at
+            description: "{{ doc('updated_at') }}"
+      - name: tweet_url
+        description: Each record represents a URL used in a tweet.
+        identifier: "{{ var('twitter_ads_tweet_url_identifier', 'tweet_url') }}"
+        columns:
+          - name: _fivetran_synced
+            description: "{{ doc('_fivetran_synced') }}"
+          - name: display_url
+            description: The URL as it will be displayed.
+          - name: expanded_url
+            description: The fully expanded URL.
+          - name: index
+            description: The index of the URL within the tweet (ie if there are multiple URLs in the tweet).
+          - name: indices
+            description: The start and end point of where the URL is placed in the tweet text.
+          - name: tweet_id
+            description: The ID of the related tweet.
+          - name: url
+            description: The 't.co' shortened URL.
+      - name: promoted_tweet_report
+        description: Each record represents the performance of a promoted tweet on a given day, in its defined placement.
+        identifier: "{{ var('twitter_ads_promoted_tweet_report_identifier', 'promoted_tweet_report') }}"
+        columns:
+          - name: _fivetran_synced
+            description: "{{ doc('_fivetran_synced') }}"
+          - name: account_id
+            description: The ID of the related account.
+          - name: billed_charge_local_micro
+            description: The spend for the promoted tweet on that day.
+          - name: clicks
+            description: The clicks for the promoted tweet on that day. Includes clicks on the URL (shortened or regular links), profile pic, screen name, username, detail, hashtags, and likes.
+          - name: date
+            description: The date of the performance.
+          - name: impressions
+            description: The impressions for the promoted tweet on that day.  This is the number of users who see a Promoted Ad either in their home timeline or search results.
+          - name: promoted_tweet_id
+            description: The ID of the related promoted tweet.
+          - name: url_clicks
+            description: The url clicks for the promoted tweet on that day.
+          - name: placement
+            description: Where on Twitter the ad is being displayed. Possible values include 'ALL_ON_TWITTER', 'PUBLISHER_NETWORK', 'TWITTER_PROFILE', 'TWITTER_SEARCH', 'TWITTER_TIMELINE', and 'TAP_*', which are more granular options for `PUBLISHER_NETWORK`.
+          - name: conversion_purchases_metric
+            description: Total number of purchases. The sum of post view, post engagement, and assisted purchases for both your website and mobile app. Included by the `twitter_ads__conversion_fields` variable by default.
+          - name: conversion_custom_metric
+            description: The number of conversions of type CUSTOM. Included by the `twitter_ads__conversion_fields` variable by default.
+          - name: mobile_conversion_payment_info_additions_assisted
+            description: Number of **assisted** (engaged with ad but did not immediately convert) mobile conversions of type PAYMENT_INFO_ADDITION.
+          - name: mobile_conversion_payment_info_additions_post_engagement
+            description: Number of **post-engagement** mobile conversions of type PAYMENT_INFO_ADDITION.
+          - name: mobile_conversion_payment_info_additions_post_view
+            description: Number of **post-view** mobile conversions of type PAYMENT_INFO_ADDITION.
+          - name: mobile_conversion_add_to_wishlists_assisted
+            description: Number of **assisted** (engaged with ad but did not immediately convert) mobile conversions of type ADD_TO_WISHLIST.
+          - name: mobile_conversion_add_to_wishlists_post_engagement
+            description: Number of **post-engagement** mobile conversions of type ADD_TO_WISHLIST.
+          - name: mobile_conversion_add_to_wishlists_post_view
+            description: Number of **post-view** mobile conversions of type ADD_TO_WISHLIST.
+          - name: mobile_conversion_add_to_carts_assisted
+            description: Number of **assisted** (engaged with ad but did not immediately convert) mobile conversions of type ADD_TO_CART.
+          - name: mobile_conversion_add_to_carts_post_engagement
+            description: Number of **post-engagement** mobile conversions of type ADD_TO_CART.
+          - name: mobile_conversion_add_to_carts_post_view
+            description: Number of **post-view** mobile conversions of type ADD_TO_CART.
+          - name: conversion_sign_ups_metric
+            description: Total number of sign ups. This is the same as the sum of post views, post engagements and assisted sign ups. This is also the sum of website and mobile app sign ups
+          - name: mobile_conversion_checkouts_initiated_assisted
+            description: Number of **assisted** (engaged with ad but did not immediately convert) mobile conversions of type CHECKOUT_INITIATED.
+          - name: mobile_conversion_checkouts_initiated_post_engagement
+            description: Number of **post-engagement** mobile conversions of type CHECKOUT_INITIATED.
+          - name: mobile_conversion_checkouts_initiated_post_view
+            description: Number of **post-view** mobile conversions of type CHECKOUT_INITIATED.
+          - name: mobile_conversion_searches_assisted
+            description: Number of **assisted** (engaged with ad but did not immediately convert) mobile conversions of type SEARCH.
+          - name: mobile_conversion_searches_post_engagement
+            description: Number of **post-engagement** mobile conversions of type SEARCH.
+          - name: mobile_conversion_searches_post_view
+            description: Number of **post-view** mobile conversions of type SEARCH.
+          - name: mobile_conversion_content_views_assisted
+            description: Number of **assisted** (engaged with ad but did not immediately convert) mobile conversions of type CONTENT_VIEW.
+          - name: mobile_conversion_content_views_post_engagement
+            description: Number of **post-engagement** mobile conversions of type CONTENT_VIEW.
+          - name: mobile_conversion_content_views_post_view
+            description: Number of **post-view** mobile conversions of type CONTENT_VIEW.
+          - name: conversion_purchases_sale_amount
+            description: The sale amount corresponding to PURCHASE conversion events. Included by the `twitter_ads__conversion_sale_amount_fields` variable by default.
+          - name: conversion_custom_sale_amount
+            description: The sale amount corresponding to PURCHASE conversion events. Included by the `twitter_ads__conversion_sale_amount_fields` variable by default.
+          - name: mobile_conversion_payment_info_additions_sale_amount
+            description: The sale amount corresponding to mobile conversions of type PAYMENT_INFO_ADDITION.
+          - name: mobile_conversion_add_to_wishlists_sale_amount
+            description: The sale amount corresponding to mobile conversions of type ADD_TO_WISHLIST.
+          - name: mobile_conversion_add_to_carts_sale_amount
+            description: The sale amount corresponding to mobile conversions of type ADD_TO_CART.
+          - name: conversion_sign_ups_sale_amount
+            description: The sale amount corresponding to sign ups.
+          - name: mobile_conversion_checkouts_initiated_sale_amount
+            description: The sale amount corresponding to mobile conversions of type CHECKOUT_INITIATED.
+          - name: mobile_conversion_searches_sale_amount
+            description: The sale amount corresponding to mobile conversions of type SEARCH.
+          - name: mobile_conversion_content_views_sale_amount
+            description: The sale amount corresponding to mobile conversions of type CONTENT_VIEW.
+
+      - name: tweet
+        description: Each record represents a tweet, promoted or not. 
+        identifier: "{{ var('twitter_ads_tweet_identifier', 'tweet') }}"
+        columns:
+          - name: _fivetran_synced
+            description: "{{ doc('_fivetran_synced') }}"
+          - name: account_id
+            description: The ID of the related account.
+          - name: id
+            description: Unique identifier of the tweet.
+          - name: name 
+            description: If provided, the non-public title of the tweet. 
+          - name: full_text
+            description: Full text of the tweet's content.
+          - name: lang
+            description: Two-letter language code of the tweet. 
+      - name: campaign_report
+        description: Each record represents the performance of an ad campaign on a given day.
+        identifier: "{{ var('twitter_ads_campaign_report_identifier', 'campaign_report') }}"
+        columns:
+          - name: _fivetran_synced
+            description: "{{ doc('_fivetran_synced') }}"
+          - name: account_id
+            description: The ID of the related account.
+          - name: billed_charge_local_micro
+            description: The spend for the campaign on that day, in micros and in whichever currency was selected during account creation.
+          - name: clicks
+            description: The clicks for the campaign on that day. Includes clicks on the URL (shortened or regular links), profile pic, screen name, username, detail, hashtags, and likes.
+          - name: date
+            description: The date of the performance.
+          - name: impressions
+            description: The impressions for the campaign on that day. This is the number of users who see a Promoted Ad either in their home timeline or search results.
+          - name: campaign_id
+            description: The ID of the ad campaign.
+          - name: url_clicks
+            description: The url clicks for the campaign on that day.
+          - name: placement
+            description: Where on Twitter the ad is being displayed. Possible values include 'ALL_ON_TWITTER', 'PUBLISHER_NETWORK', 'TWITTER_PROFILE', 'TWITTER_SEARCH', 'TWITTER_TIMELINE', and 'TAP_*', which are more granular options for `PUBLISHER_NETWORK`.
+          - name: conversion_purchases_metric
+            description: Total number of purchases. The sum of post view, post engagement, and assisted purchases for both your website and mobile app. Included by the `twitter_ads__conversion_fields` variable by default.
+          - name: conversion_custom_metric
+            description: The number of conversions of type CUSTOM. Included by the `twitter_ads__conversion_fields` variable by default.
+          - name: mobile_conversion_payment_info_additions_assisted
+            description: Number of **assisted** (engaged with ad but did not immediately convert) mobile conversions of type PAYMENT_INFO_ADDITION.
+          - name: mobile_conversion_payment_info_additions_post_engagement
+            description: Number of **post-engagement** mobile conversions of type PAYMENT_INFO_ADDITION.
+          - name: mobile_conversion_payment_info_additions_post_view
+            description: Number of **post-view** mobile conversions of type PAYMENT_INFO_ADDITION.
+          - name: mobile_conversion_add_to_wishlists_assisted
+            description: Number of **assisted** (engaged with ad but did not immediately convert) mobile conversions of type ADD_TO_WISHLIST.
+          - name: mobile_conversion_add_to_wishlists_post_engagement
+            description: Number of **post-engagement** mobile conversions of type ADD_TO_WISHLIST.
+          - name: mobile_conversion_add_to_wishlists_post_view
+            description: Number of **post-view** mobile conversions of type ADD_TO_WISHLIST.
+          - name: mobile_conversion_add_to_carts_assisted
+            description: Number of **assisted** (engaged with ad but did not immediately convert) mobile conversions of type ADD_TO_CART.
+          - name: mobile_conversion_add_to_carts_post_engagement
+            description: Number of **post-engagement** mobile conversions of type ADD_TO_CART.
+          - name: mobile_conversion_add_to_carts_post_view
+            description: Number of **post-view** mobile conversions of type ADD_TO_CART.
+          - name: conversion_sign_ups_metric
+            description: Total number of sign ups. This is the same as the sum of post views, post engagements and assisted sign ups. This is also the sum of website and mobile app sign ups
+          - name: mobile_conversion_checkouts_initiated_assisted
+            description: Number of **assisted** (engaged with ad but did not immediately convert) mobile conversions of type CHECKOUT_INITIATED.
+          - name: mobile_conversion_checkouts_initiated_post_engagement
+            description: Number of **post-engagement** mobile conversions of type CHECKOUT_INITIATED.
+          - name: mobile_conversion_checkouts_initiated_post_view
+            description: Number of **post-view** mobile conversions of type CHECKOUT_INITIATED.
+          - name: mobile_conversion_searches_assisted
+            description: Number of **assisted** (engaged with ad but did not immediately convert) mobile conversions of type SEARCH.
+          - name: mobile_conversion_searches_post_engagement
+            description: Number of **post-engagement** mobile conversions of type SEARCH.
+          - name: mobile_conversion_searches_post_view
+            description: Number of **post-view** mobile conversions of type SEARCH.
+          - name: mobile_conversion_content_views_assisted
+            description: Number of **assisted** (engaged with ad but did not immediately convert) mobile conversions of type CONTENT_VIEW.
+          - name: mobile_conversion_content_views_post_engagement
+            description: Number of **post-engagement** mobile conversions of type CONTENT_VIEW.
+          - name: mobile_conversion_content_views_post_view
+            description: Number of **post-view** mobile conversions of type CONTENT_VIEW.
+          - name: conversion_purchases_sale_amount
+            description: The sale amount corresponding to PURCHASE conversion events. Included by the `twitter_ads__conversion_sale_amount_fields` variable by default.
+          - name: conversion_custom_sale_amount
+            description: The sale amount corresponding to PURCHASE conversion events. Included by the `twitter_ads__conversion_sale_amount_fields` variable by default.
+          - name: mobile_conversion_payment_info_additions_sale_amount
+            description: The sale amount corresponding to mobile conversions of type PAYMENT_INFO_ADDITION.
+          - name: mobile_conversion_add_to_wishlists_sale_amount
+            description: The sale amount corresponding to mobile conversions of type ADD_TO_WISHLIST.
+          - name: mobile_conversion_add_to_carts_sale_amount
+            description: The sale amount corresponding to mobile conversions of type ADD_TO_CART.
+          - name: conversion_sign_ups_sale_amount
+            description: The sale amount corresponding to sign ups.
+          - name: mobile_conversion_checkouts_initiated_sale_amount
+            description: The sale amount corresponding to mobile conversions of type CHECKOUT_INITIATED.
+          - name: mobile_conversion_searches_sale_amount
+            description: The sale amount corresponding to mobile conversions of type SEARCH.
+          - name: mobile_conversion_content_views_sale_amount
+            description: The sale amount corresponding to mobile conversions of type CONTENT_VIEW.
+
+      - name: line_item_report
+        description: Each record represents the performance of a line item (ad group) on a given day.
+        identifier: "{{ var('twitter_ads_line_item_report_identifier', 'line_item_report') }}"
+        columns:
+          - name: _fivetran_synced
+            description: "{{ doc('_fivetran_synced') }}"
+          - name: account_id
+            description: The ID of the related account.
+          - name: billed_charge_local_micro
+            description: The spend for the line item on that day, in micros and in whichever currency was selected during account creation.
+          - name: clicks
+            description: The clicks for the line item on that day. Includes clicks on the URL (shortened or regular links), profile pic, screen name, username, detail, hashtags, and likes.
+          - name: date
+            description: The date of the performance.
+          - name: impressions
+            description: The impressions for the line item on that day.  This is the number of users who see a Promoted Ad either in their home timeline or search results.
+          - name: line_item_id
+            description: The ID of the line item.
+          - name: url_clicks
+            description: The url clicks for the line item on that day.
+          - name: placement
+            description: Where on Twitter the ad is being displayed. Possible values include 'ALL_ON_TWITTER', 'PUBLISHER_NETWORK', 'TWITTER_PROFILE', 'TWITTER_SEARCH', 'TWITTER_TIMELINE', and 'TAP_*', which are more granular options for `PUBLISHER_NETWORK`.
+          - name: conversion_purchases_metric
+            description: Total number of purchases. The sum of post view, post engagement, and assisted purchases for both your website and mobile app. Included by the `twitter_ads__conversion_fields` variable by default.
+          - name: conversion_custom_metric
+            description: The number of conversions of type CUSTOM. Included by the `twitter_ads__conversion_fields` variable by default.
+          - name: mobile_conversion_payment_info_additions_assisted
+            description: Number of **assisted** (engaged with ad but did not immediately convert) mobile conversions of type PAYMENT_INFO_ADDITION.
+          - name: mobile_conversion_payment_info_additions_post_engagement
+            description: Number of **post-engagement** mobile conversions of type PAYMENT_INFO_ADDITION.
+          - name: mobile_conversion_payment_info_additions_post_view
+            description: Number of **post-view** mobile conversions of type PAYMENT_INFO_ADDITION.
+          - name: mobile_conversion_add_to_wishlists_assisted
+            description: Number of **assisted** (engaged with ad but did not immediately convert) mobile conversions of type ADD_TO_WISHLIST.
+          - name: mobile_conversion_add_to_wishlists_post_engagement
+            description: Number of **post-engagement** mobile conversions of type ADD_TO_WISHLIST.
+          - name: mobile_conversion_add_to_wishlists_post_view
+            description: Number of **post-view** mobile conversions of type ADD_TO_WISHLIST.
+          - name: mobile_conversion_add_to_carts_assisted
+            description: Number of **assisted** (engaged with ad but did not immediately convert) mobile conversions of type ADD_TO_CART.
+          - name: mobile_conversion_add_to_carts_post_engagement
+            description: Number of **post-engagement** mobile conversions of type ADD_TO_CART.
+          - name: mobile_conversion_add_to_carts_post_view
+            description: Number of **post-view** mobile conversions of type ADD_TO_CART.
+          - name: conversion_sign_ups_metric
+            description: Total number of sign ups. This is the same as the sum of post views, post engagements and assisted sign ups. This is also the sum of website and mobile app sign ups
+          - name: mobile_conversion_checkouts_initiated_assisted
+            description: Number of **assisted** (engaged with ad but did not immediately convert) mobile conversions of type CHECKOUT_INITIATED.
+          - name: mobile_conversion_checkouts_initiated_post_engagement
+            description: Number of **post-engagement** mobile conversions of type CHECKOUT_INITIATED.
+          - name: mobile_conversion_checkouts_initiated_post_view
+            description: Number of **post-view** mobile conversions of type CHECKOUT_INITIATED.
+          - name: mobile_conversion_searches_assisted
+            description: Number of **assisted** (engaged with ad but did not immediately convert) mobile conversions of type SEARCH.
+          - name: mobile_conversion_searches_post_engagement
+            description: Number of **post-engagement** mobile conversions of type SEARCH.
+          - name: mobile_conversion_searches_post_view
+            description: Number of **post-view** mobile conversions of type SEARCH.
+          - name: mobile_conversion_content_views_assisted
+            description: Number of **assisted** (engaged with ad but did not immediately convert) mobile conversions of type CONTENT_VIEW.
+          - name: mobile_conversion_content_views_post_engagement
+            description: Number of **post-engagement** mobile conversions of type CONTENT_VIEW.
+          - name: mobile_conversion_content_views_post_view
+            description: Number of **post-view** mobile conversions of type CONTENT_VIEW.
+          - name: conversion_purchases_sale_amount
+            description: The sale amount corresponding to PURCHASE conversion events. Included by the `twitter_ads__conversion_sale_amount_fields` variable by default.
+          - name: conversion_custom_sale_amount
+            description: The sale amount corresponding to PURCHASE conversion events. Included by the `twitter_ads__conversion_sale_amount_fields` variable by default.
+          - name: mobile_conversion_payment_info_additions_sale_amount
+            description: The sale amount corresponding to mobile conversions of type PAYMENT_INFO_ADDITION.
+          - name: mobile_conversion_add_to_wishlists_sale_amount
+            description: The sale amount corresponding to mobile conversions of type ADD_TO_WISHLIST.
+          - name: mobile_conversion_add_to_carts_sale_amount
+            description: The sale amount corresponding to mobile conversions of type ADD_TO_CART.
+          - name: conversion_sign_ups_sale_amount
+            description: The sale amount corresponding to sign ups.
+          - name: mobile_conversion_checkouts_initiated_sale_amount
+            description: The sale amount corresponding to mobile conversions of type CHECKOUT_INITIATED.
+          - name: mobile_conversion_searches_sale_amount
+            description: The sale amount corresponding to mobile conversions of type SEARCH.
+          - name: mobile_conversion_content_views_sale_amount
+            description: The sale amount corresponding to mobile conversions of type CONTENT_VIEW.
+
+      - name: line_item_keywords_report
+        description: Each record represents the performance of a line item (ad group) and keyword combination on a given day.
+        identifier: "{{ var('twitter_ads_line_item_keywords_report_identifier', 'line_item_keywords_report') }}"
+        config:
+          enabled: "{{ var('twitter_ads__using_keywords', true) and var('ad_reporting__twitter_ads_enabled', true) }}"
+        columns:
+          - name: _fivetran_synced
+            description: "{{ doc('_fivetran_synced') }}"
+          - name: account_id
+            description: The ID of the related account.
+          - name: billed_charge_local_micro
+            description: The spend for the line item + keyword on that day, in micros and in whichever currency was selected during account creation.
+          - name: clicks
+            description: The clicks for the line item + keyword on that day. Includes clicks on the URL (shortened or regular links), profile pic, screen name, username, detail, hashtags, and likes.
+          - name: date
+            description: The date of the performance.
+          - name: impressions
+            description: The impressions for the line item + keyword on that day.  This is the number of users who see a Promoted Ad either in their home timeline or search results.
+          - name: line_item_id
+            description: The ID of the line item.
+          - name: url_clicks
+            description: The url clicks for the line item + keyword on that day.
+          - name: segment
+            description: The keyword whose performance is being tracked.
+          - name: placement
+            description: Where on Twitter the ad is being displayed. Possible values include 'ALL_ON_TWITTER', 'PUBLISHER_NETWORK', 'TWITTER_PROFILE', 'TWITTER_SEARCH', 'TWITTER_TIMELINE', and 'TAP_*', which are more granular options for `PUBLISHER_NETWORK`.
+          - name: conversion_purchases_metric
+            description: Total number of purchases. The sum of post view, post engagement, and assisted purchases for both your website and mobile app. Included by the `twitter_ads__conversion_fields` variable by default.
+          - name: conversion_custom_metric
+            description: The number of conversions of type CUSTOM. Included by the `twitter_ads__conversion_fields` variable by default.
+          - name: mobile_conversion_payment_info_additions_assisted
+            description: Number of **assisted** (engaged with ad but did not immediately convert) mobile conversions of type PAYMENT_INFO_ADDITION.
+          - name: mobile_conversion_payment_info_additions_post_engagement
+            description: Number of **post-engagement** mobile conversions of type PAYMENT_INFO_ADDITION.
+          - name: mobile_conversion_payment_info_additions_post_view
+            description: Number of **post-view** mobile conversions of type PAYMENT_INFO_ADDITION.
+          - name: mobile_conversion_add_to_wishlists_assisted
+            description: Number of **assisted** (engaged with ad but did not immediately convert) mobile conversions of type ADD_TO_WISHLIST.
+          - name: mobile_conversion_add_to_wishlists_post_engagement
+            description: Number of **post-engagement** mobile conversions of type ADD_TO_WISHLIST.
+          - name: mobile_conversion_add_to_wishlists_post_view
+            description: Number of **post-view** mobile conversions of type ADD_TO_WISHLIST.
+          - name: mobile_conversion_add_to_carts_assisted
+            description: Number of **assisted** (engaged with ad but did not immediately convert) mobile conversions of type ADD_TO_CART.
+          - name: mobile_conversion_add_to_carts_post_engagement
+            description: Number of **post-engagement** mobile conversions of type ADD_TO_CART.
+          - name: mobile_conversion_add_to_carts_post_view
+            description: Number of **post-view** mobile conversions of type ADD_TO_CART.
+          - name: conversion_sign_ups_metric
+            description: Total number of sign ups. This is the same as the sum of post views, post engagements and assisted sign ups. This is also the sum of website and mobile app sign ups
+          - name: mobile_conversion_checkouts_initiated_assisted
+            description: Number of **assisted** (engaged with ad but did not immediately convert) mobile conversions of type CHECKOUT_INITIATED.
+          - name: mobile_conversion_checkouts_initiated_post_engagement
+            description: Number of **post-engagement** mobile conversions of type CHECKOUT_INITIATED.
+          - name: mobile_conversion_checkouts_initiated_post_view
+            description: Number of **post-view** mobile conversions of type CHECKOUT_INITIATED.
+          - name: mobile_conversion_searches_assisted
+            description: Number of **assisted** (engaged with ad but did not immediately convert) mobile conversions of type SEARCH.
+          - name: mobile_conversion_searches_post_engagement
+            description: Number of **post-engagement** mobile conversions of type SEARCH.
+          - name: mobile_conversion_searches_post_view
+            description: Number of **post-view** mobile conversions of type SEARCH.
+          - name: mobile_conversion_content_views_assisted
+            description: Number of **assisted** (engaged with ad but did not immediately convert) mobile conversions of type CONTENT_VIEW.
+          - name: mobile_conversion_content_views_post_engagement
+            description: Number of **post-engagement** mobile conversions of type CONTENT_VIEW.
+          - name: mobile_conversion_content_views_post_view
+            description: Number of **post-view** mobile conversions of type CONTENT_VIEW.
+          - name: conversion_purchases_sale_amount
+            description: The sale amount corresponding to PURCHASE conversion events. Included by the `twitter_ads__conversion_sale_amount_fields` variable by default.
+          - name: conversion_custom_sale_amount
+            description: The sale amount corresponding to PURCHASE conversion events. Included by the `twitter_ads__conversion_sale_amount_fields` variable by default.
+          - name: mobile_conversion_payment_info_additions_sale_amount
+            description: The sale amount corresponding to mobile conversions of type PAYMENT_INFO_ADDITION.
+          - name: mobile_conversion_add_to_wishlists_sale_amount
+            description: The sale amount corresponding to mobile conversions of type ADD_TO_WISHLIST.
+          - name: mobile_conversion_add_to_carts_sale_amount
+            description: The sale amount corresponding to mobile conversions of type ADD_TO_CART.
+          - name: conversion_sign_ups_sale_amount
+            description: The sale amount corresponding to sign ups.
+          - name: mobile_conversion_checkouts_initiated_sale_amount
+            description: The sale amount corresponding to mobile conversions of type CHECKOUT_INITIATED.
+          - name: mobile_conversion_searches_sale_amount
+            description: The sale amount corresponding to mobile conversions of type SEARCH.
+          - name: mobile_conversion_content_views_sale_amount
+            description: The sale amount corresponding to mobile conversions of type CONTENT_VIEW.
+
+      - name: campaign_locations_report
+        identifier: '{{ var("twitter_ads_campaign_locations_report_identifier", "campaign_locations_report") }}'
+        description: Each record represents the performance of an ad campaign on a given day in a specific country.
+        config:
+          enabled: "{{ var('ad_reporting__twitter_ads_enabled', true) and var('twitter_ads__using_campaign_locations_report', false) }}"
+        columns:
+          - name: segment_name 
+            description: "{{ doc('country') }}"
+          - name: segment
+            description: (DEPRECATED IN JUNE 2023) Long-form name of the country being reported on. Coalesced with the newer `segment_name` field.
+          - name: _fivetran_synced
+            description: "{{ doc('_fivetran_synced') }}"
+          - name: account_id
+            description: The ID of the related account.
+          - name: billed_charge_local_micro
+            description: The spend for the campaign on that day, in micros and in whichever currency was selected during account creation.
+          - name: clicks
+            description: The clicks for the campaign on that day. Includes clicks on the URL (shortened or regular links), profile pic, screen name, username, detail, hashtags, and likes.
+          - name: date
+            description: The date of the performance.
+          - name: impressions
+            description: The impressions for the campaign on that day. This is the number of users who see a Promoted Ad either in their home timeline or search results.
+          - name: campaign_id
+            description: The ID of the ad campaign.
+          - name: url_clicks
+            description: The url clicks for the campaign on that day.
+          - name: placement
+            description: Where on Twitter the ad is being displayed. Possible values include 'ALL_ON_TWITTER', 'PUBLISHER_NETWORK', 'TWITTER_PROFILE', 'TWITTER_SEARCH', 'TWITTER_TIMELINE', and 'TAP_*', which are more granular options for `PUBLISHER_NETWORK`.
+          - name: conversion_purchases_metric
+            description: Total number of purchases. The sum of post view, post engagement, and assisted purchases for both your website and mobile app. Included by the `twitter_ads__conversion_fields` variable by default.
+          - name: conversion_custom_metric
+            description: The number of conversions of type CUSTOM. Included by the `twitter_ads__conversion_fields` variable by default.
+          - name: mobile_conversion_payment_info_additions_assisted
+            description: Number of **assisted** (engaged with ad but did not immediately convert) mobile conversions of type PAYMENT_INFO_ADDITION.
+          - name: mobile_conversion_payment_info_additions_post_engagement
+            description: Number of **post-engagement** mobile conversions of type PAYMENT_INFO_ADDITION.
+          - name: mobile_conversion_payment_info_additions_post_view
+            description: Number of **post-view** mobile conversions of type PAYMENT_INFO_ADDITION.
+          - name: mobile_conversion_add_to_wishlists_assisted
+            description: Number of **assisted** (engaged with ad but did not immediately convert) mobile conversions of type ADD_TO_WISHLIST.
+          - name: mobile_conversion_add_to_wishlists_post_engagement
+            description: Number of **post-engagement** mobile conversions of type ADD_TO_WISHLIST.
+          - name: mobile_conversion_add_to_wishlists_post_view
+            description: Number of **post-view** mobile conversions of type ADD_TO_WISHLIST.
+          - name: mobile_conversion_add_to_carts_assisted
+            description: Number of **assisted** (engaged with ad but did not immediately convert) mobile conversions of type ADD_TO_CART.
+          - name: mobile_conversion_add_to_carts_post_engagement
+            description: Number of **post-engagement** mobile conversions of type ADD_TO_CART.
+          - name: mobile_conversion_add_to_carts_post_view
+            description: Number of **post-view** mobile conversions of type ADD_TO_CART.
+          - name: conversion_sign_ups_metric
+            description: Total number of sign ups. This is the same as the sum of post views, post engagements and assisted sign ups. This is also the sum of website and mobile app sign ups
+          - name: mobile_conversion_checkouts_initiated_assisted
+            description: Number of **assisted** (engaged with ad but did not immediately convert) mobile conversions of type CHECKOUT_INITIATED.
+          - name: mobile_conversion_checkouts_initiated_post_engagement
+            description: Number of **post-engagement** mobile conversions of type CHECKOUT_INITIATED.
+          - name: mobile_conversion_checkouts_initiated_post_view
+            description: Number of **post-view** mobile conversions of type CHECKOUT_INITIATED.
+          - name: mobile_conversion_searches_assisted
+            description: Number of **assisted** (engaged with ad but did not immediately convert) mobile conversions of type SEARCH.
+          - name: mobile_conversion_searches_post_engagement
+            description: Number of **post-engagement** mobile conversions of type SEARCH.
+          - name: mobile_conversion_searches_post_view
+            description: Number of **post-view** mobile conversions of type SEARCH.
+          - name: mobile_conversion_content_views_assisted
+            description: Number of **assisted** (engaged with ad but did not immediately convert) mobile conversions of type CONTENT_VIEW.
+          - name: mobile_conversion_content_views_post_engagement
+            description: Number of **post-engagement** mobile conversions of type CONTENT_VIEW.
+          - name: mobile_conversion_content_views_post_view
+            description: Number of **post-view** mobile conversions of type CONTENT_VIEW.
+          - name: conversion_purchases_sale_amount
+            description: The sale amount corresponding to PURCHASE conversion events. Included by the `twitter_ads__conversion_sale_amount_fields` variable by default.
+          - name: conversion_custom_sale_amount
+            description: The sale amount corresponding to PURCHASE conversion events. Included by the `twitter_ads__conversion_sale_amount_fields` variable by default.
+          - name: mobile_conversion_payment_info_additions_sale_amount
+            description: The sale amount corresponding to mobile conversions of type PAYMENT_INFO_ADDITION.
+          - name: mobile_conversion_add_to_wishlists_sale_amount
+            description: The sale amount corresponding to mobile conversions of type ADD_TO_WISHLIST.
+          - name: mobile_conversion_add_to_carts_sale_amount
+            description: The sale amount corresponding to mobile conversions of type ADD_TO_CART.
+          - name: conversion_sign_ups_sale_amount
+            description: The sale amount corresponding to sign ups.
+          - name: mobile_conversion_checkouts_initiated_sale_amount
+            description: The sale amount corresponding to mobile conversions of type CHECKOUT_INITIATED.
+          - name: mobile_conversion_searches_sale_amount
+            description: The sale amount corresponding to mobile conversions of type SEARCH.
+          - name: mobile_conversion_content_views_sale_amount
+            description: The sale amount corresponding to mobile conversions of type CONTENT_VIEW.
+
+      - name: campaign_regions_report
+        identifier: '{{ var("twitter_ads_campaign_regions_report_identifier", "campaign_regions_report") }}'
+        description: Each record represents the performance of an ad campaign on a given day in a specific geographic region.
+        config:
+          enabled: "{{ var('ad_reporting__twitter_ads_enabled', true) and var('twitter_ads__using_campaign_regions_report', false) }}"
+        columns:
+          - name: segment_name 
+            description: "{{ doc('region') }}"
+          - name: segment
+            description: (DEPRECATED IN JUNE 2023) Long-form name of the geographic region being reported on. Coalesced with the newer `segment_name` field.
+          - name: location_type 
+            description: Type of umbrella `LOCATION`. Likely to be `COUNTRIES`.
+          - name: location_name
+            description: Name of the umbrella `LOCATION`. Likely to be the country name.
+          - name: _fivetran_synced
+            description: "{{ doc('_fivetran_synced') }}"
+          - name: account_id
+            description: The ID of the related account.
+          - name: billed_charge_local_micro
+            description: The spend for the campaign on that day, in micros and in whichever currency was selected during account creation.
+          - name: clicks
+            description: The clicks for the campaign on that day. Includes clicks on the URL (shortened or regular links), profile pic, screen name, username, detail, hashtags, and likes.
+          - name: date
+            description: The date of the performance.
+          - name: impressions
+            description: The impressions for the campaign on that day. This is the number of users who see a Promoted Ad either in their home timeline or search results.
+          - name: campaign_id
+            description: The ID of the ad campaign.
+          - name: url_clicks
+            description: The url clicks for the campaign on that day.
+          - name: placement
+            description: Where on Twitter the ad is being displayed. Possible values include 'ALL_ON_TWITTER', 'PUBLISHER_NETWORK', 'TWITTER_PROFILE', 'TWITTER_SEARCH', 'TWITTER_TIMELINE', and 'TAP_*', which are more granular options for `PUBLISHER_NETWORK`.
+          - name: conversion_purchases_metric
+            description: Total number of purchases. The sum of post view, post engagement, and assisted purchases for both your website and mobile app. Included by the `twitter_ads__conversion_fields` variable by default.
+          - name: conversion_custom_metric
+            description: The number of conversions of type CUSTOM. Included by the `twitter_ads__conversion_fields` variable by default.
+          - name: mobile_conversion_payment_info_additions_assisted
+            description: Number of **assisted** (engaged with ad but did not immediately convert) mobile conversions of type PAYMENT_INFO_ADDITION.
+          - name: mobile_conversion_payment_info_additions_post_engagement
+            description: Number of **post-engagement** mobile conversions of type PAYMENT_INFO_ADDITION.
+          - name: mobile_conversion_payment_info_additions_post_view
+            description: Number of **post-view** mobile conversions of type PAYMENT_INFO_ADDITION.
+          - name: mobile_conversion_add_to_wishlists_assisted
+            description: Number of **assisted** (engaged with ad but did not immediately convert) mobile conversions of type ADD_TO_WISHLIST.
+          - name: mobile_conversion_add_to_wishlists_post_engagement
+            description: Number of **post-engagement** mobile conversions of type ADD_TO_WISHLIST.
+          - name: mobile_conversion_add_to_wishlists_post_view
+            description: Number of **post-view** mobile conversions of type ADD_TO_WISHLIST.
+          - name: mobile_conversion_add_to_carts_assisted
+            description: Number of **assisted** (engaged with ad but did not immediately convert) mobile conversions of type ADD_TO_CART.
+          - name: mobile_conversion_add_to_carts_post_engagement
+            description: Number of **post-engagement** mobile conversions of type ADD_TO_CART.
+          - name: mobile_conversion_add_to_carts_post_view
+            description: Number of **post-view** mobile conversions of type ADD_TO_CART.
+          - name: conversion_sign_ups_metric
+            description: Total number of sign ups. This is the same as the sum of post views, post engagements and assisted sign ups. This is also the sum of website and mobile app sign ups
+          - name: mobile_conversion_checkouts_initiated_assisted
+            description: Number of **assisted** (engaged with ad but did not immediately convert) mobile conversions of type CHECKOUT_INITIATED.
+          - name: mobile_conversion_checkouts_initiated_post_engagement
+            description: Number of **post-engagement** mobile conversions of type CHECKOUT_INITIATED.
+          - name: mobile_conversion_checkouts_initiated_post_view
+            description: Number of **post-view** mobile conversions of type CHECKOUT_INITIATED.
+          - name: mobile_conversion_searches_assisted
+            description: Number of **assisted** (engaged with ad but did not immediately convert) mobile conversions of type SEARCH.
+          - name: mobile_conversion_searches_post_engagement
+            description: Number of **post-engagement** mobile conversions of type SEARCH.
+          - name: mobile_conversion_searches_post_view
+            description: Number of **post-view** mobile conversions of type SEARCH.
+          - name: mobile_conversion_content_views_assisted
+            description: Number of **assisted** (engaged with ad but did not immediately convert) mobile conversions of type CONTENT_VIEW.
+          - name: mobile_conversion_content_views_post_engagement
+            description: Number of **post-engagement** mobile conversions of type CONTENT_VIEW.
+          - name: mobile_conversion_content_views_post_view
+            description: Number of **post-view** mobile conversions of type CONTENT_VIEW.
+          - name: conversion_purchases_sale_amount
+            description: The sale amount corresponding to PURCHASE conversion events. Included by the `twitter_ads__conversion_sale_amount_fields` variable by default.
+          - name: conversion_custom_sale_amount
+            description: The sale amount corresponding to PURCHASE conversion events. Included by the `twitter_ads__conversion_sale_amount_fields` variable by default.
+          - name: mobile_conversion_payment_info_additions_sale_amount
+            description: The sale amount corresponding to mobile conversions of type PAYMENT_INFO_ADDITION.
+          - name: mobile_conversion_add_to_wishlists_sale_amount
+            description: The sale amount corresponding to mobile conversions of type ADD_TO_WISHLIST.
+          - name: mobile_conversion_add_to_carts_sale_amount
+            description: The sale amount corresponding to mobile conversions of type ADD_TO_CART.
+          - name: conversion_sign_ups_sale_amount
+            description: The sale amount corresponding to sign ups.
+          - name: mobile_conversion_checkouts_initiated_sale_amount
+            description: The sale amount corresponding to mobile conversions of type CHECKOUT_INITIATED.
+          - name: mobile_conversion_searches_sale_amount
+            description: The sale amount corresponding to mobile conversions of type SEARCH.
+          - name: mobile_conversion_content_views_sale_amount
+            description: The sale amount corresponding to mobile conversions of type CONTENT_VIEW.
