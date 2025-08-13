@@ -2,10 +2,16 @@ name: 'twitter_ads'
 version: '1.0.0'
 config-version: 2
 require-dbt-version: [">=1.3.0", "<2.0.0"]
+
 models:
   twitter_ads:
     +schema: twitter_ads
     +materialized: table
+    staging:
+      +schema: twitter_ads_source
+      tmp:
+        +materialized: view
+
 vars:
   twitter_ads:
     line_item_history: "{{ source('twitter_ads', 'line_item_history') }}"
