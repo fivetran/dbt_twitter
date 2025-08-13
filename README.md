@@ -1,4 +1,4 @@
-# Twitter Ads Transformation dbt Package ([Docs](https://fivetran.github.io/dbt_twitter/))
+# Twitter Ads dbt Package ([Docs](https://fivetran.github.io/dbt_twitter/))
 
 <p align="left">
     <a alt="License"
