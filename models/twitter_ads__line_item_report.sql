@@ -8,27 +8,27 @@ with report as (
         {{ var('twitter_ads__conversion_fields') | join(' + ') if var('twitter_ads__conversion_fields') else 0 }} as total_conversions,
         {{ var('twitter_ads__conversion_sale_amount_fields') | join(' + ') if var('twitter_ads__conversion_sale_amount_fields') else 0 }} as total_conversions_sale_amount
 
-    from {{ var('line_item_report') }}
+    from {{ ref('stg_twitter_ads__line_item_report') }}
 ),
 
 line_items as (
 
     select *
-    from {{ var('line_item_history') }}
+    from {{ ref('stg_twitter_ads__line_item_history') }}
     where is_latest_version
 ),
 
 campaigns as (
 
     select *
-    from {{ var('campaign_history') }}
+    from {{ ref('stg_twitter_ads__campaign_history') }}
     where is_latest_version
 ),
 
 accounts as (
 
     select *
-    from {{ var('account_history') }}
+    from {{ ref('stg_twitter_ads__account_history') }}
     where is_latest_version
 ),
 

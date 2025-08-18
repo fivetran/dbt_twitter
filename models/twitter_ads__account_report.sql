@@ -3,7 +3,7 @@
 with accounts as (
 
     select *
-    from {{ var('account_history') }}
+    from {{ ref('stg_twitter_ads__account_history') }}
     where is_latest_version
 ),
 
@@ -15,7 +15,7 @@ promoted_tweet_report as (
         {{ var('twitter_ads__conversion_fields') | join(' + ') if var('twitter_ads__conversion_fields') else 0 }} as total_conversions,
         {{ var('twitter_ads__conversion_sale_amount_fields') | join(' + ') if var('twitter_ads__conversion_sale_amount_fields') else 0 }} as total_conversions_sale_amount
 
-    from {{ var('promoted_tweet_report') }}
+    from {{ ref('stg_twitter_ads__promoted_tweet_report') }}
 ),
 
 rollup_report as (

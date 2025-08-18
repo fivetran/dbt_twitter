@@ -1,33 +1,30 @@
 name: 'twitter_integration_tests'
-version: '0.10.0'
+version: '1.0.0'
 profile: 'integration_tests'
 config-version: 2
-snapshot-paths: ["snapshots"]
 
 models:
   +schema: "twitter_ads_{{ var('directed_schema','dev') }}"
   
 vars:
-  # Comment OUT for docs generation
-  twitter_ads__line_item_report_passthrough_metrics:
-    - name: "conversion_purchases_metric"
-    - name: "conversion_custom_sale_amount"
-      alias: "custom_conversion_value"
+  twitter_ads__line_item_report_passthrough_metrics: # @docs-ignore
+    - name: "conversion_purchases_metric" # @docs-ignore
+    - name: "conversion_custom_sale_amount" # @docs-ignore
+      alias: "custom_conversion_value" # @docs-ignore
 
-  twitter_ads__conversion_fields:
-    - conversion_purchases_metric
-    - conversion_custom_metric
+  twitter_ads__conversion_fields: # @docs-ignore
+    - conversion_purchases_metric # @docs-ignore
+    - conversion_custom_metric # @docs-ignore
 
-  twitter_ads__conversion_sale_amount_fields:
-    - conversion_purchases_sale_amount
-    - conversion_custom_sale_amount
-    - conversion_sign_ups_sale_amount
+  twitter_ads__conversion_sale_amount_fields: # @docs-ignore
+    - conversion_purchases_sale_amount # @docs-ignore
+    - conversion_custom_sale_amount # @docs-ignore
+    - conversion_sign_ups_sale_amount # @docs-ignore
 
-  # Comment IN for docs generation and running validation tests
-  # twitter_ads__using_campaign_locations_report: true
-  # twitter_ads__using_campaign_regions_report: true
+  # twitter_ads__using_campaign_locations_report: true # @docs-include
+  # twitter_ads__using_campaign_regions_report: true # @docs-include
 
-  twitter_ads_source:
+  twitter_ads:
     twitter_ads_schema: twitter_ads_integration_tests_4
 
     twitter_ads_account_history_identifier: "twitter_account_history_data"
@@ -63,3 +60,7 @@ seeds:
 dispatch:
   - macro_namespace: dbt_utils
     search_order: ['spark_utils', 'dbt_utils']
+
+flags:
+  send_anonymous_usage_stats: False
+  use_colors: True
