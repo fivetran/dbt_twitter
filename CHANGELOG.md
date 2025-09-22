@@ -1,3 +1,12 @@
+# dbt_twitter v1.0.1
+
+[PR #38](https://github.com/fivetran/dbt_twitter/pull/38) includes the following updates:
+
+## Bug Fixes
+- Updated `twitter_ads__promoted_tweet_report` model to source 'account_id' and `promoted_tweet_id` fields from `stg_twitter_ads__promoted_tweet_report` rather than from `_history` staging models.
+   - Prevents a failure on not_null test that can occur due to `_history` tables hard-deleting entities like promoted tweets, while retaining related records in report tables.
+   - Customers who have experienced this failure should run a full refresh of their dbt project.
+
 # dbt_twitter v1.0.0
 
 [PR #36](https://github.com/fivetran/dbt_twitter/pull/36) includes the following updates:
