@@ -4,7 +4,7 @@
 
 ## Bug Fixes
 - Updated `twitter_ads__promoted_tweet_report` and `twitter_ads__url_report` models to source `account_id` and `promoted_tweet_id` fields from `stg_twitter_ads__promoted_tweet_report` rather than from `*_history` staging models.
-   - Prevents a failure on not_null test that can occur due to `_history` tables hard-deleting entities like promoted tweets, while retaining related records in report tables.
+   - Prevents a failure on not_null test that can occur due to `*_history` tables hard-deleting entities like promoted tweets, while retaining related records in report tables.
 
 # dbt_twitter v1.0.0
 
