@@ -76,7 +76,7 @@ If you are not using the downstream [Ad Reporting](https://github.com/fivetran/d
 # packages.yml
 packages:
   - package: fivetran/twitter_ads
-    version: [">=1.0.0", "<1.1.0"] # we recommend using ranges to capture non-breaking changes automatically
+    version: [">=1.1.0", "<1.2.0"] # we recommend using ranges to capture non-breaking changes automatically
 ```
 > All required sources and staging models are now bundled into this transformation package. Do not include `fivetran/twitter_ads_source` in your `packages.yml` since this package has been deprecated.
 
