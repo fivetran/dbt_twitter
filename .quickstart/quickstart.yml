@@ -46,31 +46,31 @@ supported_vars:
 
   twitter_ads__promoted_tweet_report_passthrough_metrics:
     type: dictionary
-    description: "Addtional `PROMOTED_TWEET_REPORT` columns to include in `twitter_ads__promoted_tweet_report`, `twitter_ads__account_report`, and `twitter_ads__promoted_url_report`"
+    description: "Additional `PROMOTED_TWEET_REPORT` columns to include in `twitter_ads__promoted_tweet_report`, `twitter_ads__account_report`, and `twitter_ads__promoted_url_report`"
     display_name: "Additional Promoted Tweet Report Metrics"
 
   twitter_ads__line_item_report_passthrough_metrics:
     type: dictionary
-    description: "Addtional `LINE_ITEM_REPORT` columns to include in `twitter_ads__line_item_report`"
+    description: "Additional `LINE_ITEM_REPORT` columns to include in `twitter_ads__line_item_report`"
     display_name: "Additional Line Item Report Metrics"
 
   twitter_ads__line_item_keywords_report_passthrough_metrics:
     type: dictionary
-    description: "Addtional `LINE_ITEM__KEYWORDS_REPORT` columns to include in `twitter_ads__keyword_report`"
+    description: "Additional `LINE_ITEM__KEYWORDS_REPORT` columns to include in `twitter_ads__keyword_report`"
     display_name: "Additional Keyword Report Metrics"
 
   twitter_ads__campaign_report_passthrough_metrics:
     type: dictionary
-    description: "Addtional `CAMPAIGN_REPORT` columns to include in `twitter_ads__campaign_report`"
+    description: "Additional `CAMPAIGN_REPORT` columns to include in `twitter_ads__campaign_report`"
     display_name: "Additional Campaign Report Metrics"
 
   twitter_ads__campaign_locations_report_passthrough_metrics:
     type: dictionary
-    description: "Addtional `CAMPAIGN_LOCATIONS_REPORT` columns to include in `twitter_ads__campaign_country_report`"
+    description: "Additional `CAMPAIGN_LOCATIONS_REPORT` columns to include in `twitter_ads__campaign_country_report`"
     display_name: "Additional Campaign Country Report Metrics"
 
   twitter_ads__campaign_regions_report_passthrough_metrics:
     type: dictionary
-    description: "Addtional `CAMPAIGN_REGIONS_REPORT` columns to include in `twitter_ads__campaign_region_report`"
+    description: "Additional `CAMPAIGN_REGIONS_REPORT` columns to include in `twitter_ads__campaign_region_report`"
     display_name: "Additional Campaign Region Report Metrics"
 
