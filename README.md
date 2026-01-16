@@ -22,8 +22,8 @@ This dbt package transforms data from Fivetran's Twitter connector into analytic
 
 - Number of materialized models¹: 32
 - Connector documentation
-  - [Twitter connector documentation](https://fivetran.com/docs/connectors/applications/twitter)
-  - [Twitter ERD](https://fivetran.com/docs/connectors/applications/twitter#schemainformation)
+  - [Twitter connector documentation](https://fivetran.com/docs/connectors/applications/twitter-ads#twitterads)
+  - [Twitter ERD](https://fivetran.com/docs/connectors/applications/twitter-ads#schemainformation)
 - dbt package documentation
   - [GitHub repository](https://github.com/fivetran/dbt_twitter)
   - [dbt Docs](https://fivetran.github.io/dbt_twitter/#!/overview)
@@ -60,7 +60,7 @@ By default, this package materializes the following final tables:
 ---
 
 ## Visualizations
-Many of the above reports are now configurable for [visualization via Streamlit](https://github.com/fivetran/streamlit_twitter). Check out some [sample reports here](https://fivetran-twitter.streamlit.app/).
+Many of the above reports are now configurable for [visualization via Streamlit](https://github.com/fivetran/streamlit_ad_reporting). Check out some [sample reports here](https://fivetran-ad-reporting.streamlit.app/ad_performance).
 
 <p align="center">
   <a href="https://fivetran-ad-reporting.streamlit.app/ad_performance">
