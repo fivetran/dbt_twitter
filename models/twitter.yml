@@ -247,8 +247,6 @@ models:
           - not_null
       - name: impressions
         description: The impressions for the line item + keyword on that day.  This is the number of users who see a Promoted Ad either in their home timeline or search results.
-      - name: line_item_id
-        description: The ID of the line item.
       - name: url_clicks
         description: The url clicks for the line item + keyword on that day.
       - name: keyword
