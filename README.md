@@ -191,6 +191,16 @@ vars:
     twitter_ads__campaign_regions_report_passthrough_metrics: 
         - name: "that_field"
 ```
+
+#### Disable the URL null filter
+By default, the `twitter_ads_url_report` model will filter out records where the URL field is null. However, you may wish to include these null records in your final model. To disable this filter, add the following variable to your `dbt_project.yml` file:
+
+```yml
+# dbt_project.yml
+vars:
+    ad_reporting__url_report__using_null_filter: False # Default = true
+```
+
 #### Changing the Build Schema
 By default this package will build the Twitter Ads staging models within a schema titled (<target_schema> + `_twitter_ads_source`) and the Twitter Ads final models with a schema titled (<target_schema> + `_twitter_ads`) in your target database. If this is not where you would like your modeled Twitter Ads data to be written to, add the following configuration to your `dbt_project.yml` file:
 
