@@ -28,7 +28,7 @@ vars:
   # twitter_ads__using_campaign_regions_report: true # @docs-include
 
   twitter_ads:
-    twitter_ads_schema: twitter_ads_integration_tests_4
+    twitter_ads_schema: twitter_ads_integration_tests
 
     twitter_ads_account_history_identifier: "twitter_account_history_data"
     twitter_ads_campaign_history_identifier: "twitter_campaign_history_data"
@@ -46,17 +46,66 @@ vars:
 
 seeds:
   twitter_integration_tests:
-    +column_types:
-      date: timestamp
-    twitter_tweet_url_data:
+    twitter_account_history_data:
       +column_types:
-        tweet_id: "{{ 'INT64' if target.type == 'bigquery' else 'bigint' }}"
+        _fivetran_synced: timestamp
+        created_at: timestamp
+        timezone_switch_at: timestamp
+        updated_at: timestamp
+    twitter_account_report_data:
+      +column_types:
+        date: timestamp
+        _fivetran_synced: timestamp
+    twitter_campaign_history_data:
+      +column_types:
+        _fivetran_synced: timestamp
+        created_at: timestamp
+        end_time: timestamp
+        start_time: timestamp
+        updated_at: timestamp
+    twitter_campaign_locations_report_data:
+      +column_types:
+        date: timestamp
+    twitter_campaign_regions_report_data:
+      +column_types:
+        date: timestamp
+    twitter_campaign_report_data:
+      +column_types:
+        date: timestamp
+        _fivetran_synced: timestamp
+    twitter_line_item_history_data:
+      +column_types:
+        created_at: timestamp
+        end_time: timestamp
+        start_time: timestamp
+        updated_at: timestamp
+    twitter_line_item_keywords_report_data:
+      +column_types:
+        date: timestamp
+        _fivetran_synced: timestamp
+    twitter_line_item_report_data:
+      +column_types:
+        date: timestamp
+        _fivetran_synced: timestamp
     twitter_promoted_tweet_history_data:
       +column_types:
+        _fivetran_synced: timestamp
+        created_at: timestamp
+        updated_at: timestamp
         tweet_id: "{{ 'INT64' if target.type == 'bigquery' else 'bigint' }}"
     twitter_promoted_tweet_report_data:
       +column_types:
+        _fivetran_synced: timestamp
+        date: timestamp
         impressions: "{{ 'INT64' if target.type == 'bigquery' else 'bigint' }}"
+    twitter_tweet_data:
+      +column_types:
+        _fivetran_synced: timestamp
+        created_at: timestamp
+    twitter_tweet_url_data:
+      +column_types:
+        _fivetran_synced: timestamp
+        tweet_id: "{{ 'INT64' if target.type == 'bigquery' else 'bigint' }}"
   +docs:
     show: false
 
