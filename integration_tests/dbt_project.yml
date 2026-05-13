@@ -46,20 +46,9 @@ vars:
 
 seeds:
   twitter_integration_tests:
-    twitter_account_history_data:
-      +column_types:
-        created_at: timestamp
-        timezone_switch_at: timestamp
-        updated_at: timestamp
     twitter_account_report_data:
       +column_types:
         date: timestamp
-    twitter_campaign_history_data:
-      +column_types:
-        created_at: timestamp
-        end_time: timestamp
-        start_time: timestamp
-        updated_at: timestamp
     twitter_campaign_locations_report_data:
       +column_types:
         date: timestamp
@@ -69,12 +58,6 @@ seeds:
     twitter_campaign_report_data:
       +column_types:
         date: timestamp
-    twitter_line_item_history_data:
-      +column_types:
-        created_at: timestamp
-        end_time: timestamp
-        start_time: timestamp
-        updated_at: timestamp
     twitter_line_item_keywords_report_data:
       +column_types:
         date: timestamp
@@ -83,16 +66,11 @@ seeds:
         date: timestamp
     twitter_promoted_tweet_history_data:
       +column_types:
-        created_at: timestamp
-        updated_at: timestamp
         tweet_id: "{{ 'INT64' if target.type == 'bigquery' else 'bigint' }}"
     twitter_promoted_tweet_report_data:
       +column_types:
         date: timestamp
         impressions: "{{ 'INT64' if target.type == 'bigquery' else 'bigint' }}"
-    twitter_tweet_data:
-      +column_types:
-        created_at: timestamp
     twitter_tweet_url_data:
       +column_types:
         tweet_id: "{{ 'INT64' if target.type == 'bigquery' else 'bigint' }}"
