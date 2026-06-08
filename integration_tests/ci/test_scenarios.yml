@@ -24,3 +24,9 @@ test_scenarios:
       twitter_ads__using_campaign_locations_report: true
       twitter_ads__using_campaign_regions_report: true
     include_incremental: false
+
+  - name: "MDLS"
+    vars:
+      fivetran_using_source_casing: true
+    include_incremental: false
+    include_dbt_seed: true

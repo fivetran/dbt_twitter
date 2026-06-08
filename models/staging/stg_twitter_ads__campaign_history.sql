@@ -18,10 +18,7 @@ fields as (
             )
         }}
     
-        {{ fivetran_utils.source_relation(
-            union_schema_variable='twitter_ads_union_schemas', 
-            union_database_variable='twitter_ads_union_databases') 
-        }}
+        {{ fivetran_utils.apply_source_relation(package_name='twitter') }}
 
     from source
 
@@ -50,7 +47,7 @@ final as (
         updated_at as updated_timestamp,
         round(daily_budget_amount_local_micro / 1000000.0,2) as daily_budget_amount,
         round(total_budget_amount_local_micro / 1000000.0,2) as total_budget_amount,
-        row_number() over (partition by source_relation, id order by updated_at desc) = 1 as is_latest_version
+        row_number() over (partition by id {{ fivetran_utils.partition_by_source_relation(package_name='twitter') }} order by updated_at desc) = 1 as is_latest_version
     
     from fields 
 )
