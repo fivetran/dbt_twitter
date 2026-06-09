@@ -91,25 +91,25 @@ dispatch:
 
 ### Define database and schema variables
 #### Option A: Single connection
-By default, this package runs using your destination and the `twitter` schema. If this is not where your Twitter data is (for example, if your Twitter schema is named `twitter_fivetran`), add the following configuration to your root `dbt_project.yml` file:
+By default, this package runs using your destination and the `twitter_ads` schema. If this is not where your Twitter Ads data is (for example, if your Twitter schema is named `twitter_ads_fivetran`), add the following configuration to your root `dbt_project.yml` file:
 
 ```yml
 vars:
-    twitter_database: your_destination_name
-    twitter_schema: your_schema_name
+    twitter_ads_database: your_destination_name
+    twitter_ads_schema: your_schema_name
 ```
 
 #### Option B: Union multiple connections
-If you have multiple Twitter connections in Fivetran and would like to use this package on all of them simultaneously, we have provided functionality to do so. For each source table, the package will union all of the data together and pass the unioned table into the transformations. The `source_relation` column in each model indicates the origin of each record.
+If you have multiple Twitter Ads connections in Fivetran and would like to use this package on all of them simultaneously, we have provided functionality to do so. For each source table, the package will union all of the data together and pass the unioned table into the transformations. The `source_relation` column in each model indicates the origin of each record.
 
-To use this functionality, you will need to set the `twitter_sources` variable in your root `dbt_project.yml` file:
+To use this functionality, you will need to set the `twitter_ads_sources` variable in your root `dbt_project.yml` file:
 
 ```yml
 # dbt_project.yml
 
 vars:
-  twitter:
-    twitter_sources:
+  twitter_ads:
+    twitter_ads_sources:
       - database: connection_1_destination_name # Required
         schema: connection_1_schema_name # Required
         name: connection_1_source_name # Required only if following the step in the following subsection
@@ -119,7 +119,7 @@ vars:
         name: connection_2_source_name
 ```
 
-> Previous versions of this package employed two separate, mutually exclusive variables for unioning: `twitter_union_schemas` and `twitter_union_databases`. While these variables are still supported, `twitter_sources` is the recommended variable to configure.
+> Previous versions of this package employed two separate, mutually exclusive variables for unioning: `twitter_ads_union_schemas` and `twitter_ads_union_databases`. While these variables are still supported, `twitter_ads_sources` is the recommended variable to configure.
 
 #### Optional: Incorporate unioned sources into DAG
 

@@ -1,17 +1,17 @@
 {{ config(enabled=var('ad_reporting__twitter_ads_enabled', True)) }}
 
-{% if var('twitter_union_schemas', []) | length > 0 or var('twitter_union_databases', []) | length > 0 %}
+{% if var('twitter_ads_union_schemas', []) | length > 0 or var('twitter_ads_union_databases', []) | length > 0 %}
 
 {{
     fivetran_utils.union_data(
-        table_identifier='line_item_history', 
-        database_variable='twitter_database', 
-        schema_variable='twitter_schema', 
+        table_identifier='line_item_history',
+        database_variable='twitter_ads_database',
+        schema_variable='twitter_ads_schema',
         default_database=target.database,
-        default_schema='twitter',
+        default_schema='twitter_ads',
         default_variable='line_item_history',
-        union_schema_variable='twitter_union_schemas',
-        union_database_variable='twitter_union_databases'
+        union_schema_variable='twitter_ads_union_schemas',
+        union_database_variable='twitter_ads_union_databases'
     )
 }}
 
@@ -19,8 +19,8 @@
 
 {{
     fivetran_utils.union_connections(
-        connection_dictionary='twitter_sources',
-        single_source_name='twitter',
+        connection_dictionary='twitter_ads_sources',
+        single_source_name='twitter_ads',
         single_table_name='line_item_history'
     )
 }}

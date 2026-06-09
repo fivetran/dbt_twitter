@@ -15,7 +15,7 @@ fields as (
                 staging_columns=get_campaign_regions_report_columns()
             )
         }}
-        {{ fivetran_utils.apply_source_relation(package_name='twitter') }}
+        {{ fivetran_utils.apply_source_relation(package_name='twitter_ads') }}
     from base
 ),
 

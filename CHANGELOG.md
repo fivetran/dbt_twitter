@@ -10,7 +10,7 @@
 | All models | `source_relation` column (when using a single Twitter schema) | Empty string (`''`) | `<database>.<schema>` |  |
 
 ## Feature Updates
-- Introduces the new (recommended) `twitter_sources` variable for more robust union data configuration. The old `twitter_union_schemas` and `twitter_union_databases` variables will still be supported. See the [README](https://github.com/fivetran/dbt_twitter/tree/main#define-database-and-schema-variables) for specific details.
+- Introduces the new (recommended) `twitter_ads_sources` variable for more robust union data configuration. The old `twitter_ads_union_schemas` and `twitter_ads_union_databases` variables will still be supported. See the [README](https://github.com/fivetran/dbt_twitter/tree/main#define-database-and-schema-variables) for specific details.
 
 ## Under the Hood
 - Adds the `fivetran_using_source_casing` variable for case-sensitive destination support. When enabled, downstream transformations respect source casing to ensure consistent results. See the [Additional Configurations](https://github.com/fivetran/dbt_twitter/#source-casing-for-case-sensitive-destinations) section of the README for details.

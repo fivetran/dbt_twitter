@@ -18,7 +18,7 @@ renamed as (
             )
         }}
     
-        {{ fivetran_utils.apply_source_relation(package_name='twitter') }}
+        {{ fivetran_utils.apply_source_relation(package_name='twitter_ads') }}
 
     from source
 
