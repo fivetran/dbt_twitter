@@ -9,7 +9,7 @@ sources:
 
     config:
       loaded_at_field: _fivetran_synced
-      enabled: "{{ var('ad_reporting__twitter_ads_enabled', true) }}"
+      enabled: "{{ var('ad_reporting__twitter_ads_enabled', true) and var('twitter_ads_sources', []) == [] }}"
       freshness: 
         warn_after: {count: 48, period: hour}
         error_after: {count: 168, period: hour}
@@ -448,7 +448,7 @@ sources:
         description: Each record represents the performance of a line item (ad group) and keyword combination on a given day.
         identifier: "{{ var('twitter_ads_line_item_keywords_report_identifier', 'line_item_keywords_report') }}"
         config:
-          enabled: "{{ var('twitter_ads__using_keywords', true) and var('ad_reporting__twitter_ads_enabled', true) }}"
+          enabled: "{{ var('twitter_ads__using_keywords', true) and var('ad_reporting__twitter_ads_enabled', true) and var('twitter_ads_sources', []) == [] }}"
         columns:
           - name: _fivetran_synced
             description: "{{ doc('_fivetran_synced') }}"
@@ -535,7 +535,7 @@ sources:
         identifier: '{{ var("twitter_ads_campaign_locations_report_identifier", "campaign_locations_report") }}'
         description: Each record represents the performance of an ad campaign on a given day in a specific country.
         config:
-          enabled: "{{ var('ad_reporting__twitter_ads_enabled', true) and var('twitter_ads__using_campaign_locations_report', false) }}"
+          enabled: "{{ var('ad_reporting__twitter_ads_enabled', true) and var('twitter_ads__using_campaign_locations_report', false) and var('twitter_ads_sources', []) == [] }}"
         columns:
           - name: segment_name 
             description: "{{ doc('country') }}"
@@ -624,7 +624,7 @@ sources:
         identifier: '{{ var("twitter_ads_campaign_regions_report_identifier", "campaign_regions_report") }}'
         description: Each record represents the performance of an ad campaign on a given day in a specific geographic region.
         config:
-          enabled: "{{ var('ad_reporting__twitter_ads_enabled', true) and var('twitter_ads__using_campaign_regions_report', false) }}"
+          enabled: "{{ var('ad_reporting__twitter_ads_enabled', true) and var('twitter_ads__using_campaign_regions_report', false) and var('twitter_ads_sources', []) == [] }}"
         columns:
           - name: segment_name 
             description: "{{ doc('region') }}"
