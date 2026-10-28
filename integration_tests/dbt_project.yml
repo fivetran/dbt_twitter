@@ -74,6 +74,7 @@ seeds:
     twitter_tweet_url_data:
       +column_types:
         tweet_id: "{{ 'INT64' if target.type == 'bigquery' else 'bigint' }}"
+        expanded_url: "{{ 'string' if target.type in ('bigquery', 'spark', 'databricks') else 'varchar(65535)' }}"
   +docs:
     show: false
   +quote_columns: "{{ target.type == 'redshift' or var('fivetran_using_source_casing', false) }}"
