@@ -3,6 +3,13 @@ version: 2
 models:
   - name: stg_twitter_ads__account_history
     description: Each record represents a version of each account. The versions can be differentiated by the updated_at timestamp.
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns:
+              - source_relation
+              - account_id
+              - updated_timestamp
     columns:
       - name: source_relation
         description: "{{ doc('source_relation') }}"
@@ -36,6 +43,13 @@ models:
         description: The random encryption key used to hash data.
   - name: stg_twitter_ads__campaign_history
     description: Each record represents a version of each campaign. The versions can be differentiated by the updated_at timestamp.
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns:
+              - source_relation
+              - campaign_id
+              - updated_timestamp
     columns:
       - name: source_relation
         description: "{{ doc('source_relation') }}"
@@ -83,6 +97,13 @@ models:
         description: The total budget amount to be allocated to the campaign.
   - name: stg_twitter_ads__line_item_history
     description: Each record represents a version of each line item. The versions can be differentiated by the updated_at timestamp.
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns:
+              - source_relation
+              - line_item_id
+              - updated_timestamp
     columns:
       - name: source_relation
         description: "{{ doc('source_relation') }}"
@@ -146,6 +167,13 @@ models:
         description: The target cost per acquisition for the line item.
   - name: stg_twitter_ads__promoted_tweet_history
     description: Each record represents a version of each promoted tweet. The versions can be differentiated by the updated_at timestamp.
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns:
+              - source_relation
+              - promoted_tweet_id
+              - updated_timestamp
     columns:
       - name: source_relation
         description: "{{ doc('source_relation') }}"
@@ -171,6 +199,14 @@ models:
         description: Whether the record is the most latest version for the promoted tweet.
   - name: stg_twitter_ads__promoted_tweet_report
     description: Each record represents the performance of a promoted tweet on a given day, in the tweet's defined placement.
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns:
+              - source_relation
+              - date_day
+              - promoted_tweet_id
+              - placement
     columns:
       - name: source_relation
         description: "{{ doc('source_relation') }}"
@@ -208,6 +244,13 @@ models:
         description: The sale amount corresponding to PURCHASE conversion events. Included by the `twitter_ads__conversion_sale_amount_fields` variable by default.
   - name: stg_twitter_ads__tweet_url
     description: Each record represents a URL used in a tweet.
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns:
+              - source_relation
+              - tweet_id
+              - index
     columns:
       - name: source_relation
         description: "{{ doc('source_relation') }}"
@@ -245,6 +288,14 @@ models:
         description: The utm_term parameter of the ad, extracted from the `expanded_url`.
   - name: stg_twitter_ads__campaign_report
     description: Each record represents the performance of an ad campaign on a given day, for its placement in Twitter.
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns:
+              - source_relation
+              - date_day
+              - campaign_id
+              - placement
     columns:
       - name: source_relation
         description: "{{ doc('source_relation') }}"
@@ -282,6 +333,14 @@ models:
         description: The sale amount corresponding to PURCHASE conversion events. Included by the `twitter_ads__conversion_sale_amount_fields` variable by default.
   - name: stg_twitter_ads__line_item_report
     description: Each record represents the performance of a line item (ad group) on a given day, for its placement in Twitter.
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns:
+              - source_relation
+              - date_day
+              - line_item_id
+              - placement
     columns:
       - name: source_relation
         description: "{{ doc('source_relation') }}"
@@ -319,6 +378,13 @@ models:
         description: The sale amount corresponding to PURCHASE conversion events. Included by the `twitter_ads__conversion_sale_amount_fields` variable by default.
   - name: stg_twitter_ads__line_item_keywords_report
     description: Each record represents the performance of a line item (ad group) and keyword combination on a given day, for its placement in Twitter.
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns:
+              - source_relation
+              - date_day
+              - keyword_id
     columns:
       - name: source_relation
         description: "{{ doc('source_relation') }}"
@@ -359,6 +425,12 @@ models:
         
   - name: stg_twitter_ads__tweet
     description: Each record represents a tweet, promoted or not.
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns:
+              - source_relation
+              - tweet_id
     columns:
       - name: source_relation
         description: "{{ doc('source_relation') }}"
@@ -377,6 +449,15 @@ models:
 
   - name: stg_twitter_ads__campaign_locations_report
     description: Each record represents the performance of an ad campaign on a given day in a specific country, for its placement in Twitter.
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns:
+              - source_relation
+              - date_day
+              - campaign_id
+              - placement
+              - country
     columns:
       - name: source_relation
         description: "{{ doc('source_relation') }}"
@@ -419,6 +500,16 @@ models:
 
   - name: stg_twitter_ads__campaign_regions_report
     description: Each record represents the performance of an ad campaign on a given day in a specific geographic region, for its placement in Twitter.
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns:
+              - source_relation
+              - date_day
+              - campaign_id
+              - placement
+              - country
+              - region
     columns:
       - name: source_relation
         description: "{{ doc('source_relation') }}"

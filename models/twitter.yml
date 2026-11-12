@@ -4,6 +4,15 @@ models:
   - name: twitter_ads__campaign_report
     description: >
       Each record in this table represents the daily performance of ads at the account and campaign level, within a placement in Twitter.
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns:
+              - source_relation
+              - date_day
+              - account_id
+              - campaign_id
+              - placement
     columns:
       - name: source_relation
         description: "{{ doc('source_relation') }}"
@@ -76,6 +85,16 @@ models:
   - name: twitter_ads__line_item_report
     description: >
       Each record in this table represents the daily performance of ads at the account, campaign, and line item (ad group) level, within a placement in Twitter.
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns:
+              - source_relation
+              - date_day
+              - account_id
+              - campaign_id
+              - line_item_id
+              - placement
     columns:
       - name: source_relation
         description: "{{ doc('source_relation') }}"
@@ -169,6 +188,14 @@ models:
   - name: twitter_ads__account_report 
     description: >
       Each record in this table represents the daily performance of ads at the account level, within a placement in Twitter.
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns:
+              - source_relation
+              - date_day
+              - account_id
+              - placement
     columns:
       - name: source_relation
         description: "{{ doc('source_relation') }}"
@@ -230,6 +257,14 @@ models:
   - name: twitter_ads__keyword_report 
     description: >
       Each record in this table represents the daily performance of ads at the account, campaign, line item (ad group), and keyword level, within a placement in Twitter.
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns:
+              - source_relation
+              - date_day
+              - campaign_id
+              - keyword_id
     columns:
       - name: source_relation
         description: "{{ doc('source_relation') }}"
@@ -285,6 +320,17 @@ models:
   - name: twitter_ads__promoted_tweet_report
     description: >
       Each record in this table represents the daily performance of ads at the account, campaign, line item (ad group), and promoted tweet level, within a placement in Twitter.
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns:
+              - source_relation
+              - date_day
+              - account_id
+              - campaign_id
+              - line_item_id
+              - promoted_tweet_id
+              - placement
     columns:
       - name: source_relation
         description: "{{ doc('source_relation') }}"
@@ -360,6 +406,20 @@ models:
   - name: twitter_ads__url_report
     description: >
       Each record in this table represents the daily performance of ads at the account, campaign, line item (ad group), promoted tweet, and url level, within a placement in Twitter.
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns:
+              - source_relation
+              - date_day
+              - account_id
+              - campaign_id
+              - line_item_id
+              - promoted_tweet_id
+              - placement
+          config:
+            # Don't run this test if you allow URLs to have null entries
+            enabled: "{{ var('ad_reporting__url_report__using_null_filter', true) }}"
     columns:
       - name: source_relation
         description: "{{ doc('source_relation') }}"
@@ -446,6 +506,16 @@ models:
   - name: twitter_ads__campaign_country_report
     description: >
       Each record in this table represents the daily performance of ads at the account and campaign level, within a placement in Twitter.
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns:
+              - source_relation
+              - date_day
+              - account_id
+              - campaign_id
+              - placement
+              - country
     columns:
       - name: source_relation
         description: "{{ doc('source_relation') }}"
@@ -521,6 +591,17 @@ models:
   - name: twitter_ads__campaign_region_report
     description: >
       Each record in this table represents the daily performance of ads at the account and campaign level, within a placement in Twitter.
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns:
+              - source_relation
+              - date_day
+              - account_id
+              - campaign_id
+              - placement
+              - country
+              - region
     columns:
       - name: source_relation
         description: "{{ doc('source_relation') }}"
