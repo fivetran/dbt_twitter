@@ -10,6 +10,10 @@ table_variables:
     - campaign_locations_report
   twitter_ads__using_campaign_regions_report:
     - campaign_regions_report
+  twitter_ads__using_campaign_age_report:
+    - campaign_age_report
+  twitter_ads__using_campaign_gender_report:
+    - campaign_gender_report
 destination_configurations:
   databricks:
     dispatch:
@@ -24,7 +28,9 @@ public_models: [
   "twitter_ads__line_item_report",
   "twitter_ads__keyword_report",
   "twitter_ads__campaign_country_report",
-  "twitter_ads__campaign_region_report"
+  "twitter_ads__campaign_region_report",
+  "twitter_ads__campaign_age_report",
+  "twitter_ads__campaign_gender_report"
 ]
 
 supported_vars:
@@ -74,3 +80,12 @@ supported_vars:
     description: "Additional `CAMPAIGN_REGIONS_REPORT` columns to include in `twitter_ads__campaign_region_report`"
     display_name: "Additional Campaign Region Report Metrics"
 
+  twitter_ads__campaign_age_report_passthrough_metrics:
+    type: dictionary
+    description: "Additional `CAMPAIGN_AGE_REPORT` columns to include in `twitter_ads__campaign_age_report`"
+    display_name: "Additional Campaign Age Report Metrics"
+
+  twitter_ads__campaign_gender_report_passthrough_metrics:
+    type: dictionary
+    description: "Additional `CAMPAIGN_GENDER_REPORT` columns to include in `twitter_ads__campaign_gender_report`"
+    display_name: "Additional Campaign Gender Report Metrics"

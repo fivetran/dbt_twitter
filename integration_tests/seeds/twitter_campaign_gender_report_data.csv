@@ -1,0 +1,7 @@
+segment,account_id,billed_charge_local_micro,campaign_id,clicks,date,impressions,placement,url_clicks
+Female,18ce54lbsn8,61000,bjfji,11,2025-04-10 00:00:00,700,ALL_ON_TWITTER,8
+Male,18ce54lbsn8,73000,bjfji,14,2025-04-10 00:00:00,790,ALL_ON_TWITTER,10
+Female,18ce54lbsn8,85000,bjfi4,17,2025-04-11 00:00:00,880,PUBLISHER_NETWORK,12
+Male,18ce54lbsn8,97000,bjfi4,20,2025-04-11 00:00:00,970,PUBLISHER_NETWORK,14
+Female,18ce54lbsn8,109000,9rf3e,23,2025-04-12 00:00:00,1060,ALL_ON_TWITTER,16
+Male,18ce54lbsn8,121000,9rf3e,26,2025-04-12 00:00:00,1150,ALL_ON_TWITTER,18

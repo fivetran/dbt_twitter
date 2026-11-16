@@ -27,6 +27,8 @@ test_scenarios:
       ad_reporting__url_report__using_null_filter: false
       twitter_ads__using_campaign_locations_report: true
       twitter_ads__using_campaign_regions_report: true
+      twitter_ads__using_campaign_age_report: true
+      twitter_ads__using_campaign_gender_report: true
     include_incremental: false
 
   - name: "MDLS"
