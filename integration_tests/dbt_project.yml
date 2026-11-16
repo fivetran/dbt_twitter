@@ -1,5 +1,5 @@
 name: 'twitter_integration_tests'
-version: '1.3.1'
+version: '1.4.0'
 profile: 'integration_tests'
 config-version: 2
 
@@ -26,6 +26,8 @@ vars:
 
   # twitter_ads__using_campaign_locations_report: true # @docs-include
   # twitter_ads__using_campaign_regions_report: true # @docs-include
+  # twitter_ads__using_campaign_age_report: true # @docs-include
+  # twitter_ads__using_campaign_gender_report: true # @docs-include
 
   twitter_ads:
     twitter_ads_schema: twitter_ads_integration_tests
@@ -43,6 +45,8 @@ vars:
     twitter_ads_line_item_keywords_report_identifier: "twitter_line_item_keywords_report_data"
   twitter_ads_campaign_locations_report_identifier: "twitter_campaign_locations_report_data"
   twitter_ads_campaign_regions_report_identifier: "twitter_campaign_regions_report_data"
+  twitter_ads_campaign_age_report_identifier: "twitter_campaign_age_report_data"
+  twitter_ads_campaign_gender_report_identifier: "twitter_campaign_gender_report_data"
 
 seeds:
   twitter_integration_tests:
@@ -53,6 +57,12 @@ seeds:
       +column_types:
         date: timestamp
     twitter_campaign_regions_report_data:
+      +column_types:
+        date: timestamp
+    twitter_campaign_age_report_data:
+      +column_types:
+        date: timestamp
+    twitter_campaign_gender_report_data:
       +column_types:
         date: timestamp
     twitter_campaign_report_data:

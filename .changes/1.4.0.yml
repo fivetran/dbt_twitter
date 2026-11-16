@@ -1,0 +1,37 @@
+version: 1.4.0
+schema_data_changes:
+  entries:
+  - models:
+    - '[twitter_ads__campaign_age_report](https://fivetran.github.io/dbt_twitter/#!/model/model.twitter_ads.twitter_ads__campaign_age_report)'
+    change_type: New model
+    is_breaking: false
+    notes: Daily campaign performance by audience age range, with the range split into
+      `min_age` and `max_age`. Built from the `CAMPAIGN_AGE_REPORT` source table. Dynamically
+      enabled in Quickstart; disabled by default otherwise. To enable in self-managed
+      dbt projects, set the `twitter_ads__using_campaign_age_report` variable to `true`.
+  - models:
+    - '[twitter_ads__campaign_gender_report](https://fivetran.github.io/dbt_twitter/#!/model/model.twitter_ads.twitter_ads__campaign_gender_report)'
+    change_type: New model
+    is_breaking: false
+    notes: Daily campaign performance by audience gender. Built from the `CAMPAIGN_GENDER_REPORT`
+      source table. Dynamically enabled in Quickstart; disabled by default otherwise.
+      To enable in self-managed dbt projects, set the `twitter_ads__using_campaign_gender_report`
+      variable to `true`.
+  - models:
+    - '[stg_twitter_ads__campaign_age_report](https://fivetran.github.io/dbt_twitter/#!/model/model.twitter_ads.stg_twitter_ads__campaign_age_report)'
+    - '[stg_twitter_ads__campaign_gender_report](https://fivetran.github.io/dbt_twitter/#!/model/model.twitter_ads.stg_twitter_ads__campaign_gender_report)'
+    - '[stg_twitter_ads__campaign_age_report_tmp](https://fivetran.github.io/dbt_twitter/#!/model/model.twitter_ads.stg_twitter_ads__campaign_age_report_tmp)'
+    - '[stg_twitter_ads__campaign_gender_report_tmp](https://fivetran.github.io/dbt_twitter/#!/model/model.twitter_ads.stg_twitter_ads__campaign_gender_report_tmp)'
+    change_type: New staging models
+    is_breaking: false
+    notes: Staging models to support age and gender reporting.
+new_features:
+- title: Age and gender reporting passthrough column variables
+  description: Adds two new variables to pass additional or custom metrics through
+    to the age and gender report models.
+  details:
+  - '`twitter_ads__campaign_age_report_passthrough_metrics` passes additional `CAMPAIGN_AGE_REPORT`
+    metrics through to `twitter_ads__campaign_age_report`.'
+  - '`twitter_ads__campaign_gender_report_passthrough_metrics` passes additional `CAMPAIGN_GENDER_REPORT`
+    metrics through to `twitter_ads__campaign_gender_report`.'
+date: '2026-11-16'
