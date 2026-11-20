@@ -3,6 +3,13 @@ version: 2
 models:
   - name: stg_twitter_ads__account_history
     description: Each record represents a version of each account. The versions can be differentiated by the updated_at timestamp.
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns:
+              - source_relation
+              - account_id
+              - updated_timestamp
     columns:
       - name: source_relation
         description: "{{ doc('source_relation') }}"
@@ -18,7 +25,7 @@ models:
         description: "{{ doc('deleted') }}"
       - name: account_id
         description: The ID of the account.
-        tests:
+        data_tests:
           - not_null
       - name: industry_type
         description: The industry of the accounts.
@@ -36,6 +43,13 @@ models:
         description: The random encryption key used to hash data.
   - name: stg_twitter_ads__campaign_history
     description: Each record represents a version of each campaign. The versions can be differentiated by the updated_at timestamp.
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns:
+              - source_relation
+              - campaign_id
+              - updated_timestamp
     columns:
       - name: source_relation
         description: "{{ doc('source_relation') }}"
@@ -59,7 +73,7 @@ models:
         description: The maximum number of times an ad could be delivered to a user.
       - name: campaign_id
         description: The ID of the campaign.
-        tests:
+        data_tests:
           - not_null
       - name: campaign_name
         description: The name of the campaign.
@@ -83,6 +97,13 @@ models:
         description: The total budget amount to be allocated to the campaign.
   - name: stg_twitter_ads__line_item_history
     description: Each record represents a version of each line item. The versions can be differentiated by the updated_at timestamp.
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns:
+              - source_relation
+              - line_item_id
+              - updated_timestamp
     columns:
       - name: source_relation
         description: "{{ doc('source_relation') }}"
@@ -116,7 +137,7 @@ models:
         description: The status of the line item.
       - name: line_item_id
         description: The ID of the line item.
-        tests:
+        data_tests:
           - not_null
       - name: name
         description: The name of the line item.
@@ -146,6 +167,13 @@ models:
         description: The target cost per acquisition for the line item.
   - name: stg_twitter_ads__promoted_tweet_history
     description: Each record represents a version of each promoted tweet. The versions can be differentiated by the updated_at timestamp.
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns:
+              - source_relation
+              - promoted_tweet_id
+              - updated_timestamp
     columns:
       - name: source_relation
         description: "{{ doc('source_relation') }}"
@@ -159,7 +187,7 @@ models:
         description: The status of the promoted tweet.
       - name: promoted_tweet_id
         description: The ID of the promoted tweet.
-        tests:
+        data_tests:
           - not_null
       - name: line_item_id
         description: The ID of the related line item.
@@ -171,6 +199,14 @@ models:
         description: Whether the record is the most latest version for the promoted tweet.
   - name: stg_twitter_ads__promoted_tweet_report
     description: Each record represents the performance of a promoted tweet on a given day, in the tweet's defined placement.
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns:
+              - source_relation
+              - date_day
+              - promoted_tweet_id
+              - placement
     columns:
       - name: source_relation
         description: "{{ doc('source_relation') }}"
@@ -184,19 +220,19 @@ models:
         description: The clicks for the promoted tweet on that day. Includes clicks on the URL (shortened or regular links), profile pic, screen name, username, detail, hashtags, and likes.
       - name: date_day
         description: The date of the performance.
-        tests:
+        data_tests:
           - not_null
       - name: impressions
         description: The impressions for the promoted tweet on that day.  This is the number of users who see a Promoted Ad either in their home timeline or search results.
       - name: promoted_tweet_id
         description: The ID of the related promoted tweet.
-        tests:
+        data_tests:
           - not_null
       - name: url_clicks
         description: The url clicks for the promoted tweet on that day.
       - name: placement
         description: Where on Twitter the ad is being displayed. Possible values include 'ALL_ON_TWITTER', 'PUBLISHER_NETWORK', 'TWITTER_PROFILE', 'TWITTER_SEARCH', 'TWITTER_TIMELINE', and 'TAP_*', which are more granular options for `PUBLISHER_NETWORK`.
-        tests:
+        data_tests:
           - not_null
       - name: conversion_purchases_metric
         description: Total number of purchases. The sum of post view, post engagement, and assisted purchases for both your website and mobile app. Included by the `twitter_ads__conversion_fields` variable by default.
@@ -208,6 +244,13 @@ models:
         description: The sale amount corresponding to PURCHASE conversion events. Included by the `twitter_ads__conversion_sale_amount_fields` variable by default.
   - name: stg_twitter_ads__tweet_url
     description: Each record represents a URL used in a tweet.
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns:
+              - source_relation
+              - tweet_id
+              - index
     columns:
       - name: source_relation
         description: "{{ doc('source_relation') }}"
@@ -217,13 +260,13 @@ models:
         description: The fully expanded URL.
       - name: index
         description: The index of the URL within the tweet (ie if there are multiple URLs)
-        tests:
+        data_tests:
           - not_null
       - name: indices
         description: The start and end point of where the URL is placed in the tweet text.
       - name: tweet_id
         description: The ID of the related tweet.
-        tests:
+        data_tests:
           - not_null
       - name: url
         description: The 't.co' shortened URL.
@@ -245,6 +288,14 @@ models:
         description: The utm_term parameter of the ad, extracted from the `expanded_url`.
   - name: stg_twitter_ads__campaign_report
     description: Each record represents the performance of an ad campaign on a given day, for its placement in Twitter.
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns:
+              - source_relation
+              - date_day
+              - campaign_id
+              - placement
     columns:
       - name: source_relation
         description: "{{ doc('source_relation') }}"
@@ -258,19 +309,19 @@ models:
         description: The clicks for the campaign on that day. Includes clicks on the URL (shortened or regular links), profile pic, screen name, username, detail, hashtags, and likes.
       - name: date_day
         description: The date of the performance.
-        tests:
+        data_tests:
           - not_null
       - name: impressions
         description: The impressions for the campaign on that day.  This is the number of users who see a Promoted Ad either in their home timeline or search results.
       - name: campaign_id
         description: The ID of the campaign.
-        tests:
+        data_tests:
           - not_null
       - name: url_clicks
         description: The url clicks for the campaign on that day.
       - name: placement
         description: Where on Twitter the ad is being displayed. Possible values include 'ALL_ON_TWITTER', 'PUBLISHER_NETWORK', 'TWITTER_PROFILE', 'TWITTER_SEARCH', 'TWITTER_TIMELINE', and 'TAP_*', which are more granular options for `PUBLISHER_NETWORK`.
-        tests:
+        data_tests:
           - not_null
       - name: conversion_purchases_metric
         description: Total number of purchases. The sum of post view, post engagement, and assisted purchases for both your website and mobile app. Included by the `twitter_ads__conversion_fields` variable by default.
@@ -282,6 +333,14 @@ models:
         description: The sale amount corresponding to PURCHASE conversion events. Included by the `twitter_ads__conversion_sale_amount_fields` variable by default.
   - name: stg_twitter_ads__line_item_report
     description: Each record represents the performance of a line item (ad group) on a given day, for its placement in Twitter.
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns:
+              - source_relation
+              - date_day
+              - line_item_id
+              - placement
     columns:
       - name: source_relation
         description: "{{ doc('source_relation') }}"
@@ -295,19 +354,19 @@ models:
         description: The clicks for the line item on that day. Includes clicks on the URL (shortened or regular links), profile pic, screen name, username, detail, hashtags, and likes.
       - name: date_day
         description: The date of the performance.
-        tests:
+        data_tests:
           - not_null
       - name: impressions
         description: The impressions for the line item on that day.  This is the number of users who see a Promoted Ad either in their home timeline or search results.
       - name: line_item_id
         description: The ID of the line item.
-        tests:
+        data_tests:
           - not_null
       - name: url_clicks
         description: The url clicks for the line item on that day.
       - name: placement
         description: Where on Twitter the ad is being displayed. Possible values include 'ALL_ON_TWITTER', 'PUBLISHER_NETWORK', 'TWITTER_PROFILE', 'TWITTER_SEARCH', 'TWITTER_TIMELINE', and 'TAP_*', which are more granular options for `PUBLISHER_NETWORK`.
-        tests:
+        data_tests:
           - not_null
       - name: conversion_purchases_metric
         description: Total number of purchases. The sum of post view, post engagement, and assisted purchases for both your website and mobile app. Included by the `twitter_ads__conversion_fields` variable by default.
@@ -319,12 +378,19 @@ models:
         description: The sale amount corresponding to PURCHASE conversion events. Included by the `twitter_ads__conversion_sale_amount_fields` variable by default.
   - name: stg_twitter_ads__line_item_keywords_report
     description: Each record represents the performance of a line item (ad group) and keyword combination on a given day, for its placement in Twitter.
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns:
+              - source_relation
+              - date_day
+              - keyword_id
     columns:
       - name: source_relation
         description: "{{ doc('source_relation') }}"
       - name: keyword_id
         description: Unique key of the table built from the combination of 'account_id', 'line_item_id','segment', and 'placement' fields.
-        tests:
+        data_tests:
           - not_null
       - name: account_id
         description: The ID of the related account.
@@ -336,7 +402,7 @@ models:
         description: The clicks for the line item + keyword on that day. Includes clicks on the URL (shortened or regular links), profile pic, screen name, username, detail, hashtags, and likes.
       - name: date_day
         description: The date of the performance.
-        tests:
+        data_tests:
           - not_null
       - name: impressions
         description: The impressions for the line item + keyword on that day.  This is the number of users who see a Promoted Ad either in their home timeline or search results.
@@ -359,6 +425,12 @@ models:
         
   - name: stg_twitter_ads__tweet
     description: Each record represents a tweet, promoted or not.
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns:
+              - source_relation
+              - tweet_id
     columns:
       - name: source_relation
         description: "{{ doc('source_relation') }}"
@@ -366,7 +438,7 @@ models:
         description: The ID of the related account.
       - name: tweet_id
         description: Unique identifier of the tweet.
-        tests:
+        data_tests:
           - not_null
       - name: name 
         description: If provided, the non-public title of the tweet. 
@@ -377,12 +449,21 @@ models:
 
   - name: stg_twitter_ads__campaign_locations_report
     description: Each record represents the performance of an ad campaign on a given day in a specific country, for its placement in Twitter.
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns:
+              - source_relation
+              - date_day
+              - campaign_id
+              - placement
+              - country
     columns:
       - name: source_relation
         description: "{{ doc('source_relation') }}"
       - name: country 
         description: "{{ doc('country') }}"
-        tests:
+        data_tests:
           - not_null
       - name: account_id
         description: The ID of the related account.
@@ -394,19 +475,19 @@ models:
         description: The clicks for the campaign on that day. Includes clicks on the URL (shortened or regular links), profile pic, screen name, username, detail, hashtags, and likes.
       - name: date_day
         description: The date of the performance.
-        tests:
+        data_tests:
           - not_null
       - name: impressions
         description: The impressions for the campaign on that day.  This is the number of users who see a Promoted Ad either in their home timeline or search results.
       - name: campaign_id
         description: The ID of the campaign.
-        tests:
+        data_tests:
           - not_null
       - name: url_clicks
         description: The url clicks for the campaign on that day.
       - name: placement
         description: Where on Twitter the ad is being displayed. Possible values include 'ALL_ON_TWITTER', 'PUBLISHER_NETWORK', 'TWITTER_PROFILE', 'TWITTER_SEARCH', 'TWITTER_TIMELINE', and 'TAP_*', which are more granular options for `PUBLISHER_NETWORK`.
-        tests:
+        data_tests:
           - not_null
       - name: conversion_purchases_metric
         description: Total number of purchases. The sum of post view, post engagement, and assisted purchases for both your website and mobile app. Included by the `twitter_ads__conversion_fields` variable by default.
@@ -419,6 +500,16 @@ models:
 
   - name: stg_twitter_ads__campaign_regions_report
     description: Each record represents the performance of an ad campaign on a given day in a specific geographic region, for its placement in Twitter.
+    data_tests:
+      - dbt_utils.unique_combination_of_columns:
+          arguments:
+            combination_of_columns:
+              - source_relation
+              - date_day
+              - campaign_id
+              - placement
+              - country
+              - region
     columns:
       - name: source_relation
         description: "{{ doc('source_relation') }}"
@@ -426,7 +517,7 @@ models:
         description: "{{ doc('country') }}"
       - name: region
         description: "{{ doc('region') }}"
-        tests:
+        data_tests:
           - not_null
       - name: account_id
         description: The ID of the related account.
@@ -438,7 +529,7 @@ models:
         description: The clicks for the campaign on that day. Includes clicks on the URL (shortened or regular links), profile pic, screen name, username, detail, hashtags, and likes.
       - name: date_day
         description: The date of the performance.
-        tests:
+        data_tests:
           - not_null
       - name: impressions
         description: The impressions for the campaign on that day.  This is the number of users who see a Promoted Ad either in their home timeline or search results.
