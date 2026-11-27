@@ -7,6 +7,22 @@ with accounts as (
     where is_latest_version
 ),
 
+account_currency as (
+
+    {# Twitter accounts have no currency field. Every campaign carries the account's currency,
+       so take it from the latest version of each campaign (deleted ones included, since an
+       account's currency does not change). If an account's campaigns disagree, leave it null
+       rather than guess. #}
+    select
+        source_relation,
+        account_id,
+        case when count(distinct currency) = 1 then max(currency) end as currency
+    from {{ ref('stg_twitter_ads__campaign_history') }}
+    where is_latest_version
+        and currency is not null
+    group by 1, 2
+),
+
 promoted_tweet_report as (
     
     select 
@@ -51,6 +67,7 @@ final as (
         report.placement, 
         report.account_id,
         accounts.name as account_name,
+        account_currency.currency,
         accounts.is_deleted,
         accounts.timezone,
         accounts.industry_type,
@@ -77,8 +94,11 @@ final as (
     left join accounts 
         on report.account_id = accounts.account_id
         and report.source_relation = accounts.source_relation
+    left join account_currency
+        on report.account_id = account_currency.account_id
+        and report.source_relation = account_currency.source_relation
 
-    {{ dbt_utils.group_by(14) }}
+    {{ dbt_utils.group_by(15) }}
 )
 
 select *

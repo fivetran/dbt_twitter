@@ -1,3 +1,17 @@
+# dbt_twitter v1.5.0
+
+[PR #57](https://github.com/fivetran/dbt_twitter/pull/57) includes the following updates:
+
+## Schema/Data Change
+**1 total change • 0 possible breaking changes**
+
+| Data Model(s) | Change type | Old | New | Notes |
+| ------------- | ----------- | --- | --- | ----- |
+| [twitter_ads__account_report](https://fivetran.github.io/dbt_twitter/#!/model/model.twitter_ads.twitter_ads__account_report) | New column |  |  | Adds `currency`. Twitter (X) ad accounts have no currency field, so it is taken from the latest version of the account's campaigns, and left null if they use more than one currency. Every other Twitter Ads end model already has a campaign currency. See the [DECISIONLOG](https://github.com/fivetran/dbt_twitter/blob/main/DECISIONLOG.md) for details. |
+
+## Under the Hood
+- Adds missing campaigns, line items and a promoted tweet to the history seeds. Report rows referenced them, so currency and names came out null in the campaign, keyword, line item and promoted tweet reports.
+
 # dbt_twitter v1.4.0
 
 [PR #55](https://github.com/fivetran/dbt_twitter/pull/55) includes the following updates:
