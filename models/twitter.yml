@@ -233,6 +233,8 @@ models:
           - not_null
       - name: account_name
         description: Name of the account.
+      - name: currency
+        description: The currency of the account, taken from its campaigns (Twitter accounts have no currency field). Null if the account's campaigns use more than one currency.
       - name: industry_type
         description: The industry of the accounts.
       - name: timezone
